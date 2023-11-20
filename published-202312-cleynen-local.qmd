@@ -1,0 +1,150 @@
+---
+title: "Local tree methods for classification: a review and some dead ends"
+subtitle: "Example based on the quarto system"
+author:
+  - name: Alice Cleynen
+    corresponding: true
+    email: janedoe@nowhere.moon
+    url: https://janedoe.someplace.themoon.org
+    orcid: 0000-0000-0000-0000
+    acknowledgements: |
+      Jane Doe's acknowledgements
+    affiliations:
+      - name: Name of Affiliation one
+        department: Statistics
+        url: https://someplace.themoon.org
+  - name: Louis Raynal
+    email: johndoe@nowhere.moon
+    url: https://johndoe.someplace.themoon.org
+    orcid: 0000-0000-0000-0000
+    acknowledgements: |
+      John Doe's acknowledgements
+    affiliations:
+      - name: Name of Afficiliation two
+        department: Computer Science
+        url: https://someplace.themoon.org
+   - name: Jean-Michel Marin
+    email: johndoe@nowhere.moon
+    url: https://johndoe.someplace.themoon.org
+    orcid: 0000-0000-0000-0000
+    acknowledgements: |
+      John Doe's acknowledgements
+    affiliations:
+      - name: Name of Afficiliation two
+        department: Computer Science
+        url: https://someplace.themoon.org
+
+date:
+date: last-modified
+date-modified: last-modified
+description: |
+  This document provides a template based on the quarto system for contributions to Computo, using the jounral extension and the knitr kernel (R user).
+abstract: >+
+    Random Forests (RF) [@breiman:2001] are very popular machine learning methods. They perform well even with little or no tuning, and have some theoretical guarantees, especially for sparse problems [@biau:2012;@scornet:etal:2015]. These learning strategies have been used in several contexts, also outside the field of classification and regression. To perform Bayesian model selection in the case of intractable likelihoods, the ABC Random Forests (ABC-RF) strategy of @pudlo:etal:2016 consists in applying Random Forests on training sets composed of simulations coming from the Bayesian generative models. The ABC-RF technique is based on an underlying RF for which the training and prediction phases are separated. The training phase does not take into account the data to be predicted. This seems to be suboptimal as in the ABC framework only one observation is of interest for the prediction. In this paper, we study tree-based methods that are built to predict a specific instance in a classification setting. This type of methods falls within the scope of local (lazy/instance-based/case specific) classification learning. We review some existing strategies and propose two new ones. The first consists in modifying the tree splitting rule by using kernels, the second in using a first RF to compute some local variable importance that is used to train a second, more local, RF. Unfortunately, these approaches, although interesting, do not provide conclusive results.
+keywords: [key1, key2, key3]
+citation:
+  type: article-journal
+  container-title: "Computo"
+  doi: "xxxx"
+  url: https://computo.sfds.asso.fr/template-computo-quarto
+  publisher: "Société Française de Statistique"
+  issn: "2824-7795"
+bibliography: references.bib
+github-user: computorg
+repo: "template-computo-quarto"
+draft: true # set to false once the build is running
+published: false # will be set to true once accepted
+format:
+  computo-html: default
+  computo-pdf: default
+---
+
+# Introduction
+
+The machine learning field of local/lazy/instance-based/case-specific learning [@aha:etal:1991] aims at taking into account a particular instance $\xs$ to produce a prediction thanks to its similarity to the training data set.
+It is opposed to eager learning, where the prediction is divided in two parts: a training phase where a global model is fitted and then a prediction phase. The local approach, in contrast, fits a model taking into account the information provided by $\xs$.
+
+Two closely related learning fields need to be mentioned: semi-supervised learning [@chapelle:etal:2010] and transductive learning [@gammerman:etal:1998]. Semi-supervised learning introduces unlabeled data (whose response is unknown) in addition to labeled ones to build a general model within the training phase. Then, in the testing phase this model is used to predict the response value of a new unlabeled data (different from the first ones). Transductive learning takes profit of a set of labeled and unlabelled data to avoid the construction of a general model and directly predicts the response values of those same unlabeled data. To our knowledge, semi-supervised and transductive learning require a high number of test/unlabeled instances. In our case only one is provided, making those approaches unsuitable. 
+
+The main drawback of local learning approaches is their high computational cost, because for each new test data a model has to be constructed. However, it can be very useful in domains where only one test instance is provided.
+
+Approximate Bayesian computation (ABC, @tavare:etal:1997; @pritchard:etal:1999) is a statistical method developed for frameworks where the likelihood is intractable. It relies on simulations according to Bayesian hierarchical models to generate pseudo-data. These artificial data are then compared to the test/observed one. To this effect    , the most basic algorithm is based on nearest neighbors (NN). Recently, @breiman:2001's machine learning algorithm of random forests (RF) proved to bring a meaningful improvement to the ABC paradigm in both a context of model choice [@pudlo:etal:2016] and parameter inference [@raynal:etal:2019]. 
+Here, we focus on the model choice problem and thus the classification setting.
+Unlike some ABC techniques that take advantage of local methods, such as local adjustment [@beaumont:etal:2002; @blum:francois:2010; @blum:etal:2013], ABC-RF trains an eager RF to predict, later on, the observed data.
+It seems sub-optimal because in the ABC framework only the observed data is of interest for prediction.
+The ABC-RF strategy might therefore greatly benefit from local versions of RF.
+
+Here, we focus on reviewing and proposing tree-based method to predict at best a specific data of interest.
+We start with some reminders on @breiman:2001's RF algorithm. We then study local tree-based approaches depending 
+on the way the localization process is performed. In Section \@ref(sec:localSplittingRules), we  introduce internal modifications 
+of the RF concerning the splitting rule. Then, we take an interest on modifying the random aspects of RF to turn them into local ones. 
+We focus on modifying the sampling of individuals in Section \@ref(sec:localWeightingOfIndividuls), and the sampling of predictors in Section \@ref(sec:weightingCovariates). Local weighting of votes is finally presented in Section \@ref(sec:treeWeights).
+We empirically compare these strategies with the original, eager one in four examples where a local approach might be of interest.
+
+
+# Reminders on Breiman's random forest {#sec:recallsRF}
+
+
+In the following we consider a classification problem.
+We use a set of $d$ explanatory variables $X=(X_1, \ldots, X_d)$ to predict 
+the categorical/discrete response $Y$ belonging to $\{1,\dots,K\}$.. 
+
+The training data set is composed of $N$ realizations 
+$\big\{ (y\idxi, x\idxi) \big\}_{i=1,\ldots,N}$.
+We consider @breiman:2001's random forest as the reference method to improve.
+
+An RF is a set of randomized trees [@breiman:etal:1984], each one partitioning the covariates space thanks to a series of allocation rules and assigning a class label as prediction to each partition.
+A binary tree is composed of internal and terminal nodes (a.k.a. leaves).
+For each internal node, a splitting rule on an explanatory variable is determined by maximizing an information gain, dividing the training set in two parts. This process is recursively iterated until a stopping rule is achieved. The internal node encountering a stopping rule becomes terminal.
+For continuous covariates, a splitting rule compares a covariate $X_j$ to a bound $s$, allocating to the left branch the data verifying the rule $X_j \leq s$, and to the right all others.
+For categorical covariates, the splitting rule is chosen among all the possible two-way splits of the covariate categories.
+
+The covariate index $j$ and the bound $s$ are chosen to maximize the decrease of impurity between the mother, denoted $t$, and the two resulting left and right daughter nodes, denoted $t_L$ and $t_R$, (weighted by the number of data at each node). This gain associated to a covariate $j$ and split value $s$ is always non negative and is written as
+\begin{equation}
+    G(j,s) = I(t) - \left( \frac{\#t_L}{\#t} I(t_L) + \frac{\#t_R}{\#t} I(t_R) \right), 
+    (\#eq:critRF)
+\end{equation}
+where $\#$ refers to the number of data in the associated node, and $I(\cdot)$ is the impurity.
+The impurity, i.e. the heterogeneity at a given node, is measured with either the Gini index or the entropy. 
+The Gini index, defined for categorical variables as $\sum_{k=1}^K p_k(1-p_k)$, is less computationally intensive as is counterpart, the entropy, defined as  $\sum_{k=1}^K p_k\log(p_k)$ which gives slightly better results. In both cases, the objective is to select the allocation rule that reduces the impurity the most, in other terms that produces the highest gain.
+
+Splitting events stop when one of the three following situation is reached:
+
+- all individuals of the data set at a given node have the same response value (the node is pure),
+- all individuals have the same covariate values,
+- a node has less than $N_{\text{min}}$ instances, $N_{\text{min}}$ being an user-defined integer value, typically set to 1 for classification.
+
+
+Once the tree construction is complete, each leaf predicts a model index, corresponding to the majority class of its instances.
+For a new set of explanatory variables $\xs$, predicting its model index implies passing $\xs$ through the tree, following the path of binary rules, and the predicted value is the value associated to the leaf where it falls.
+
+The RF method consists in bootstrap aggregating (bagging, @breiman:1996) randomized (classification) trees. A large number of trees is trained on bootstrap samples of the training data set and $\mtry$ covariates are randomly selected at each internal node, on which the splitting rule will be defined. $\mtry$ is usually set at $\lfloor \sqrt{d} \rfloor$, where $\lfloor \cdot \rfloor$ denotes the floor function.
+The predicted value for a data $\xs$ is the majority vote across all tree predictions.
+RF methods have some theoretical guarantees for sparse problems [@biau:2012;@scornet:etal:2015].
+Moreover, it is well-known that their performances are quite good even when no tuning is made.
+
+# Local splitting rules  {#sec:localSplittingRules}
+
+
+We now turn to discuss local tree methods. A first option to localize the tree construction is to change the information gain to the benefit of a local one. 
+The idea is to use the test instance $\xs$ to drive the splits and thus the tree construction.
+
+Indeed, because the best split is selected on average, an eager tree may lead to many irrelevant splits to predict $\xs$, potentially discarding data
+relevant for the considered example at early stages of the tree. This behavior results from data fragmentation [@fulton:etal:1996], i.e. from the recursive partitioning of the explanatory variables space to achieve good global performances. In the following we mention this phenomenon as the fragmentation problem.
+A very simple 2-class classification problem presented in Figure \@ref(fig:4Unif) illustrates this issue. The distribution of the training data set will induce, when possible, an initial cut for the tree construction in $X_1\approx0.5$, however,
+the unlabeled instance (represented by a black star) is in a region where a lot of relevant instances will be discarded after this first data split. A more pertinent first cut should occur in $X_2\approx0.25$. This problem, called fragmentation problem, also leads to less significant splitting rules at deeper levels of the tree construction since based on fewer instances.
+It is thus interesting to consider a local approach taking $\xs$ into account.
+
+:::
+
+# References {.unnumbered}
+
+::: {#refs}
+:::
+
+# Session information {.appendix .unnumbered}
+
+```{r session-info}
+sessionInfo()
+```
+

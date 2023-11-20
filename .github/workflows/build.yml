@@ -33,13 +33,18 @@ jobs:
         run: |
             quarto add --no-prompt computorg/computo-quarto-extension
 
+      - name: Installing dependencies
+        shell: bash -l {0}
+        run: |
+            Rscript r-addons.R
+
       - name: Rendering with Quarto
         shell: bash -l {0}
         run: |
-            quarto render ${{ env.quarto_file }}.qmd
+            quarto render ${{ env.quarto_file }}.qmd --to html
             mkdir _build
             mv ${{ env.quarto_file }}.html _build/index.html
-            mv -vf ${{ env.quarto_file }}_files figures ${{ env.quarto_file }}.pdf _build/
+            #mv -vf ${{ env.quarto_file }}_files figures ${{ env.quarto_file }}.pdf _build/
             cp environment.yml _build/
             touch _build/.nojekyll
 

@@ -1,0 +1,1705 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
+
+<meta charset="utf-8">
+<meta name="generator" content="quarto-1.3.450">
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+
+<meta name="author" content="Alice Cleynen">
+<meta name="author" content="Louis Raynal">
+<meta name="author" content="Jean-Michel Marin">
+<meta name="dcterms.date" content="2023-11-22">
+<meta name="keywords" content="key1, key2, key3">
+<meta name="description" content="This document provides a template based on the quarto system for contributions to Computo, using the jounral extension and the knitr kernel (R user).">
+
+<title>Local tree methods for classification: a review and some dead ends</title>
+<style>
+code{white-space: pre-wrap;}
+span.smallcaps{font-variant: small-caps;}
+div.columns{display: flex; gap: min(4vw, 1.5em);}
+div.column{flex: auto; overflow-x: auto;}
+div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+ul.task-list{list-style: none;}
+ul.task-list li input[type="checkbox"] {
+  width: 0.8em;
+  margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
+  vertical-align: middle;
+}
+/* CSS for syntax highlighting */
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+div.sourceCode { margin: 1em 0; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+  }
+pre.numberSource { margin-left: 3em;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
+/* CSS for citations */
+div.csl-bib-body { }
+div.csl-entry {
+  clear: both;
+}
+.hanging-indent div.csl-entry {
+  margin-left:2em;
+  text-indent:-2em;
+}
+div.csl-left-margin {
+  min-width:2em;
+  float:left;
+}
+div.csl-right-inline {
+  margin-left:2em;
+  padding-left:1em;
+}
+div.csl-indent {
+  margin-left: 2em;
+}</style>
+
+
+<script src="published-202312-cleynen-local_files/libs/clipboard/clipboard.min.js"></script>
+<script src="published-202312-cleynen-local_files/libs/quarto-html/quarto.js"></script>
+<script src="published-202312-cleynen-local_files/libs/quarto-html/popper.min.js"></script>
+<script src="published-202312-cleynen-local_files/libs/quarto-html/tippy.umd.min.js"></script>
+<script src="published-202312-cleynen-local_files/libs/quarto-html/anchor.min.js"></script>
+<link href="published-202312-cleynen-local_files/libs/quarto-html/tippy.css" rel="stylesheet">
+<link href="published-202312-cleynen-local_files/libs/quarto-html/quarto-syntax-highlighting.css" rel="stylesheet" id="quarto-text-highlighting-styles">
+<script src="published-202312-cleynen-local_files/libs/bootstrap/bootstrap.min.js"></script>
+<link href="published-202312-cleynen-local_files/libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
+<link href="published-202312-cleynen-local_files/libs/bootstrap/bootstrap.min.css" rel="stylesheet" id="quarto-bootstrap" data-mode="light">
+
+  <script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
+  <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml-full.js" type="text/javascript"></script>
+
+</head>
+
+<body>
+
+<div id="quarto-content" class="page-columns page-rows-contents page-layout-article">
+<div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
+<div class="quarto-alternate-formats"><h2>Other Formats</h2><ul><li><a href="published-202312-cleynen-local.pdf"><i class="bi bi-file-pdf"></i>PDF (computo)</a></li></ul></div></div>
+<main class="content" id="quarto-document-content">
+
+<header id="title-block-header" class="quarto-title-block default">
+<div class="quarto-title">
+<h1 class="title">Local tree methods for classification: a review and some dead ends</h1>
+<p class="subtitle lead">Example based on the quarto system</p>
+</div>
+
+<div>
+  <div class="description">
+    <p>This document provides a template based on the quarto system for contributions to Computo, using the jounral extension and the knitr kernel (R user).</p>
+  </div>
+</div>
+
+<div class="quarto-title-meta-author">
+  <div class="quarto-title-meta-heading">Authors</div>
+  <div class="quarto-title-meta-heading">Affiliations</div>
+  
+    <div class="quarto-title-meta-contents">
+    <p class="author"><a href="https://alice.cleynen.fr/">Alice Cleynen</a> </p>
+  </div>
+    <div class="quarto-title-meta-contents">
+        <p class="affiliation">
+            <a href="https://someplace.themoon.org">
+            Name of Affiliation one
+            </a>
+          </p>
+      </div>
+      <div class="quarto-title-meta-contents">
+    <p class="author"><a href="https://johndoe.someplace.themoon.org">Louis Raynal</a> <a href="https://orcid.org/0000-0000-0000-0000" class="quarto-title-author-orcid"> <img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAYAAAAf8/9hAAAAGXRFWHRTb2Z0d2FyZQBBZG9iZSBJbWFnZVJlYWR5ccllPAAAA2ZpVFh0WE1MOmNvbS5hZG9iZS54bXAAAAAAADw/eHBhY2tldCBiZWdpbj0i77u/IiBpZD0iVzVNME1wQ2VoaUh6cmVTek5UY3prYzlkIj8+IDx4OnhtcG1ldGEgeG1sbnM6eD0iYWRvYmU6bnM6bWV0YS8iIHg6eG1wdGs9IkFkb2JlIFhNUCBDb3JlIDUuMC1jMDYwIDYxLjEzNDc3NywgMjAxMC8wMi8xMi0xNzozMjowMCAgICAgICAgIj4gPHJkZjpSREYgeG1sbnM6cmRmPSJodHRwOi8vd3d3LnczLm9yZy8xOTk5LzAyLzIyLXJkZi1zeW50YXgtbnMjIj4gPHJkZjpEZXNjcmlwdGlvbiByZGY6YWJvdXQ9IiIgeG1sbnM6eG1wTU09Imh0dHA6Ly9ucy5hZG9iZS5jb20veGFwLzEuMC9tbS8iIHhtbG5zOnN0UmVmPSJodHRwOi8vbnMuYWRvYmUuY29tL3hhcC8xLjAvc1R5cGUvUmVzb3VyY2VSZWYjIiB4bWxuczp4bXA9Imh0dHA6Ly9ucy5hZG9iZS5jb20veGFwLzEuMC8iIHhtcE1NOk9yaWdpbmFsRG9jdW1lbnRJRD0ieG1wLmRpZDo1N0NEMjA4MDI1MjA2ODExOTk0QzkzNTEzRjZEQTg1NyIgeG1wTU06RG9jdW1lbnRJRD0ieG1wLmRpZDozM0NDOEJGNEZGNTcxMUUxODdBOEVCODg2RjdCQ0QwOSIgeG1wTU06SW5zdGFuY2VJRD0ieG1wLmlpZDozM0NDOEJGM0ZGNTcxMUUxODdBOEVCODg2RjdCQ0QwOSIgeG1wOkNyZWF0b3JUb29sPSJBZG9iZSBQaG90b3Nob3AgQ1M1IE1hY2ludG9zaCI+IDx4bXBNTTpEZXJpdmVkRnJvbSBzdFJlZjppbnN0YW5jZUlEPSJ4bXAuaWlkOkZDN0YxMTc0MDcyMDY4MTE5NUZFRDc5MUM2MUUwNEREIiBzdFJlZjpkb2N1bWVudElEPSJ4bXAuZGlkOjU3Q0QyMDgwMjUyMDY4MTE5OTRDOTM1MTNGNkRBODU3Ii8+IDwvcmRmOkRlc2NyaXB0aW9uPiA8L3JkZjpSREY+IDwveDp4bXBtZXRhPiA8P3hwYWNrZXQgZW5kPSJyIj8+84NovQAAAR1JREFUeNpiZEADy85ZJgCpeCB2QJM6AMQLo4yOL0AWZETSqACk1gOxAQN+cAGIA4EGPQBxmJA0nwdpjjQ8xqArmczw5tMHXAaALDgP1QMxAGqzAAPxQACqh4ER6uf5MBlkm0X4EGayMfMw/Pr7Bd2gRBZogMFBrv01hisv5jLsv9nLAPIOMnjy8RDDyYctyAbFM2EJbRQw+aAWw/LzVgx7b+cwCHKqMhjJFCBLOzAR6+lXX84xnHjYyqAo5IUizkRCwIENQQckGSDGY4TVgAPEaraQr2a4/24bSuoExcJCfAEJihXkWDj3ZAKy9EJGaEo8T0QSxkjSwORsCAuDQCD+QILmD1A9kECEZgxDaEZhICIzGcIyEyOl2RkgwAAhkmC+eAm0TAAAAABJRU5ErkJggg=="></a></p>
+  </div>
+    <div class="quarto-title-meta-contents">
+        <p class="affiliation">
+            <a href="https://someplace.themoon.org">
+            Name of Afficiliation two
+            </a>
+          </p>
+      </div>
+      <div class="quarto-title-meta-contents">
+    <p class="author"><a href="https://johndoe.someplace.themoon.org">Jean-Michel Marin</a> <a href="https://orcid.org/0000-0000-0000-0000" class="quarto-title-author-orcid"> <img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAYAAAAf8/9hAAAAGXRFWHRTb2Z0d2FyZQBBZG9iZSBJbWFnZVJlYWR5ccllPAAAA2ZpVFh0WE1MOmNvbS5hZG9iZS54bXAAAAAAADw/eHBhY2tldCBiZWdpbj0i77u/IiBpZD0iVzVNME1wQ2VoaUh6cmVTek5UY3prYzlkIj8+IDx4OnhtcG1ldGEgeG1sbnM6eD0iYWRvYmU6bnM6bWV0YS8iIHg6eG1wdGs9IkFkb2JlIFhNUCBDb3JlIDUuMC1jMDYwIDYxLjEzNDc3NywgMjAxMC8wMi8xMi0xNzozMjowMCAgICAgICAgIj4gPHJkZjpSREYgeG1sbnM6cmRmPSJodHRwOi8vd3d3LnczLm9yZy8xOTk5LzAyLzIyLXJkZi1zeW50YXgtbnMjIj4gPHJkZjpEZXNjcmlwdGlvbiByZGY6YWJvdXQ9IiIgeG1sbnM6eG1wTU09Imh0dHA6Ly9ucy5hZG9iZS5jb20veGFwLzEuMC9tbS8iIHhtbG5zOnN0UmVmPSJodHRwOi8vbnMuYWRvYmUuY29tL3hhcC8xLjAvc1R5cGUvUmVzb3VyY2VSZWYjIiB4bWxuczp4bXA9Imh0dHA6Ly9ucy5hZG9iZS5jb20veGFwLzEuMC8iIHhtcE1NOk9yaWdpbmFsRG9jdW1lbnRJRD0ieG1wLmRpZDo1N0NEMjA4MDI1MjA2ODExOTk0QzkzNTEzRjZEQTg1NyIgeG1wTU06RG9jdW1lbnRJRD0ieG1wLmRpZDozM0NDOEJGNEZGNTcxMUUxODdBOEVCODg2RjdCQ0QwOSIgeG1wTU06SW5zdGFuY2VJRD0ieG1wLmlpZDozM0NDOEJGM0ZGNTcxMUUxODdBOEVCODg2RjdCQ0QwOSIgeG1wOkNyZWF0b3JUb29sPSJBZG9iZSBQaG90b3Nob3AgQ1M1IE1hY2ludG9zaCI+IDx4bXBNTTpEZXJpdmVkRnJvbSBzdFJlZjppbnN0YW5jZUlEPSJ4bXAuaWlkOkZDN0YxMTc0MDcyMDY4MTE5NUZFRDc5MUM2MUUwNEREIiBzdFJlZjpkb2N1bWVudElEPSJ4bXAuZGlkOjU3Q0QyMDgwMjUyMDY4MTE5OTRDOTM1MTNGNkRBODU3Ii8+IDwvcmRmOkRlc2NyaXB0aW9uPiA8L3JkZjpSREY+IDwveDp4bXBtZXRhPiA8P3hwYWNrZXQgZW5kPSJyIj8+84NovQAAAR1JREFUeNpiZEADy85ZJgCpeCB2QJM6AMQLo4yOL0AWZETSqACk1gOxAQN+cAGIA4EGPQBxmJA0nwdpjjQ8xqArmczw5tMHXAaALDgP1QMxAGqzAAPxQACqh4ER6uf5MBlkm0X4EGayMfMw/Pr7Bd2gRBZogMFBrv01hisv5jLsv9nLAPIOMnjy8RDDyYctyAbFM2EJbRQw+aAWw/LzVgx7b+cwCHKqMhjJFCBLOzAR6+lXX84xnHjYyqAo5IUizkRCwIENQQckGSDGY4TVgAPEaraQr2a4/24bSuoExcJCfAEJihXkWDj3ZAKy9EJGaEo8T0QSxkjSwORsCAuDQCD+QILmD1A9kECEZgxDaEZhICIzGcIyEyOl2RkgwAAhkmC+eAm0TAAAAABJRU5ErkJggg=="></a></p>
+  </div>
+    <div class="quarto-title-meta-contents">
+        <p class="affiliation">
+            <a href="https://someplace.themoon.org">
+            Name of Afficiliation two
+            </a>
+          </p>
+      </div>
+    </div>
+
+<div class="quarto-title-meta">
+
+      
+    <div>
+    <div class="quarto-title-meta-heading">Published</div>
+    <div class="quarto-title-meta-contents">
+      <p class="date">November 22, 2023</p>
+    </div>
+  </div>
+  
+    <div>
+    <div class="quarto-title-meta-heading">Modified</div>
+    <div class="quarto-title-meta-contents">
+      <p class="date-modified">November 22, 2023</p>
+    </div>
+  </div>
+    
+  </div>
+  
+<div>
+  <div class="abstract">
+    <div class="abstract-title">Abstract</div>
+    <p>Random Forests (RF) <span class="citation" data-cites="breiman:2001">(<a href="#ref-breiman:2001" role="doc-biblioref">Breiman 2001</a>)</span> are very popular machine learning methods. They perform well even with little or no tuning, and have some theoretical guarantees, especially for sparse problems <span class="citation" data-cites="biau:2012 scornet:etal:2015">(<a href="#ref-biau:2012" role="doc-biblioref">Biau 2012</a>; <a href="#ref-scornet:etal:2015" role="doc-biblioref">Scornet, Biau, and Vert 2015</a>)</span>. These learning strategies have been used in several contexts, also outside the field of classification and regression. To perform Bayesian model selection in the case of intractable likelihoods, the ABC Random Forests (ABC-RF) strategy of <span class="citation" data-cites="pudlo:etal:2016">Pudlo et al. (<a href="#ref-pudlo:etal:2016" role="doc-biblioref">2016</a>)</span> consists in applying Random Forests on training sets composed of simulations coming from the Bayesian generative models. The ABC-RF technique is based on an underlying RF for which the training and prediction phases are separated. The training phase does not take into account the data to be predicted. This seems to be suboptimal as in the ABC framework only one observation is of interest for the prediction. In this paper, we study tree-based methods that are built to predict a specific instance in a classification setting. This type of methods falls within the scope of local (lazy/instance-based/case specific) classification learning. We review some existing strategies and propose two new ones. The first consists in modifying the tree splitting rule by using kernels, the second in using a first RF to compute some local variable importance that is used to train a second, more local, RF. Unfortunately, these approaches, although interesting, do not provide conclusive results.</p>
+  </div>
+</div>
+
+</header>
+
+<p><span class="math inline">\(\DeclareMathOperator*{\argmin}{argmin}\)</span> <span class="math inline">\(\DeclareMathOperator*{\argmax}{argmax}\)</span> <span class="math inline">\(\DeclareMathOperator*{\diag}{diag}\)</span> <span class="math inline">\(\newcommand{\var}{\mathrm{Var}}\)</span> <span class="math inline">\(\newcommand{\xs}{x^*}\)</span> <span class="math inline">\(\newcommand{\xsj}{x_j^*}\)</span> <span class="math inline">\(\newcommand{\xsij}{x_j^{*(i)}}\)</span> <span class="math inline">\(\newcommand{\inroot}{\in\text{ROOT}}\)</span> <span class="math inline">\(\newcommand{\idxi}{^{(i)}}\)</span> <span class="math inline">\(\newcommand{\Nmin}{N_{\text{min}}}\)</span> <span class="math inline">\(\newcommand{\mtry}{m_{\text{try}}}\)</span> <span class="math inline">\(\newcommand{\indicator}{\mathds{1}}\)</span> <span class="math inline">\(\renewcommand{\P}{\mathbb{P}}\)</span></p>
+<section id="introduction" class="level1">
+<h1>Introduction</h1>
+<p>The machine learning field of local/lazy/instance-based/case-specific learning <span class="citation" data-cites="aha:etal:1991">(<a href="#ref-aha:etal:1991" role="doc-biblioref">Aha, Kibler, and Albert 1991</a>)</span> aims at taking into account a particular instance <span class="math inline">\(\xs\)</span> to produce a prediction thanks to its similarity to the training data set. It is opposed to eager learning, where the prediction is divided in two parts: a training phase where a global model is fitted and then a prediction phase. The local approach, in contrast, fits a model taking into account the information provided by <span class="math inline">\(\xs\)</span>.</p>
+<p>Two closely related learning fields need to be mentioned: semi-supervised learning <span class="citation" data-cites="chapelle:etal:2010">(<a href="#ref-chapelle:etal:2010" role="doc-biblioref">Chapelle, Schölkopf, and Zien 2010</a>)</span> and transductive learning <span class="citation" data-cites="gammerman:etal:1998">(<a href="#ref-gammerman:etal:1998" role="doc-biblioref">Gammerman, Vovk, and Vapnik 1998</a>)</span>. Semi-supervised learning introduces unlabeled data (whose response is unknown) in addition to labeled ones to build a general model within the training phase. Then, in the testing phase this model is used to predict the response value of a new unlabeled data (different from the first ones). Transductive learning takes profit of a set of labeled and unlabelled data to avoid the construction of a general model and directly predicts the response values of those same unlabeled data. To our knowledge, semi-supervised and transductive learning require a high number of test/unlabeled instances. In our case only one is provided, making those approaches unsuitable.</p>
+<p>The main drawback of local learning approaches is their high computational cost, because for each new test data a model has to be constructed. However, it can be very useful in domains where only one test instance is provided.</p>
+<p>Approximate Bayesian computation (ABC, <span class="citation" data-cites="tavare:etal:1997">Tavaré et al. (<a href="#ref-tavare:etal:1997" role="doc-biblioref">1997</a>)</span>; <span class="citation" data-cites="pritchard:etal:1999">Pritchard et al. (<a href="#ref-pritchard:etal:1999" role="doc-biblioref">1999</a>)</span>) is a statistical method developed for frameworks where the likelihood is intractable. It relies on simulations according to Bayesian hierarchical models to generate pseudo-data. These artificial data are then compared to the test/observed one. To this effect , the most basic algorithm is based on nearest neighbors (NN). Recently, <span class="citation" data-cites="breiman:2001">Breiman (<a href="#ref-breiman:2001" role="doc-biblioref">2001</a>)</span>’s machine learning algorithm of random forests (RF) proved to bring a meaningful improvement to the ABC paradigm in both a context of model choice <span class="citation" data-cites="pudlo:etal:2016">(<a href="#ref-pudlo:etal:2016" role="doc-biblioref">Pudlo et al. 2016</a>)</span> and parameter inference <span class="citation" data-cites="raynal:etal:2019">(<a href="#ref-raynal:etal:2019" role="doc-biblioref">Raynal et al. 2019</a>)</span>. Here, we focus on the model choice problem and thus the classification setting. Unlike some ABC techniques that take advantage of local methods, such as local adjustment <span class="citation" data-cites="beaumont:etal:2002 blum:francois:2010 blum:etal:2013">(<a href="#ref-beaumont:etal:2002" role="doc-biblioref">Beaumont, Zhang, and Balding 2002</a>; <a href="#ref-blum:francois:2010" role="doc-biblioref">Blum and François 2010</a>; <a href="#ref-blum:etal:2013" role="doc-biblioref">Blum et al. 2013</a>)</span>, ABC-RF trains an eager RF to predict, later on, the observed data. It seems sub-optimal because in the ABC framework only the observed data is of interest for prediction. The ABC-RF strategy might therefore greatly benefit from local versions of RF.</p>
+<p>Here, we focus on reviewing and proposing tree-based method to predict at best a specific data of interest. We start with some reminders on <span class="citation" data-cites="breiman:2001">Breiman (<a href="#ref-breiman:2001" role="doc-biblioref">2001</a>)</span>’s RF algorithm. We then study local tree-based approaches depending on the way the localization process is performed. In Section @ref(sec:localSplittingRules), we introduce internal modifications of the RF concerning the splitting rule. Then, we take an interest on modifying the random aspects of RF to turn them into local ones. We focus on modifying the sampling of individuals in Section @ref(sec:localWeightingOfIndividuls), and the sampling of predictors in Section @ref(sec:weightingCovariates). Local weighting of votes is finally presented in Section @ref(sec:treeWeights). We empirically compare these strategies with the original, eager one in four examples where a local approach might be of interest.</p>
+</section>
+<section id="sec:recallsRF" class="level1">
+<h1>Reminders on Breiman’s random forest</h1>
+<p>In the following we consider a classification problem. We use a set of <span class="math inline">\(d\)</span> explanatory variables <span class="math inline">\(X=(X_1, \ldots, X_d)\)</span> to predict the categorical/discrete response <span class="math inline">\(Y\)</span> belonging to <span class="math inline">\(\{1,\dots,K\}\)</span>..</p>
+<p>The training data set is composed of <span class="math inline">\(N\)</span> realizations <span class="math inline">\(\big\{ (y\idxi, x\idxi) \big\}_{i=1,\ldots,N}\)</span>. We consider <span class="citation" data-cites="breiman:2001">Breiman (<a href="#ref-breiman:2001" role="doc-biblioref">2001</a>)</span>’s random forest as the reference method to improve.</p>
+<p>An RF is a set of randomized trees <span class="citation" data-cites="breiman:etal:1984">(<a href="#ref-breiman:etal:1984" role="doc-biblioref">L. Breiman et al. 1984</a>)</span>, each one partitioning the covariates space thanks to a series of allocation rules and assigning a class label as prediction to each partition. A binary tree is composed of internal and terminal nodes (a.k.a. leaves). For each internal node, a splitting rule on an explanatory variable is determined by maximizing an information gain, dividing the training set in two parts. This process is recursively iterated until a stopping rule is achieved. The internal node encountering a stopping rule becomes terminal. For continuous covariates, a splitting rule compares a covariate <span class="math inline">\(X_j\)</span> to a bound <span class="math inline">\(s\)</span>, allocating to the left branch the data verifying the rule <span class="math inline">\(X_j \leq s\)</span>, and to the right all others. For categorical covariates, the splitting rule is chosen among all the possible two-way splits of the covariate categories.</p>
+<p>The covariate index <span class="math inline">\(j\)</span> and the bound <span class="math inline">\(s\)</span> are chosen to maximize the decrease of impurity between the mother, denoted <span class="math inline">\(t\)</span>, and the two resulting left and right daughter nodes, denoted <span class="math inline">\(t_L\)</span> and <span class="math inline">\(t_R\)</span>, (weighted by the number of data at each node). This gain associated to a covariate <span class="math inline">\(j\)</span> and split value <span class="math inline">\(s\)</span> is always non negative and is written as <span class="math display">\[\begin{equation}
+    G(j,s) = I(t) - \left( \frac{\#t_L}{\#t} I(t_L) + \frac{\#t_R}{\#t} I(t_R) \right),
+    (\#eq:critRF)
+\end{equation}\]</span> where <span class="math inline">\(\#\)</span> refers to the number of data in the associated node, and <span class="math inline">\(I(\cdot)\)</span> is the impurity. The impurity, i.e.&nbsp;the heterogeneity at a given node, is measured with either the Gini index or the entropy. The Gini index, defined for categorical variables as <span class="math inline">\(\sum_{k=1}^K p_k(1-p_k)\)</span>, is less computationally intensive as is counterpart, the entropy, defined as <span class="math inline">\(\sum_{k=1}^K p_k\log(p_k)\)</span> which gives slightly better results. In both cases, the objective is to select the allocation rule that reduces the impurity the most, in other terms that produces the highest gain.</p>
+<p>Splitting events stop when one of the three following situation is reached:</p>
+<ul>
+<li>all individuals of the data set at a given node have the same response value (the node is pure),</li>
+<li>all individuals have the same covariate values,</li>
+<li>a node has less than <span class="math inline">\(N_{\text{min}}\)</span> instances, <span class="math inline">\(N_{\text{min}}\)</span> being an user-defined integer value, typically set to 1 for classification.</li>
+</ul>
+<p>Once the tree construction is complete, each leaf predicts a model index, corresponding to the majority class of its instances. For a new set of explanatory variables <span class="math inline">\(\xs\)</span>, predicting its model index implies passing <span class="math inline">\(\xs\)</span> through the tree, following the path of binary rules, and the predicted value is the value associated to the leaf where it falls.</p>
+<p>The RF method consists in bootstrap aggregating (bagging, <span class="citation" data-cites="breiman:1996">Breiman (<a href="#ref-breiman:1996" role="doc-biblioref">1996</a>)</span>) randomized (classification) trees. A large number of trees is trained on bootstrap samples of the training data set and <span class="math inline">\(\mtry\)</span> covariates are randomly selected at each internal node, on which the splitting rule will be defined. <span class="math inline">\(\mtry\)</span> is usually set at <span class="math inline">\(\lfloor \sqrt{d} \rfloor\)</span>, where <span class="math inline">\(\lfloor \cdot \rfloor\)</span> denotes the floor function. The predicted value for a data <span class="math inline">\(\xs\)</span> is the majority vote across all tree predictions. RF methods have some theoretical guarantees for sparse problems <span class="citation" data-cites="biau:2012 scornet:etal:2015">(<a href="#ref-biau:2012" role="doc-biblioref">Biau 2012</a>; <a href="#ref-scornet:etal:2015" role="doc-biblioref">Scornet, Biau, and Vert 2015</a>)</span>. Moreover, it is well-known that their performances are quite good even when no tuning is made.</p>
+</section>
+<section id="sec:localSplittingRules" class="level1">
+<h1>Local splitting rules</h1>
+<p>We now turn to discuss local tree methods. A first option to localize the tree construction is to change the information gain to the benefit of a local one. The idea is to use the test instance <span class="math inline">\(\xs\)</span> to drive the splits and thus the tree construction.</p>
+<p>Indeed, because the best split is selected on average, an eager tree may lead to many irrelevant splits to predict <span class="math inline">\(\xs\)</span>, potentially discarding data relevant for the considered example at early stages of the tree. This behavior results from data fragmentation <span class="citation" data-cites="fulton:etal:1996">(<a href="#ref-fulton:etal:1996" role="doc-biblioref">Fulton et al. 1996</a>)</span>, i.e.&nbsp;from the recursive partitioning of the explanatory variables space to achieve good global performances. In the following we mention this phenomenon as the fragmentation problem. A very simple 2-class classification problem presented in Figure @ref(fig:4Unif) illustrates this issue. The distribution of the training data set will induce, when possible, an initial cut for the tree construction in <span class="math inline">\(X_1\approx0.5\)</span>, however, the unlabeled instance (represented by a black star) is in a region where a lot of relevant instances will be discarded after this first data split. A more pertinent first cut should occur in <span class="math inline">\(X_2\approx0.25\)</span>. This problem, called fragmentation problem, also leads to less significant splitting rules at deeper levels of the tree construction since based on fewer instances. It is thus interesting to consider a local approach taking <span class="math inline">\(\xs\)</span> into account.</p>
+<div class="cell">
+<div class="cell-output-display">
+<div id="fig-simuLMM" class="quarto-figure quarto-figure-center anchored">
+<figure class="figure">
+<p><img src="published-202312-cleynen-local_files/figure-html/fig-simuLMM-1.png" class="img-fluid figure-img" width="672"></p>
+<figcaption class="figure-caption">Figure&nbsp;1: An illustrative classification problem with 2 classes (purple and sky blye), containing two covariates describing four distinguishable regions (delimited by orange dashed lines) and an unlabeled data to classify (black star). This case will give rise to a fragmentation problem.</figcaption>
+</figure>
+</div>
+</div>
+</div>
+<p>It is interesting to note that building a local tree by modifying its internal construction results in building a single trajectory only, since the splitting rules are only applied on branches containing <span class="math inline">\(\xs\)</span>. A local tree is therefore a tool to recursively remove non-relevant data points from the classifier rule. Thus, a local random forest might be much faster for its construction compared to the eager version, especially if only one instance is of interest.</p>
+<p>In this section we present the approach of <span class="citation" data-cites="friedman:etal:1997">Friedman, Kohavi, and Yun (<a href="#ref-friedman:etal:1997" role="doc-biblioref">1997</a>)</span> to build local decision trees, called lazy decision trees, and expand it for RF. We also present our attempts at using unidimensional or multidimensional kernels to give more weight to training samples closer to <span class="math inline">\(\xs\)</span>.</p>
+<section id="subsec:lazyDT" class="level2">
+<h2 class="anchored" data-anchor-id="subsec:lazyDT">Lazy decision trees</h2>
+<p>The lazy decision tree algorithm (LazyDT) is introduced in <span class="citation" data-cites="friedman:etal:1997">Friedman, Kohavi, and Yun (<a href="#ref-friedman:etal:1997" role="doc-biblioref">1997</a>)</span>. Its objective is to take into account <span class="math inline">\(\xs\)</span> during the tree construction. To do so, the information gain – depending on <span class="math inline">\(j\)</span> and <span class="math inline">\(s\)</span> – to maximize at each node is modified compared to criterion @ref(eq:critRF). Only the difference of impurity between the mother node <span class="math inline">\(t\)</span> and the daughter node where <span class="math inline">\(\xs\)</span> ends, denoted <span class="math inline">\(t^*\)</span>, is considered. The resulting local information gain is defined by <span class="math display">\[\begin{equation}
+    G_w(j,s) = I_w(t) - I_w(t^*),
+    (\#eq:critLazyDT)
+\end{equation}\]</span> where <span class="math inline">\(I_w\)</span> is the information gain computed with data at the node, weighted by a weight vector <span class="math inline">\(w=(w^{(1)}, \ldots, w^{(N)})\)</span> (described below). Note the absence of the proportion of individuals <span class="math inline">\(\#t_L/\#t\)</span> or <span class="math inline">\(\#t_R/\#t\)</span> compared to gain @ref(eq:critRF).</p>
+<p>To ensure that this gain is always non-negative, to each instance <span class="math inline">\((y\idxi, x\idxi)\)</span> is assigned a weight <span class="math inline">\(w\idxi=\frac{1}{n_k K}\)</span> when <span class="math inline">\(y\idxi = k\)</span> and where <span class="math inline">\(n_k\)</span> is the number of data labeled <span class="math inline">\(k\)</span> at the mother node. Indeed, this weight ensures that all the weighted class frequencies are equal at the mother node, hence the weighted mother node impurity <span class="math inline">\(I_w(t)\)</span> is maximal and the resulting gain always non-negative. The value of <span class="math inline">\(I_w(t)\)</span> is equal to <span class="math inline">\(\frac{K-1}{K}\)</span> for the Gini index, and to <span class="math inline">\(\log(K)\)</span> for the entropy. Due to this constant value, the maximization of @ref(eq:critLazyDT) is equivalent to the minimization of <span class="math inline">\(I_w(t^*)\)</span>. Note that the weights used at <span class="math inline">\(t^*\)</span> and <span class="math inline">\(t\)</span> are the same (limited to the sub-sample induced by the potential cut depending on <span class="math inline">\(j\)</span> and <span class="math inline">\(s\)</span> for <span class="math inline">\(t^*\)</span>), but are recomputed after each accepted tree partition.</p>
+<p>Moreover, those weights also avoid the problem that the impurity measures only use the classes proportions, without distinction of their associated class labels. Indeed, let us take the example of a two-class classification problem (1 and 2), where the mother node contains <span class="math inline">\(80\%\)</span> of data labeled 1 and <span class="math inline">\(20\%\)</span> labeled 2. A splitting rule computed on unweighted data might induce, at the daughter node where <span class="math inline">\(\xs\)</span> falls, <span class="math inline">\(20\%\)</span> and <span class="math inline">\(80\%\)</span> as proportions of 1 and 2, respectively. In this way, the non-weighted gain @ref(eq:critLazyDT) would be zero, even though the discriminatory power of this cut is clearly non-null.</p>
+<p>LazyDT provides three other major features: the use of discretised explanatory variables, the use of options and a condition on allowed split events.</p>
+<ul>
+<li>This algorithm only handles discretised explanatory variables. A preliminary discretisation is thus necessary, using for example the minimum description length principle <span class="citation" data-cites="fayyad:irani:1995">(<a href="#ref-fayyad:irani:1995" role="doc-biblioref">Fayyad and Irani 1995</a>)</span>. This was initially introduced to enhance the algorithm speed. According to our experiments this might also be useful when continuous noise variables are considered as features as splitting along them may result in early strop of the algorithm. For instance in figure @ref(fig:early) below, <span class="math inline">\(\xs_1\)</span> is localized at a border of x1 values, together with two datapoints with same label. The next splitting rule will isolate them with <span class="math inline">\(\xs_1\)</span> because the resulting node will be pure and hence provide the maximum gain. <span class="math inline">\(\xs\)</span> would thus be classified as sky-blue, even though a cut along x2 would have resulted in a purple prediction using many more datapoints. The discretisation will be an asset in such situations since pure noise variables are more likely to be discretised into a unique or few categories containing large amount of data.</li>
+<li>The use of <em>options</em> is introduced. Indeed, because features can induce very similar information gains, <span class="citation" data-cites="friedman:etal:1997">Friedman, Kohavi, and Yun (<a href="#ref-friedman:etal:1997" role="doc-biblioref">1997</a>)</span> advise to develop all the paths – induced by splitting rules – achieving at least <span class="math inline">\(90\%\)</span> of the maximal possible gain. The prediction associated to a tree for <span class="math inline">\(\xs\)</span> becomes the prediction of the leaf with the maximal number of individuals in its majority class. We tried values different from <span class="math inline">\(90\%\)</span> and it did not provide better results. Moreover, we studied an alternative to this method of prediction: because each option provides a prediction for <span class="math inline">\(\xs\)</span>, we considered taking as final prediction the majority vote of these option predictions, but again results were not more conclusive.</li>
+<li>Finally, LazyDT only considers split values that are not equal to the values of <span class="math inline">\(\xs\)</span> as potential cuts.</li>
+</ul>
+<div class="cell">
+<div class="cell-output-display">
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="published-202312-cleynen-local_files/figure-html/unnamed-chunk-2-1.png" class="img-fluid figure-img" width="672"></p>
+<figcaption class="figure-caption">An illustrative classification problem with 2 classes (purple and sky blye), containing an informative covariate (x2) and a non-informative covariate (x1) and an unlabeled data to classify (black star). Splitting along x1 will result in a pure leaf with sky-blue label.</figcaption>
+</figure>
+</div>
+</div>
+</div>
+<p>The LazyDT algorithm has undergone some developments. First, a bagged version to deduce class probabilities is presented in <span class="citation" data-cites="margineantu:dietterich:2003">Margineantu and Dietterich (<a href="#ref-margineantu:dietterich:2003" role="doc-biblioref">2003</a>)</span>. A boosted version is then introduced in <span class="citation" data-cites="fern:etal:2003">Fern and Brodley (<a href="#ref-fern:etal:2003" role="doc-biblioref">2003</a>)</span>. <span class="citation" data-cites="friedman:etal:1997">Friedman, Kohavi, and Yun (<a href="#ref-friedman:etal:1997" role="doc-biblioref">1997</a>)</span> mention as main drawback for this method its inability to allow pruning. <span class="citation" data-cites="fern:etal:2003">Fern and Brodley (<a href="#ref-fern:etal:2003" role="doc-biblioref">2003</a>)</span> propose a heuristic to overcome this drawback, but their algorithm is not guaranteed to improve the classifier accuracy. Considering trees-ensemble overcomes this weakness.</p>
+</section>
+<section id="subsec:localKernel" class="level2">
+<h2 class="anchored" data-anchor-id="subsec:localKernel">Unidimensional (per covariate) kernel approach</h2>
+<p>Most local methods are based on weights depending on the proximity to <span class="math inline">\(\xs\)</span>. This is the case of locally weighted regression <span class="citation" data-cites="cleveland:1979 cleveland:devlin:1988 fan:1993 hastie:loader:1993">(<a href="#ref-cleveland:1979" role="doc-biblioref">Cleveland 1979</a>, <a href="#ref-cleveland:devlin:1988" role="doc-biblioref">1988</a>; <a href="#ref-fan:1993" role="doc-biblioref">Fan 1993</a>; <a href="#ref-hastie:loader:1993" role="doc-biblioref">Hastie and Loader 1993</a>)</span>. There are different ways to use weights in the context of tree methods. One can think of taking into account these weights to define the training sets on which trees are built. Such type of strategy is described in Section @ref(sec:localWeightingOfIndividuls). In this section, we examine the possibility of using weights during tree construction, inside the tree splitting criterion.</p>
+<p>In the wake of locally weighted regression, we set a weight to each training individual and per covariate <span class="math inline">\(j\)</span> depending on its proximity to <span class="math inline">\(\xsj\)</span> in the covariate <span class="math inline">\(j\)</span> space. We consider a Gaussian kernel centered in <span class="math inline">\(\xsj\)</span>, providing weights <span class="math display">\[
+K_{h_j}(x_j^{(i)} - x_j^*, \;\; \text{for} \;\; i\in\{1,\ldots,N\}.
+\]</span></p>
+<p>We focus on a Gaussian kernel due to its smoothness and to avoid giving exactly zero weights to some individuals, so that $ K_{h_j}(x_j^{(i)} - x_j^*=1/ h_j (-)$.</p>
+<p>The choice of the bandwidth <span class="math inline">\(h_j\)</span> is tricky. We consider as bandwidth value <span class="math inline">\(h_j\)</span> the quantile of order <span class="math inline">\(\alpha\)</span> of the distribution of distances to <span class="math inline">\(\xs\)</span>: <span class="math inline">\(\mathbb{Q}_\alpha \left\{ \mid x_j^{(i)} - \xsj \mid_{i=1, \ldots, N} \right\}\)</span> (ie <span class="math inline">\(h_j=d^j_{(\alpha N)}\)</span> where <span class="math inline">\(d^j_{(1)},\dots ,d^j_{(N)}\)</span> are the ordered distances <span class="math inline">\(\mid x_j^{(i)} - \xsj \mid\)</span> of the training data points to <span class="math inline">\(\xs\)</span> in the covariate <span class="math inline">\(j\)</span> space). The parameter <span class="math inline">\(\alpha\)</span> determines the shape of the kernel. For low <span class="math inline">\(\alpha\)</span> values, a higher weight is given to data close to <span class="math inline">\(\xs\)</span>, and vice-versa. In our numerical experiments, we clearly observed that low values of <span class="math inline">\(\alpha\)</span> again result in cuts too close to <span class="math inline">\(\xsj\)</span>. We set <span class="math inline">\(\alpha=1\)</span>, i.e.&nbsp;<span class="math inline">\(h_j\)</span> is the maximum of the absolute values considered. Moreover, the bandwidth can eventually be recalculated at each internal node or kept constant during the tree construction. We observed very few differences when using a fixed or a varying bandwidth and <span class="math inline">\(h_j\)</span> is set as constant in the following.</p>
+<p>For a given class label <span class="math inline">\(k\)</span>, at the mother node <span class="math inline">\(t\)</span>, this approach transforms the usual class frequencies (giving uniform weights among data) into some weighted class frequencies in the following way: <span class="math display">\[
+    p_k  = \frac{\sum_{i:x^{(i)}\in t} \mathbf{1}\{ y^{(i)}=k \}}{\#t} \quad
+    \Rightarrow \quad  \;\;\; \widetilde{p}_{k,j} = \frac{\sum_{i:x\idxi\in t} \mathbf{1}\{ y\idxi=k \}
+K_{h_j}(x_j^{(i)} - x_j^*}{\sum_{\ell:x^{(\ell)}\in t}
+K_{h_j}(x_j^{(\ell)} - x_j^*)},
+\]</span> where <span class="math inline">\(\mathbf{1}\{\cdot\}\)</span> is the indicator function. Moreover, the proportion of individuals, for example, at the left daughter node <span class="math inline">\(t_L\)</span> implied by a cut <span class="math inline">\(X_j \leq s\)</span> is transformed from <span class="math display">\[\begin{equation}
+    \frac{\#t_L}{\#t} = \frac{\sum_{i:x\idxi\in t} \mathbf{1}\{ x_j^{(i)} \leq s \}}{\#t}
+\quad \text{into} \quad
+      \frac{\widetilde{\#t_L}}{\widetilde{\#t}} = \frac{\sum_{i:x\idxi\in t} \mathbf{1}\{ x_j^{(i)} \leq s \}
+K_{h_j}(x_j^{(i)} - x_j^*)}{\sum_{\ell:x^{(\ell)}\in t}
+K_{h_j}(x_j^{(\ell)} - x_j^*)}.
+    (\#eq:kernelProp)
+\end{equation}\]</span> The information gain to maximize (based on the Gini index) thus becomes</p>
+<p><span class="math display">\[\begin{equation}
+   \sum_{k=1}^K  \widetilde{p}_{k,j} (1-\widetilde{p}_{k,j})
+- \Big(\frac{\widetilde{\#t_L}}{\widetilde{\#t}}  
+  \sum_{k=1}^K \widetilde{p}_{k,j}^L (1-\widetilde{p}_{k,j}^L)  
+   +\frac{\widetilde{\#t_R}}{\widetilde{\#t}}
+    \sum_{k=1}^K \widetilde{p}_{k,j}^R (1-\widetilde{p}_{k,j}^R)
+\Big)
+   (\#eq:critlocalKernel)
+\end{equation}\]</span> where <span class="math inline">\(\widetilde{p}_{k,j}^L\)</span> and <span class="math inline">\(\widetilde{p}_{k,j}^R\)</span> are the weighted proportions of class <span class="math inline">\(k\)</span> at the left and right daughter nodes, respectively.</p>
+<p><span class="math display">\[\begin{equation}
+\let\scriptstyle\textstyle\substack{\widetilde{I_j}(t)}=\sum_{k=1}^K  \widetilde{p}_{k,j} (1-\widetilde{p}_{k,j})
+\end{equation}\]</span></p>
+<p><span class="math display">\[\begin{equation}
+\let\scriptstyle\textstyle\substack{\widetilde{I_j}(t_L)}=\sum_{k=1}^K \widetilde{p}_{k,j}^L (1-\widetilde{p}_{k,j}^L)
+\end{equation}\]</span></p>
+<p><span class="math display">\[\begin{equation}
+\let\scriptstyle\textstyle\substack{\widetilde{I_j}(t_R)}=\sum_{k=1}^K \widetilde{p}_{k,j}^R (1-\widetilde{p}_{k,j}^R)
+\end{equation}\]</span></p>
+<p>The first term <span class="math inline">\(\widetilde{I_j}(t)\)</span> is important and cannot be omitted contrary to the eager version, because it depends on the covariate index.</p>
+<p>We use this local Gini index during the tree construction and do not modify the default values for the RF parameters <span class="math inline">\(\mtry\)</span> and <span class="math inline">\(\Nmin\)</span>. For each tree, the associated prediction is the usual majority vote at the leaf.</p>
+<p>Our local splitting rule is similar to the one used in the recent method of <span class="citation" data-cites="armano:tamponi:2018">Armano and Tamponi (<a href="#ref-armano:tamponi:2018" role="doc-biblioref">2018</a>)</span>. In their work, an improvement to RF is introduced by using an ensemble of local trees. Each tree is trained giving more weight to training data around a centroid, which is sampled among the training instances, and different centroids are considered to map the whole predictor space. Although using a local Gini index, this approach is more of an eager one than a local one. Indeed, no test instance is involved during the forest construction. Moreover, a multidimensional kernel per tree is used.</p>
+</section>
+<section id="subsec:localKernelMultiDim" class="level2">
+<h2 class="anchored" data-anchor-id="subsec:localKernelMultiDim">Multidimensional kernel approach</h2>
+<p>In the spirit of <span class="citation" data-cites="armano:tamponi:2018">Armano and Tamponi (<a href="#ref-armano:tamponi:2018" role="doc-biblioref">2018</a>)</span>, it is natural to extend the approach introduced in Section @ref(subsec:localKernel) with a multidimensional kernel centered in <span class="math inline">\(\xs\)</span>. We assign to each data <span class="math inline">\((y\idxi,x\idxi)\)</span> a weight <span class="math display">\[
+K_V(x^{(i)}-x^*) = \exp{ \left( -\frac{1}{2}(x\idxi - \xs)^\top V^{-2} (x\idxi - \xs) \right)},
+\]</span> where <span class="math inline">\(V\)</span> is a scaling matrix of the Gaussian kernel. Similarly to Section @ref(subsec:localKernel) we consider for <span class="math inline">\(V\)</span> the diagonal matrix made of the <span class="math inline">\(\alpha\)</span> quantiles, i.e. <span class="math display">\[
+V= \diag\left(\mathbb{Q}_\alpha \left\{ \mid x_1\idxi - x_1^* \mid_{i=1, \ldots, N} \right\}, \ldots, \mathbb{Q}_\alpha \left\{ \mid x_d\idxi - x_d^*\mid_{i=1, \ldots, N} \right\} \right).
+\]</span> As for the unidimensional kernel approach, using extensive numerical experiments, we observed that low values of <span class="math inline">\(\alpha\)</span> result in cuts too close to <span class="math inline">\(\xsj\)</span> and we set <span class="math inline">\(\alpha=1\)</span>. Also, the weights are fixed during the tree construction.</p>
+<p>The weighted frequency for a given class label <span class="math inline">\(k\)</span> becomes $$ _k = .</p>
+<p>$$ The weighted proportions of individual at the daughter nodes are transformed in a similar manner to @ref(eq:kernelProp), resulting in a gain criterion analogous to @ref(eq:critlocalKernel).</p>
+<p>The major benefit of such weights is that they do not depend on the covariate index, thus the usual tree prediction, i.e.&nbsp;the majority class at the leaf where <span class="math inline">\(\xs\)</span> falls, can be replaced by a more coherent strategy with the tree construction, using as prediction the class with the maximal weighted class proportion at the leaf. Thus, the prediction for <span class="math inline">\(\xs\)</span> provided by the <span class="math inline">\(b\)</span>-th tree is <span class="math display">\[
+    \hat{y}_b^* = \argmax_{1\leq k \leq K} \widetilde{p}_k.
+\]</span> The forest prediction for <span class="math inline">\(\xs\)</span> is the usual majority vote of the tree predictions.</p>
+</section>
+</section>
+<section id="sec:localWeightingOfIndividuls" class="level1">
+<h1>Local weighting of individuals</h1>
+<p>To avoid the fragmentation problem, instead of modifying the way the predictor space is partitioned, one can consider directly targeting the region of interest, i.e.&nbsp;samples similar to <span class="math inline">\(\xs\)</span>. In this part, we focus on strategies acting on the individuals sampling schemes involved at the first step of a tree construction, replacing the usual bootstrap sampling with a local one.</p>
+<section id="subsec:weightingIndividuals" class="level2">
+<h2 class="anchored" data-anchor-id="subsec:weightingIndividuals">Weighted bootstrap</h2>
+<p><span class="citation" data-cites="xu:etal:2016">Xu, Nettleton, and Nordman (<a href="#ref-xu:etal:2016" role="doc-biblioref">2016</a>)</span> propose to perform weighted bootstrap sampling, where a measure of proximity between <span class="math inline">\(\xs\)</span> and the training data is used to compute the weights. This algorithm is entitled Case-Specific Random Forest (CSRF, Algorithm 1).</p>
+<p>An individual closer to <span class="math inline">\(\xs\)</span> will have higher weight and will more likely be picked in the bootstrap sampling. However, such weights depend heavily on the choice of the proximity measure, especially in a high dimensional setting and with many irrelevant explanatory variables. This is why in this framework the proximity measure will be automatically computed thanks to a bagged tree-ensemble (i.e.&nbsp;with <span class="math inline">\(\mtry=d\)</span>).</p>
+<p>Indeed, for a given tree, <span class="math inline">\(\xs\)</span> ends in a leaf with some training data. For each <span class="math inline">\(x\idxi\)</span>, counting the number of trees where <span class="math inline">\(\xs\)</span> and <span class="math inline">\(x\idxi\)</span> end in the same leaf allows to compute the contribution of <span class="math inline">\(x\idxi\)</span> to predict <span class="math inline">\(\xs\)</span>, denoted <span class="math inline">\(\omega\idxi\)</span> in Algorithm 1. The deduced weights are then used to perform weighted bootstrap sampling during the training of a new RF. This process can be seen as a nearest neighbors strategy: per tree, a leaf provides a certain amount of neighbors to <span class="math inline">\(\xs\)</span>, those are then accumulated over all the trees to deduce instance weights.</p>
+<p>This algorithm highly depends on the depth of the first RF trees, hence a pivotal parameter for this strategy is <span class="math inline">\(N_{\text{min}}\)</span>, the minimal number of observations at an internal node. The higher <span class="math inline">\(N_{\text{min}}\)</span>, the shallower the trees will be. Hence, low values of <span class="math inline">\(N_{\text{min}}\)</span> result in putting more weight on the closest individuals to <span class="math inline">\(\xs\)</span>, and vice-versa. We tried various values of <span class="math inline">\(\Nmin\)</span> in our experiments, and find that optimal performance require <span class="math inline">\(Nmin\)</span> not to be too small.</p>
+<hr>
+<p><strong>Algorithm 1</strong>: CSRF – local weighting of individuals</p>
+<hr>
+<p>Step 1. Grow <span class="math inline">\(B_1\)</span> bootstrapped trees with <span class="math inline">\(\mtry=d\)</span> and a given <span class="math inline">\(\Nmin\)</span> value</p>
+<p>Step 2. For each training data <span class="math inline">\((y\idxi, x\idxi)\)</span>, count <span class="math inline">\(c\idxi\)</span> the number of times <span class="math inline">\(x\idxi\)</span> and <span class="math inline">\(\xs\)</span> end in the same leaf</p>
+<p>Step 3. Compute the resampling probability of the training individual <span class="math inline">\(i\)</span> relative to <span class="math inline">\(\xs\)</span> as <span class="math inline">\(\omega\idxi=\frac{c\idxi}{\sum_{\ell=1}^N c^{(\ell)}}\)</span>, for <span class="math inline">\(i \in \left\{ 1, \ldots, N \right\}\)</span></p>
+<p>Step 4. Train a usual RF of size <span class="math inline">\(B_2\)</span> with bootstrap resampling probabilities <span class="math inline">\(\omega^{(1)}, \ldots, \omega^{(N)}\)</span> and deduce the prediction for <span class="math inline">\(\xs\)</span></p>
+<hr>
+</section>
+<section id="subsec:nearest-neighbours" class="level2">
+<h2 class="anchored" data-anchor-id="subsec:nearest-neighbours">Nearest neighbours: 0/1 weights</h2>
+<p>A more intuitive idea is based on the deduction of <span class="math inline">\(\kappa\)</span> nearest neighbors (NN) to <span class="math inline">\(\xs\)</span>, which are then used to train an RF. <span class="citation" data-cites="fulton:etal:1996">Fulton et al. (<a href="#ref-fulton:etal:1996" role="doc-biblioref">1996</a>)</span> propose several methods to extract data local to <span class="math inline">\(\xs\)</span> – the best one being based on NN – in order to build decision trees on this restricted training set. <span class="citation" data-cites="galvan:etal:2009">Galván et al. (<a href="#ref-galvan:etal:2009" role="doc-biblioref">2009</a>)</span> also mention the possibility of pre-selecting closest observations to <span class="math inline">\(\xs\)</span> (possibly with replicates) at first and applying any machine learning algorithm on these data set. This kind of strategy is more recently applied in a text classification framework by <span class="citation" data-cites="salles:etal:2018">Salles et al. (<a href="#ref-salles:etal:2018" role="doc-biblioref">2018</a>)</span>, and shows good improvements in terms of classification errors compared to RF (and other ones).</p>
+<p>Those approaches are closely related to CSRF (Section @ref(subsec:weightingIndividuals)) since considering NN during a preliminary step is equivalent to giving 0/1 sampling weights (with or without replacement).</p>
+<p>In Section @ref(sec:examples), we compare the use of a preliminary selection of nearest neighbors to <span class="math inline">\(\xs\)</span> followed by a usual RF training, this strategy is denoted in the remaining by NN-RF, for nearest neighbors - random forest. The main issue of such approaches (and local ones in general) is the difficulty to choose this neighborhood.</p>
+</section>
+</section>
+<section id="sec:weightingCovariates" class="level1">
+<h1>Local weighting of covariates</h1>
+<p>Instead of acting on the bootstrap resampling of RF, we propose to operate on the covariates subsampling which occurs at each internal node. In the wake of Section @ref(subsec:weightingIndividuals) we propose to weight covariates during the RF trees construction depending on their importance to predict <span class="math inline">\(\xs\)</span>. In the following we mention it as LVI-RF (for local variable importance - random forest).</p>
+<p>We study the influence of considering sampling probability weights on explanatory variables. The principle is detailed in Algorithm 2 and is very similar to Algorithm 1.</p>
+<p>We take profit of a first RF construction with default parameters to deduce covariate importance to predict <span class="math inline">\(\xs\)</span>: in a very intuitive way we pass <span class="math inline">\(\xs\)</span> through each tree of the RF, and count the number of times each covariate is involved in a splitting rule to allocate <span class="math inline">\(\xs\)</span>. We can then easily deduce some predictor weights, and we propose to introduce them into the usual RF covariate sampling, so that a covariate with high weight is more likely to be drawn in the <span class="math inline">\(\mtry\)</span>-sample.</p>
+<p>Our thought is that using such weights might improve the prediction accuracy of the RF, especially in a sparse framework, by avoiding useless data fragmentation according to irrelevant predictors and potential loss of useful training data for the prediction of <span class="math inline">\(\xs\)</span>. Moreover, a different set of explanatory variables might be useful to predict different test instances, thus thanks to a local measure of variable importance we also try to ensure that interesting covariates are more likely to be sampled during the tree construction. Finally, in the case of a huge number of noise covariates, even though RF can handle a large number of features, useful ones are very unlikely to be drawn during the tree construction, deteriorating the algorithm performance. In counterpart, weighted covariate sampling might increase the prediction correlation between the RF trees and alter the performance of the global tree ensemble.</p>
+<hr>
+<p><strong>Algorithm 2</strong>: Local weighting of covariates</p>
+<hr>
+<p>Step 1. Grow <span class="math inline">\(B_1\)</span> randomized trees with <span class="math inline">\(\mtry=\lfloor \sqrt{d} \rfloor\)</span> and <span class="math inline">\(\Nmin=1\)</span></p>
+<p>Step 2. For each covariate <span class="math inline">\(j \in \left\{ 1, \ldots, d \right\}\)</span>, count <span class="math inline">\(v_j\)</span> the number of times <span class="math inline">\(X_j\)</span> has been used during the paths followed by <span class="math inline">\(\xs\)</span></p>
+<p>Step 3. Compute the resampling probability of the covariate <span class="math inline">\(j\)</span> relative to <span class="math inline">\(\xs\)</span> as <span class="math inline">\(p_j=\frac{v_j}{\sum_{\ell=1}^d v_\ell}\)</span>, for <span class="math inline">\(j \in \left\{ 1, \ldots, d \right\}\)</span></p>
+<p>Step 4. Train a usual RF of size <span class="math inline">\(B_2\)</span> with covariate resampling probabilities <span class="math inline">\(p_1, \ldots, p_d\)</span> at each internal node and deduce the prediction for <span class="math inline">\(\xs\)</span></p>
+<hr>
+<p>Some approaches dealing with covariate weighting have been studied in a non-local framework. <span class="citation" data-cites="amaratunga:etal:2008">Amaratunga, Cabrera, and Lee (<a href="#ref-amaratunga:etal:2008" role="doc-biblioref">2008</a>)</span> propose the enriched random forests in an extremely noisy feature space, where covariate sampling is modified using global weights. <span class="citation" data-cites="maudes:etal:2012">Maudes et al. (<a href="#ref-maudes:etal:2012" role="doc-biblioref">2012</a>)</span>, with their random feature weights approach, investigate the use of non-uniform sampling of covariates, changing for each tree.</p>
+</section>
+<section id="sec:treeWeights" class="level1">
+<h1>Local weighting of votes</h1>
+<p>The final prediction of a classical RF is the majority vote of all trees, hence they all have equal weight. However a given tree might provide very good predictions on some test instances, but perform very poorly on others. This is why a strategy for building local random forests is based on weighting tree predictions depending on their ability to correctly predict instances similar to <span class="math inline">\(\xs\)</span>. Majority vote is hence replaced with locally weighted vote.</p>
+<p>In the instance-based framework, <span class="citation" data-cites="robnik:2004">Robnik-Šikonja (<a href="#ref-robnik:2004" role="doc-biblioref">2004</a>)</span>; <span class="citation" data-cites="tsymbal:etal:2006">Tsymbal, Pechenizkiy, and Cunningham (<a href="#ref-tsymbal:etal:2006" role="doc-biblioref">2006</a>)</span> and then <span class="citation" data-cites="zhang:etal:2013">Zhang, Ren, and Suganthan (<a href="#ref-zhang:etal:2013" role="doc-biblioref">2013</a>)</span> investigate this idea. Given a test instance <span class="math inline">\(\xs\)</span>, <span class="math inline">\(\kappa\)</span> neighbors are selected based on the proximity measure introduced in <span class="citation" data-cites="breiman:2001">Breiman (<a href="#ref-breiman:2001" role="doc-biblioref">2001</a>)</span>, (i.e.&nbsp;the average number of times two data end in the same leaf) to compute a per-tree error score. These scores are further used to select and weight trees and to provide a final weighted-vote prediction.</p>
+<section id="subsec:dynamicVoting" class="level2">
+<h2 class="anchored" data-anchor-id="subsec:dynamicVoting">Dynamic voting and selection</h2>
+<p>This section describes the methodology of <span class="citation" data-cites="tsymbal:etal:2006">Tsymbal, Pechenizkiy, and Cunningham (<a href="#ref-tsymbal:etal:2006" role="doc-biblioref">2006</a>)</span>, called Dynamic Voting with Selection Random Forest (DVSRF). A first RF is trained thanks to which <span class="math inline">\(\kappa\)</span> nearest neighbors to <span class="math inline">\(\xs\)</span> are selected. The quality of the <span class="math inline">\(b\)</span>-th tree toward <span class="math inline">\(\xs\)</span> is then evaluated as the average margins of the out-of-bag <span class="math inline">\(\kappa\)</span> instances, weighted by proximities, i.e.<br>
+<span class="math display">\[\begin{equation}
+    w_b(\xs) = \frac{ \sum_{i=1}^\kappa \mathbf{1}\{x\idxi \in \text{OOB}_b\} \, \sigma(\xs, x\idxi) \, \text{mr}_b(x\idxi) }{\sum_{\ell=1}^\kappa \mathbf{1}\{x^{(\ell)} \in \text{OOB}_b\} \, \sigma(\xs, x^{(\ell)}) } \, , (\#eq:weightsTree)
+\end{equation}\]</span> where <span class="math inline">\(\text{OOB}_b\)</span> is the set of out-of-bag data for the <span class="math inline">\(b\)</span>-th tree, <span class="math inline">\(\sigma(\xs, x\idxi)\)</span> is the proximity measure provided by the RF, to the power of <span class="math inline">\(3\)</span>, and the margin function <span class="math inline">\(\text{mr}_b(x\idxi)\)</span> is equal to <span class="math inline">\(1\)</span> if the <span class="math inline">\(b\)</span>-th tree predicts <span class="math inline">\(y\idxi\)</span> correctly, <span class="math inline">\(-1\)</span> otherwise. Weights @ref(eq:weightsTree) are then normalized to be positive and to sum to one. Finally, the prediction for <span class="math inline">\(\xs\)</span> is computed using the majority class of the weighted tree vote proportions <span class="math display">\[\begin{equation}
+    \hat{y}^* = \argmax_{1\leq k \leq K} p_{\text{DVS},k} \;\;\;\;\;\; (\#eq:predDVSRF)
+\end{equation}\]</span></p>
+<p><span class="math display">\[
+\text{where} \;\;\;\;\;\; p_{\text{DVS},k} = \frac{\sum_{b=1}^B  \mathbf{1}\{ \hat{y}^*_b=k \} w_b(\xs)}{\sum_{\ell=1}^B w_\ell(\xs)}
+\]</span> and <span class="math inline">\(\hat{y}^*_b\)</span> denotes the original prediction of the <span class="math inline">\(b\)</span>-th tree for <span class="math inline">\(\xs\)</span>. \ A predefined number of trees denoted <span class="math inline">\(B_\text{sel}\)</span> (usually half of <span class="math inline">\(B\)</span>), carrying the highest weights, can be selected and used for the final prediction, modifying weighted predictions @ref(eq:predDVSRF) accordingly.</p>
+</section>
+<section id="subsec:kernelVoting" class="level2">
+<h2 class="anchored" data-anchor-id="subsec:kernelVoting">Kernel weighted voting</h2>
+<p>In the same spirit, we investigate the use of a multidimensional kernel as similarity measure (presented in Section @ref(subsec:localKernelMultiDim)) and we replace the margin function by the simpler alternative <span class="math inline">\(\mathbf{1}\{\hat{y}\idxi_b=y\idxi\}\)</span> indicating whether the <span class="math inline">\(b\)</span>-th tree prediction for <span class="math inline">\(x\idxi\)</span>, denoted <span class="math inline">\(\hat{y}\idxi_b\)</span>, is correct or not.</p>
+<p>Using the same notations as above, the <span class="math inline">\(b\)</span>-th tree weight is hence computed in the following way: <span class="math display">\[\begin{equation}
+    w_b(\xs) = \frac{ \sum_{i=1}^N \mathbf{1}\{x\idxi \in \text{OOB}_b\} \,
+K_V(x^{(i)}-x^*) \, \mathbf{1} \{\hat{y}\idxi_b=y\idxi\} }{\sum_{\ell=1}^N \mathbf{1}\{x^{(\ell)} \in \text{OOB}_b\} \,
+K_V(x^{({\ell)}-x^*)}. (\#eq:weightsKernelTree)
+\end{equation}\]</span> All <span class="math inline">\(N\)</span> labeled data are used for the weight computation, their importance being measured by the kernel. <span class="math inline">\(\alpha\)</span> is again set to <span class="math inline">\(1\)</span> and tree selection is not performed. In the following this proposal is denoted as KV-RF (for kernel voting - random forest).</p>
+</section>
+</section>
+<section id="sec:examples" class="level1">
+<h1>Numerical experiments</h1>
+<p>In this section, we compare the previously presented methods – summarized below – on two (simulated) Gaussian mixtures examples and a population genetics example.</p>
+<ul>
+<li>CSRF - Case-specific RF - Section @ref(subsec:weightingIndividuals)<br>
+</li>
+<li>NN-RF - Nearest-neighbors RF - Section @ref(subsec:nearest-neighbours)<br>
+</li>
+<li>LVI-RF - Local variable importance RF - Section @ref(sec:weightingCovariates)</li>
+<li>DVSRF - Dynamic voting with selection RF - Section @ref(subsec:dynamicVoting)</li>
+<li>KV-RF - Kernel voting RF - Section @ref(subsec:kernelVoting)</li>
+</ul>
+<p>Methods are run ten times on the same test data set. The average and standard deviation of the ten resulting misclassification error rates, per method, are reported as a measure of performance. Note that in order to recover the predictions for the whole test table, each local algorithm is reapplied to each test data. The first two Gaussian examples have the advantage of being simple enough to compute the Bayes classifier which gives the optimal error rate.</p>
+<p>The lazy decision random forest approach presented in Section @ref(subsec:lazyDT) as well as both approaches involving kernels (unidimensional kernels and multidimension kernel presented in Sections @ref(subsec:localKernel) and @ref(subsec:localKernelMultiDim)) were implemented and compared on a lower dimensional simulation study (second Gaussian examples with only 500 test data and 4 replications, results presented in Section @ref(subsection:gaussianExampleUnbalanced)) but were dropped of the final comparison due to high computational cost despite poor results. Indeed, localizing trees with identical criterion should be faster, but with modified criterion (information gain or kernel-based Gini criterion), they require the computation of one weight per training data in the leaf, which can be very burdensome. This is particularly true since given our first results, we have not optimized our codes to allow faster computations.</p>
+<p>The random forests are built using the default parameters, i.e.&nbsp;trees are maximal (<span class="math inline">\(\Nmin=1\)</span>), and the covariate sampling parameter is <span class="math inline">\(\mtry=\lfloor \sqrt{d} \rfloor\)</span>. Moreover, each forest is made of <span class="math inline">\(100\)</span> trees, meaning CSRF and LVI-RF use a total of <span class="math inline">\(200\)</span> trees. Additional/different tuning parameters are specified in the displayed result tables. All the methods involve classic RF, we use the R package <em>ranger</em> <span class="citation" data-cites="wright:ziegler:2017">(<a href="#ref-wright:ziegler:2017" role="doc-biblioref">Wright and Ziegler 2017</a>)</span> for their construction.</p>
+<section id="subsection:gaussianExample" class="level2">
+<h2 class="anchored" data-anchor-id="subsection:gaussianExample">Balanced Gaussian mixture example</h2>
+<p>We consider 40-dimensional data from four classes <span class="math inline">\((1, 2, 3, 4)\)</span>. The classes have equal weight: <span class="math inline">\(p_1=p_2=p_3=p_4=1/4\)</span>. The data are generated from 20-dimensional Gaussian distributions and <span class="math inline">\(20\)</span> noise explanatory variables are added, simulated according to a uniform distribution <span class="math inline">\(\mathcal{U}_{[0;10,000]}\)</span>. We consider two training data sets of sizes <span class="math inline">\(3,000\)</span> and <span class="math inline">\(10,000\)</span>, both sampled among the 4 classes with equal probabilities. In both cases, <span class="math inline">\(5,000\)</span> simulations are used as testing data set, also sampled equally among the 4 models.</p>
+<p>The parameters associated to the <span class="math inline">\(20\)</span>-multidimensional Gaussian distribution are <span class="math display">\[\begin{align*}
+    \mu_1 &amp;=    \left(0.8, 3, 1, 2.5,   \ldots,1, 2.5   \right)^\top,       &amp;
+    \mu_2 &amp;=    \left(3.2, 3, 2.5, 2.5, \ldots, 2.5, 2.5    \right)^\top,   \\
+    \mu_3 &amp;=    \left(2, 1, 2, 2.3, \ldots, 2, 2.3  \right)^\top,           &amp;
+    \mu_4 &amp;=    \left(2, 0, 2, 1.8, \ldots, 2, 1.8  \right)^\top,           \\
+    \Sigma_1 &amp;= \diag(3, 3, 3, 1, \ldots, 3, 1),        &amp;
+    \Sigma_2 &amp;= \diag(3, 3, 3, 5, \ldots, 3, 5),        \\
+    \Sigma_3 &amp;= \diag(4, 1, 4, 1, \ldots, 4, 1),        &amp;
+    \Sigma_4 &amp;= \diag(2.5, 1, 2.5, 1, \ldots, 2.5, 1).
+\end{align*}\]</span> The first two dimensions are the most relevant for discriminating between the four classes. They are represented in Figure @ref(fig:gaussEq). Indeed, although the remaining ones can provide information to identify the class labels, they are more overlapping with each others and hence less informative. We also consider a higher dimensional setting in which we add <span class="math inline">\(100\)</span> additional noise variables (sampled as uniforms on <span class="math inline">\([0,1]\)</span>) for which we reproduce the same training / test combinations. The results are presented in Table @ref(tab:gaussEqNoise10) for <span class="math inline">\(10,000\)</span> training data. In both scenarios, using only <span class="math inline">\(3,000\)</span> training data increased the error rates of about <span class="math inline">\(2\)</span>% for each method, but did not change the comparison.</p>
+<div class="cell">
+<div class="cell-output-display">
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="published-202312-cleynen-local_files/figure-html/unnamed-chunk-3-1.png" class="img-fluid figure-img" width="672"></p>
+<figcaption class="figure-caption">First Gaussian example: two first explanatory variables <span class="math inline">\(X_1\)</span> and <span class="math inline">\(X_2\)</span> ; colors indicate the class labels (1-sky blue, 2-purple, 3-sand, 4-dark green).</figcaption>
+</figure>
+</div>
+</div>
+</div>
+<p>```pky #gaussEq10, message=FALSE, warning=FALSE, results=“asis”} library(xtable) resTOT&lt;-read.table(“Gaussian-Balanced-No-Noise/Example-Gaussian-Balanced-No-Noise-Res-10000.txt”,header=T) resTOT&lt;-100*resTOT</p>
+<p>Identifier&lt;-c(“Bayes classifier”,“Bagged CARTs”,“Random forest”,“LVI-RF”,“CSRF”,“CSRF”,“CSRF”,“CSRF”,“CSRF”,“CSRF”,“DVSRF”,“DVSRF”,“KV-RF”,“KV-RF”,“KV-RF”,“KV-RF”,“NN-RF”,“NN-RF”,“NN-RF”) Characteristics&lt;-c(““,”“,”“,”“,”Nmin=5”,“Nmin=10”,“Nmin=50”,“Nmin=150”,“Nmin=250”,“Nmin=350”,“k=3000,Bsel=100”,“k=3000,Bsel=50”,“alpha=1”,“alpha=0.75”,“alpha=0.5”,“alpha=0.25”, “k=1000”,“k=1500”,“k=2500”) Table=cbind(Identifier,Characteristics,apply(resTOT,2,mean),paste(“(”,round(apply(resTOT,2,sd),3),“)”,sep=““))</p>
+<p>TableOrdered=Table[c(1:3,5:10,17:19,4,11:16),] colnames(TableOrdered)=c(“Method”,“Parameters”,“Error rate”,“(sd)”) rownames(TableOrdered)=NULL</p>
+<p>#knitr::kable(TableOrdered,caption= “First Gaussian example: prediction error rate (percentage), with 10000 training data”,booktabs=T,label= “gaussEq10”,row.names=NA)</p>
+<p>resTOT&lt;-read.table(“Gaussian-Balanced-With-Noise/Example-Gaussian-Balanced-With-Noise-Res-10000.txt”,header=T) resTOT&lt;-100*resTOT</p>
+<p>Identifier&lt;-c(“Bayes classifier”,“Bagged CARTs”,“Random forest”,“LVI-RF”,“CSRF”,“CSRF”,“CSRF”,“CSRF”,“CSRF”,“CSRF”,“DVSRF”,“DVSRF”,“KV-RF”,“KV-RF”,“KV-RF”,“KV-RF”,“NN-RF”,“NN-RF”,“NN-RF”) Characteristics&lt;-c(““,”“,”“,”“,”Nmin=5”,“Nmin=10”,“Nmin=50”,“Nmin=150”,“Nmin=250”,“Nmin=350”,“k=3000,Bsel=100”,“k=3000,Bsel=50”,“alpha=1”,“alpha=0.75”,“alpha=0.5”,“alpha=0.25”, “k=1000”,“k=1500”,“k=2500”) Table=cbind(Identifier,Characteristics,apply(resTOT,2,mean),paste(“(”,round(apply(resTOT,2,sd),3),“)”,sep=““))</p>
+<p>TableOrdered2=Table[c(1:3,5:10,17:19,4,11:16),] colnames(TableOrdered2)=c(“Method”,“Parameters”,“Error rate”,“(sd)”) rownames(TableOrdered2)=NULL</p>
+<p>Table2=cbind(TableOrdered,TableOrdered2[,3:4])</p>
+<p>knitr::kable(Table2,caption= “First Gaussian example: prediction error rate (percentage), with 10000 training data. With 20 variables (columns 3 and 4), and with 100 additional noise variables (columns 5 and 6)”,booktabs=T,label= “gaussEqNoise10”,row.names=NA)</p>
+<pre><code>The only method that manages to outbeat a standard random forest is the Nearest-Neighbors RF (about 1\% of error rate), while all other methods have similar or worse results than RF.
+
+## Unbalanced Gaussian mixture example {#subsection:gaussianExampleUnbalanced}
+
+We still consider four classes but their model prior probabilities are
+$p_1=p_2=0.4$ and $p_3=p_4=0.1$. Once again, we considered two training data sets, one made of $3,000$ samples, the other of $10,000$ samples, drawn among the four classes according to these probabilities.
+The testing set considers $5,000$ data equally sampled among the two classes 3 and 4, the least frequent ones.
+In this example we therefore measure the prediction accuracy of low-frequency data.
+
+The first two covariates are still the most important ones, 
+however we slightly modified the Gaussian parameters 
+(the first two diagonal terms for $\Sigma_1$ and $\Sigma_2$ are now 2 and 1) to induce as best split rule 
+for a CART: $X_1\approx2$. This example hence becomes an illustration of the fragmentation problem we mentioned 
+earlier (Figure \@ref(fig:4Unif)). Indeed, the first cut produced by the eager RF algorithm -- if this covariate is sampled -- 
+will split the elements labeled 3 and 4 in half (at $X_1\approx2$). It implies the loss of some potentially relevant training data to predict those two classes. We hope local approaches can handle such an example which also contains very unbalanced classes proportions, see Figure \@ref(fig:gaussDisp). Once again we also consider the same scenario where we add $100$ additional noise variables drawn from uniform distributions on $[0,1]$. The results are presented in Table \@ref(tab:gaussUnbNoise10). Once again, only the results for $10,000$ training data are shown as the methods comparison is similar for $3,000$ data, at the price of a higher error rate (about 2\%).
+
+
+
+
+::: {.cell}
+::: {.cell-output-display}
+![Second Gaussian example: two first explanatory variables $X_1$ and $X_2$ ;    colors indicate the classes (1-sky blue, 2-purple, 3-sand, 4-dark green).](published-202312-cleynen-local_files/figure-html/unnamed-chunk-4-1.png){width=672}
+:::
+:::
+
+::: {.cell}
+::: {.cell-output-display}
+Table: Second Gaussian example: prediction error rate (percentage), with 10000 training data. With 20 variables (columns 3 and 4), and with 100 additional noise variables (columns 5 and 6)
+
+|Method           |Parameters      |Error rate |(sd)    |Error rate |(sd)    |
+|:----------------|:---------------|:----------|:-------|:----------|:-------|
+|Bayes classifier |                |25.626     |(0.725) |25.53      |(0.539) |
+|Bagged CARTs     |                |39.818     |(0.882) |43.988     |(1.219) |
+|Random forest    |                |40.27      |(1.249) |49.02      |(1.131) |
+|CSRF             |Nmin=5          |42.35      |(0.56)  |46.756     |(0.948) |
+|CSRF             |Nmin=10         |42.364     |(0.529) |46.724     |(1.043) |
+|CSRF             |Nmin=50         |41.924     |(0.504) |46.75      |(0.871) |
+|CSRF             |Nmin=150        |41.52      |(0.711) |46.788     |(0.957) |
+|CSRF             |Nmin=250        |41.172     |(0.728) |47.074     |(1.071) |
+|CSRF             |Nmin=350        |40.77      |(0.862) |46.748     |(0.968) |
+|NN-RF            |k=1000          |38.26      |(1.021) |50.686     |(1.185) |
+|NN-RF            |k=1500          |38.656     |(1.179) |50.116     |(1.341) |
+|NN-RF            |k=2500          |39.012     |(0.801) |49.776     |(1.239) |
+|LVI-RF           |                |42.234     |(1.271) |42.266     |(0.967) |
+|DVSRF            |k=3000,Bsel=100 |40.35      |(1.03)  |49.362     |(1.185) |
+|DVSRF            |k=3000,Bsel=50  |40.992     |(0.966) |49.758     |(1.404) |
+|KV-RF            |alpha=1         |40.238     |(1.001) |48.78      |(1.376) |
+|KV-RF            |alpha=0.75      |39.968     |(1.17)  |48.932     |(1.147) |
+|KV-RF            |alpha=0.5       |40.206     |(1.133) |49.304     |(1.098) |
+|KV-RF            |alpha=0.25      |40.49      |(0.987) |49.684     |(0.998) |
+:::
+:::
+
+
+
+
+In this example, when no additional noise is considered, bagging CARTs and Random forest have similar performance, which is once again slightly beaten by a Nearest-neighbors random forest with moderate number of neighbors. When the number of noise variable increases, surprisingly bagging Carts outperforms classic random forest, and is slightly beaten by the Local variable importance RF which manages to select important variables to build trees.
+
+Finally, we performed an independent experiment using the same unbalanced design with noise where we also included a comparison with LazyRF and the univariate and multivariate kernel approach on only 500 test data and 4 replicates. The total experiment took 41 days to run using 10 cores of a standard high performance computing cluster.
+The results are displayed in Table \@ref(tab:Small). Even though it is hard to compare the results on such small experiments (500 tests hardly cover a 23-dimensional space), there is no clear performance gain for methods LazyRF, Multi-K and Uni-K, who run up to 750 thousand times slower than a classic RF.
+
+
+
+
+
+::: {.cell}
+
+```{.r .cell-code}
+library(xtable)
+resTOT&lt;-read.table("Gaussian-Unbalanced-With-Noise/Unbalanced-Noise-Small.Res.txt",header=T)
+resTime&lt;-read.table("Gaussian-Unbalanced-With-Noise/Unbalanced-Noise-Small-time.txt",header=T)
+resTOT&lt;-100*resTOT
+
+Identifier&lt;-c("Bagged CARTs","Random forest","LVI-RF","CSRF","CSRF","CSRF","CSRF","CSRF","CSRF","DVSRF","DVSRF","KV-RF","KV-RF","KV-RF","KV-RF","NN-RF","Multi-K", "Uni-K")
+Characteristics&lt;-c("","","","Nmin=5","Nmin=10","Nmin=50","Nmin=150","Nmin=250","Nmin=350","k=3000,Bsel=100","k=3000,Bsel=50","alpha=1","alpha=0.75","alpha=0.5","alpha=0.25", "k=1000","","")
+Table=cbind(Identifier,Characteristics,apply(resTOT,2,mean),paste("(",round(apply(resTOT,2,sd),3),")",sep=""),round(apply(resTime,2,mean),1))
+Table[is.na(Table[,5]),5]&lt;-""
+
+TableOrderedS=Table[c(1:2,4:9,16,3,10:15,17:18),]
+TableOrderedS=TableOrderedS[-12,]
+colnames(TableOrderedS)=c("Method","Parameters","Error rate","(sd)","RunTime (seconds)")
+rownames(TableOrderedS)=NULL
+
+
+knitr::kable(TableOrderedS,caption= "Smaller second Gaussian example: prediction error rate for only 500 test data, with runtime comparison",booktabs=T,label= "Small",row.names=NA)</code></pre>
+<div class="cell-output-display">
+<table class="table">
+<caption>Smaller second Gaussian example: prediction error rate for only 500 test data, with runtime comparison</caption>
+<colgroup>
+<col style="width: 20%">
+<col style="width: 23%">
+<col style="width: 16%">
+<col style="width: 11%">
+<col style="width: 26%">
+</colgroup>
+<thead>
+<tr class="header">
+<th style="text-align: left;">Method</th>
+<th style="text-align: left;">Parameters</th>
+<th style="text-align: left;">Error rate</th>
+<th style="text-align: left;">(sd)</th>
+<th style="text-align: left;">RunTime (seconds)</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: left;">Bagged CARTs</td>
+<td style="text-align: left;"></td>
+<td style="text-align: left;">46.85</td>
+<td style="text-align: left;">(2.542)</td>
+<td style="text-align: left;">2.9</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Random forest</td>
+<td style="text-align: left;"></td>
+<td style="text-align: left;">49.65</td>
+<td style="text-align: left;">(2.7)</td>
+<td style="text-align: left;">0.6</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">CSRF</td>
+<td style="text-align: left;">Nmin=5</td>
+<td style="text-align: left;">48.2</td>
+<td style="text-align: left;">(2.546)</td>
+<td style="text-align: left;">181.6</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">CSRF</td>
+<td style="text-align: left;">Nmin=10</td>
+<td style="text-align: left;">47.75</td>
+<td style="text-align: left;">(2.484)</td>
+<td style="text-align: left;">182.3</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">CSRF</td>
+<td style="text-align: left;">Nmin=50</td>
+<td style="text-align: left;">47.45</td>
+<td style="text-align: left;">(2.042)</td>
+<td style="text-align: left;">186.6</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">CSRF</td>
+<td style="text-align: left;">Nmin=150</td>
+<td style="text-align: left;">48.3</td>
+<td style="text-align: left;">(1.483)</td>
+<td style="text-align: left;">195.6</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">CSRF</td>
+<td style="text-align: left;">Nmin=250</td>
+<td style="text-align: left;">47.85</td>
+<td style="text-align: left;">(2.408)</td>
+<td style="text-align: left;">203</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">CSRF</td>
+<td style="text-align: left;">Nmin=350</td>
+<td style="text-align: left;">48.35</td>
+<td style="text-align: left;">(1.473)</td>
+<td style="text-align: left;">208.1</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">NN-RF</td>
+<td style="text-align: left;">k=1000</td>
+<td style="text-align: left;">56.35</td>
+<td style="text-align: left;">(2.941)</td>
+<td style="text-align: left;">26486.9</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">LVI-RF</td>
+<td style="text-align: left;"></td>
+<td style="text-align: left;">47.8</td>
+<td style="text-align: left;">(2.179)</td>
+<td style="text-align: left;">336.8</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">DVSRF</td>
+<td style="text-align: left;">k=3000,Bsel=100</td>
+<td style="text-align: left;">48.55</td>
+<td style="text-align: left;">(2.505)</td>
+<td style="text-align: left;">6</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">KV-RF</td>
+<td style="text-align: left;">alpha=1</td>
+<td style="text-align: left;">49.1</td>
+<td style="text-align: left;">(2.783)</td>
+<td style="text-align: left;">56.1</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">KV-RF</td>
+<td style="text-align: left;">alpha=0.75</td>
+<td style="text-align: left;">49.85</td>
+<td style="text-align: left;">(2.589)</td>
+<td style="text-align: left;">58</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">KV-RF</td>
+<td style="text-align: left;">alpha=0.5</td>
+<td style="text-align: left;">49.1</td>
+<td style="text-align: left;">(1.8)</td>
+<td style="text-align: left;">58.5</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">KV-RF</td>
+<td style="text-align: left;">alpha=0.25</td>
+<td style="text-align: left;">50.65</td>
+<td style="text-align: left;">(1.9)</td>
+<td style="text-align: left;">58.1</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Multi-K</td>
+<td style="text-align: left;"></td>
+<td style="text-align: left;">49.55</td>
+<td style="text-align: left;">(4.129)</td>
+<td style="text-align: left;">204851.5</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">Uni-K</td>
+<td style="text-align: left;"></td>
+<td style="text-align: left;">50.85</td>
+<td style="text-align: left;">(2.462)</td>
+<td style="text-align: left;">198210</td>
+</tr>
+</tbody>
+</table>
+</div>
+<p>:::</p>
+</section>
+<section id="subsec:SphereExample" class="level2">
+<h2 class="anchored" data-anchor-id="subsec:SphereExample">Spherical fragmented example</h2>
+<p>We consider an example that combines a fragmentation situation with a spherical data distribution to challenge the splitting rules of standard random forests. Datapoints are drawn from a 3-dimensional Gaussian centered distribution with variance <span class="math inline">\(4\)</span> and null covariance. The classes are drawn with uneven probabilities from three labels depending on the location.</p>
+<p>For datapoints within a 2.5 distance from the origin:</p>
+<ul>
+<li><p>if the angle with the first axis is less than 120° in the first 2 dimensions projection [<span class="math inline">\((x_1,x_2)\)</span> projection], the class is 1 with probability 0.8, and 2 and 3 with probability 0.1 ;</p></li>
+<li><p>if the angle with the first axis is greater than 240° in the first 2 dimensions projection, it is class 2 with probability 0.8 and 1 or 3 with probability 0.1</p></li>
+<li><p>if the angle is between 120° and 240°, and class 3 with probability 0.8, and 1 or 2 with probability 0.1 otherwise.</p></li>
+</ul>
+<p>If the data point is within a 2.5 to 3.75 distance to the origin, the label class is drawn as previously but considering the <span class="math inline">\((x_1,x_3)\)</span> projections, and if the distance is greater than 3.75 we consider the <span class="math inline">\((x_2,x3)\)</span> projections. An example is illustrated in Figure @ref(fig:SpherFrag)</p>
+<p>In this example we performed a slightly different runtime comparison of all methods, conducting the experiment for only one test datapoint and using only one computing node. This allows a fairer comparison between methods which make use of global approaches and those that are entirely local. Results are given as fold-time the runtime of the classic RF, in Table @ref(tab:Spherical)</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb2"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="fu">set.seed</span>(<span class="dv">1</span>)</span>
+<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(mvtnorm)</span>
+<span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-4"><a href="#cb2-4" aria-hidden="true" tabindex="-1"></a>num.train <span class="ot">&lt;-</span> <span class="dv">10000</span></span>
+<span id="cb2-5"><a href="#cb2-5" aria-hidden="true" tabindex="-1"></a>n<span class="ot">=</span>num.train</span>
+<span id="cb2-6"><a href="#cb2-6" aria-hidden="true" tabindex="-1"></a>x.train <span class="ot">&lt;-</span> <span class="fu">rmvnorm</span>(num.train,<span class="fu">rep</span>(<span class="dv">0</span>,<span class="dv">3</span>),<span class="fu">diag</span>(<span class="fu">rep</span>(<span class="dv">4</span>,<span class="dv">3</span>)))</span>
+<span id="cb2-7"><a href="#cb2-7" aria-hidden="true" tabindex="-1"></a>dist.origin.train <span class="ot">&lt;-</span> <span class="fu">sqrt</span>(<span class="fu">apply</span>(x.train<span class="sc">^</span><span class="dv">2</span>,<span class="dv">1</span>,sum))</span>
+<span id="cb2-8"><a href="#cb2-8" aria-hidden="true" tabindex="-1"></a>cosx<span class="ot">=</span>x.train[,<span class="dv">1</span>] <span class="sc">/</span> <span class="fu">sqrt</span>(<span class="fu">apply</span>(x.train[,<span class="fu">c</span>(<span class="dv">1</span>,<span class="dv">3</span>)]<span class="sc">^</span><span class="dv">2</span>,<span class="dv">1</span>,sum))</span>
+<span id="cb2-9"><a href="#cb2-9" aria-hidden="true" tabindex="-1"></a>cosy<span class="ot">=</span>x.train[,<span class="dv">2</span>] <span class="sc">/</span> <span class="fu">sqrt</span>(<span class="fu">apply</span>(x.train[,<span class="fu">c</span>(<span class="dv">1</span>,<span class="dv">2</span>)]<span class="sc">^</span><span class="dv">2</span>,<span class="dv">1</span>,sum))</span>
+<span id="cb2-10"><a href="#cb2-10" aria-hidden="true" tabindex="-1"></a>cosz<span class="ot">=</span>x.train[,<span class="dv">3</span>] <span class="sc">/</span> <span class="fu">sqrt</span>(<span class="fu">apply</span>(x.train[,<span class="fu">c</span>(<span class="dv">2</span>,<span class="dv">3</span>)]<span class="sc">^</span><span class="dv">2</span>,<span class="dv">1</span>,sum))</span>
+<span id="cb2-11"><a href="#cb2-11" aria-hidden="true" tabindex="-1"></a>ind3 <span class="ot">&lt;-</span> dist.origin.train<span class="sc">&gt;</span><span class="fl">3.75</span></span>
+<span id="cb2-12"><a href="#cb2-12" aria-hidden="true" tabindex="-1"></a>ind2 <span class="ot">&lt;-</span> dist.origin.train<span class="sc">&gt;</span><span class="fl">2.5</span> <span class="sc">&amp;</span> dist.origin.train<span class="sc">&lt;=</span><span class="fl">3.75</span></span>
+<span id="cb2-13"><a href="#cb2-13" aria-hidden="true" tabindex="-1"></a>ind1 <span class="ot">&lt;-</span> dist.origin.train<span class="sc">&lt;=</span><span class="fl">2.5</span></span>
+<span id="cb2-14"><a href="#cb2-14" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-15"><a href="#cb2-15" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-16"><a href="#cb2-16" aria-hidden="true" tabindex="-1"></a>classe.train <span class="ot">&lt;-</span> <span class="fu">rep</span>(<span class="dv">0</span>,num.train)</span>
+<span id="cb2-17"><a href="#cb2-17" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> (i <span class="cf">in</span> <span class="dv">1</span><span class="sc">:</span>num.train)</span>
+<span id="cb2-18"><a href="#cb2-18" aria-hidden="true" tabindex="-1"></a>{</span>
+<span id="cb2-19"><a href="#cb2-19" aria-hidden="true" tabindex="-1"></a>  <span class="cf">if</span> (ind1[i] )</span>
+<span id="cb2-20"><a href="#cb2-20" aria-hidden="true" tabindex="-1"></a>  { </span>
+<span id="cb2-21"><a href="#cb2-21" aria-hidden="true" tabindex="-1"></a>    <span class="cf">if</span> (x.train[i,<span class="dv">1</span>]<span class="sc">&gt;</span><span class="dv">0</span> <span class="sc">&amp;</span> cosy[i]<span class="sc">&gt;</span>(<span class="sc">-</span><span class="dv">1</span><span class="sc">/</span><span class="dv">2</span>) ) </span>
+<span id="cb2-22"><a href="#cb2-22" aria-hidden="true" tabindex="-1"></a>        {classe.train[i] <span class="ot">&lt;-</span> <span class="fu">sample</span>(<span class="fu">c</span>(<span class="dv">1</span>,<span class="dv">2</span>,<span class="dv">3</span>), <span class="dv">1</span>, <span class="at">prob=</span><span class="fu">c</span>(<span class="fl">0.8</span>,<span class="fl">0.1</span>,<span class="fl">0.1</span>)) } <span class="cf">else</span>     <span class="cf">if</span> (x.train[i,<span class="dv">1</span>]<span class="sc">&lt;</span><span class="dv">0</span> <span class="sc">&amp;</span> cosy[i]<span class="sc">&gt;</span>(<span class="sc">-</span><span class="dv">1</span><span class="sc">/</span><span class="dv">2</span>) ) </span>
+<span id="cb2-23"><a href="#cb2-23" aria-hidden="true" tabindex="-1"></a>        {classe.train[i] <span class="ot">&lt;-</span> <span class="fu">sample</span>(<span class="fu">c</span>(<span class="dv">1</span>,<span class="dv">2</span>,<span class="dv">3</span>), <span class="dv">1</span>, <span class="at">prob=</span><span class="fu">c</span>(<span class="fl">0.1</span>,<span class="fl">0.8</span>,<span class="fl">0.1</span>)) } <span class="cf">else</span>  classe.train[i] <span class="ot">&lt;-</span> <span class="fu">sample</span>(<span class="fu">c</span>(<span class="dv">1</span>,<span class="dv">2</span>,<span class="dv">3</span>), <span class="dv">1</span>, <span class="at">prob=</span><span class="fu">c</span>(<span class="fl">0.1</span>,<span class="fl">0.1</span>,<span class="fl">0.8</span>))</span>
+<span id="cb2-24"><a href="#cb2-24" aria-hidden="true" tabindex="-1"></a>  } </span>
+<span id="cb2-25"><a href="#cb2-25" aria-hidden="true" tabindex="-1"></a>  <span class="cf">if</span> (ind2[i]) </span>
+<span id="cb2-26"><a href="#cb2-26" aria-hidden="true" tabindex="-1"></a>  { </span>
+<span id="cb2-27"><a href="#cb2-27" aria-hidden="true" tabindex="-1"></a>    <span class="cf">if</span> (x.train[i,<span class="dv">2</span>]<span class="sc">&gt;</span><span class="dv">0</span> <span class="sc">&amp;</span> cosz[i]<span class="sc">&gt;</span>(<span class="sc">-</span><span class="dv">1</span><span class="sc">/</span><span class="dv">2</span>) ) </span>
+<span id="cb2-28"><a href="#cb2-28" aria-hidden="true" tabindex="-1"></a>        {classe.train[i] <span class="ot">&lt;-</span> <span class="fu">sample</span>(<span class="fu">c</span>(<span class="dv">1</span>,<span class="dv">2</span>,<span class="dv">3</span>), <span class="dv">1</span>, <span class="at">prob=</span><span class="fu">c</span>(<span class="fl">0.8</span>,<span class="fl">0.1</span>,<span class="fl">0.1</span>)) } <span class="cf">else</span>     <span class="cf">if</span> (x.train[i,<span class="dv">2</span>]<span class="sc">&lt;</span><span class="dv">0</span> <span class="sc">&amp;</span> cosz[i]<span class="sc">&gt;</span>(<span class="sc">-</span><span class="dv">1</span><span class="sc">/</span><span class="dv">2</span>) ) </span>
+<span id="cb2-29"><a href="#cb2-29" aria-hidden="true" tabindex="-1"></a>        {classe.train[i] <span class="ot">&lt;-</span> <span class="fu">sample</span>(<span class="fu">c</span>(<span class="dv">1</span>,<span class="dv">2</span>,<span class="dv">3</span>), <span class="dv">1</span>, <span class="at">prob=</span><span class="fu">c</span>(<span class="fl">0.1</span>,<span class="fl">0.8</span>,<span class="fl">0.1</span>)) } <span class="cf">else</span>  classe.train[i] <span class="ot">&lt;-</span> <span class="fu">sample</span>(<span class="fu">c</span>(<span class="dv">1</span>,<span class="dv">2</span>,<span class="dv">3</span>), <span class="dv">1</span>, <span class="at">prob=</span><span class="fu">c</span>(<span class="fl">0.1</span>,<span class="fl">0.1</span>,<span class="fl">0.8</span>))</span>
+<span id="cb2-30"><a href="#cb2-30" aria-hidden="true" tabindex="-1"></a>  }  </span>
+<span id="cb2-31"><a href="#cb2-31" aria-hidden="true" tabindex="-1"></a>  <span class="cf">if</span> (ind3[i]) </span>
+<span id="cb2-32"><a href="#cb2-32" aria-hidden="true" tabindex="-1"></a>    { </span>
+<span id="cb2-33"><a href="#cb2-33" aria-hidden="true" tabindex="-1"></a>    <span class="cf">if</span> (x.train[i,<span class="dv">3</span>]<span class="sc">&gt;</span><span class="dv">0</span> <span class="sc">&amp;</span> cosx[i]<span class="sc">&gt;</span>(<span class="sc">-</span><span class="dv">1</span><span class="sc">/</span><span class="dv">2</span>) ) </span>
+<span id="cb2-34"><a href="#cb2-34" aria-hidden="true" tabindex="-1"></a>        {classe.train[i] <span class="ot">&lt;-</span> <span class="fu">sample</span>(<span class="fu">c</span>(<span class="dv">1</span>,<span class="dv">2</span>,<span class="dv">3</span>), <span class="dv">1</span>, <span class="at">prob=</span><span class="fu">c</span>(<span class="fl">0.8</span>,<span class="fl">0.1</span>,<span class="fl">0.1</span>)) } <span class="cf">else</span>     <span class="cf">if</span> (x.train[i,<span class="dv">3</span>]<span class="sc">&lt;</span><span class="dv">0</span> <span class="sc">&amp;</span> cosx[i]<span class="sc">&gt;</span>(<span class="sc">-</span><span class="dv">1</span><span class="sc">/</span><span class="dv">2</span>) ) </span>
+<span id="cb2-35"><a href="#cb2-35" aria-hidden="true" tabindex="-1"></a>        {classe.train[i] <span class="ot">&lt;-</span> <span class="fu">sample</span>(<span class="fu">c</span>(<span class="dv">1</span>,<span class="dv">2</span>,<span class="dv">3</span>), <span class="dv">1</span>, <span class="at">prob=</span><span class="fu">c</span>(<span class="fl">0.1</span>,<span class="fl">0.8</span>,<span class="fl">0.1</span>)) } <span class="cf">else</span>  classe.train[i] <span class="ot">&lt;-</span> <span class="fu">sample</span>(<span class="fu">c</span>(<span class="dv">1</span>,<span class="dv">2</span>,<span class="dv">3</span>), <span class="dv">1</span>, <span class="at">prob=</span><span class="fu">c</span>(<span class="fl">0.1</span>,<span class="fl">0.1</span>,<span class="fl">0.8</span>))</span>
+<span id="cb2-36"><a href="#cb2-36" aria-hidden="true" tabindex="-1"></a>  } </span>
+<span id="cb2-37"><a href="#cb2-37" aria-hidden="true" tabindex="-1"></a>}</span>
+<span id="cb2-38"><a href="#cb2-38" aria-hidden="true" tabindex="-1"></a>couleur <span class="ot">&lt;-</span> <span class="fu">rep</span>(safe_colorblind_palette[<span class="dv">1</span>], n)</span>
+<span id="cb2-39"><a href="#cb2-39" aria-hidden="true" tabindex="-1"></a>couleur[classe.train<span class="sc">==</span><span class="dv">1</span>] <span class="ot">&lt;-</span> safe_colorblind_palette[<span class="dv">1</span>]</span>
+<span id="cb2-40"><a href="#cb2-40" aria-hidden="true" tabindex="-1"></a>couleur[classe.train<span class="sc">==</span><span class="dv">2</span>] <span class="ot">&lt;-</span> safe_colorblind_palette[<span class="dv">2</span>]</span>
+<span id="cb2-41"><a href="#cb2-41" aria-hidden="true" tabindex="-1"></a>couleur[classe.train<span class="sc">==</span><span class="dv">3</span>] <span class="ot">&lt;-</span> safe_colorblind_palette[<span class="dv">3</span>]</span>
+<span id="cb2-42"><a href="#cb2-42" aria-hidden="true" tabindex="-1"></a><span class="co"># Graph generation</span></span>
+<span id="cb2-43"><a href="#cb2-43" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(x.train[,<span class="dv">1</span>], x.train[,<span class="dv">2</span>], <span class="at">col=</span>couleur,<span class="at">xlab=</span><span class="st">"X1"</span>,<span class="at">ylab=</span><span class="st">"X2"</span>,<span class="at">pch=</span><span class="dv">8</span>,<span class="at">cex=</span><span class="fl">0.8</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="published-202312-cleynen-local_files/figure-html/unnamed-chunk-7-1.png" class="img-fluid figure-img" width="672"></p>
+<figcaption class="figure-caption">Spherical fragmented example: two first explanatory variables <span class="math inline">\(X_1\)</span> and <span class="math inline">\(X_2\)</span> ; colors indicate the class labels (1-sky blue, 2-purple, 3-sand).</figcaption>
+</figure>
+</div>
+</div>
+</div>
+<p>In this example, once again bagging CARTs outperforms all other methods, while classic random forests are beaten by almost all other methods except nearest-neighbour Random Forests, who suffer most from the fragmentation issue. Local variable importance RF and Case-specific Random forests perform quite well.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb3"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(xtable)</span>
+<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a>resTOT<span class="ot">&lt;-</span><span class="fu">read.table</span>(<span class="st">"Spherical/Spherical.txt"</span>,<span class="at">header=</span>T)</span>
+<span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a>resTOT<span class="ot">&lt;-</span><span class="dv">100</span><span class="sc">*</span>resTOT</span>
+<span id="cb3-4"><a href="#cb3-4" aria-hidden="true" tabindex="-1"></a>resTime<span class="ot">&lt;-</span><span class="fu">read.table</span>(<span class="st">"Spherical/Spherical-Time.txt"</span>,<span class="at">header=</span>T)</span>
+<span id="cb3-5"><a href="#cb3-5" aria-hidden="true" tabindex="-1"></a>resTime<span class="ot">&lt;-</span>resTime[<span class="dv">1</span>,]</span>
+<span id="cb3-6"><a href="#cb3-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-7"><a href="#cb3-7" aria-hidden="true" tabindex="-1"></a>Identifier<span class="ot">&lt;-</span><span class="fu">c</span>(<span class="st">"Bagged CARTs"</span>,<span class="st">"Random forest"</span>,<span class="st">"LVI-RF"</span>,<span class="st">"CSRF"</span>,<span class="st">"CSRF"</span>,<span class="st">"CSRF"</span>,<span class="st">"CSRF"</span>,<span class="st">"CSRF"</span>,<span class="st">"CSRF"</span>, <span class="st">"DVSRF"</span>,<span class="st">"DVSRF"</span>, <span class="st">"KV-RF"</span>,<span class="st">"KV-RF"</span>,<span class="st">"KV-RF"</span>,<span class="st">"KV-RF"</span>, <span class="st">"NN-RF"</span>,<span class="st">"NN-RF"</span>,<span class="st">"NN-RF"</span>)</span>
+<span id="cb3-8"><a href="#cb3-8" aria-hidden="true" tabindex="-1"></a>Characteristics<span class="ot">&lt;-</span><span class="fu">c</span>(<span class="st">""</span>,<span class="st">""</span>,<span class="st">""</span>,<span class="st">"Nmin=5"</span>,<span class="st">"Nmin=10"</span>,<span class="st">"Nmin=50"</span>,<span class="st">"Nmin=150"</span>,<span class="st">"Nmin=250"</span>,<span class="st">"Nmin=350"</span>,<span class="st">"k=3000,Bsel=100"</span>,<span class="st">"k=3000,Bsel=50"</span>,<span class="st">"alpha=1"</span>,<span class="st">"alpha=0.75"</span>,<span class="st">"alpha=0.5"</span>,<span class="st">"alpha=0.25"</span>, <span class="st">"k=1000"</span>,<span class="st">"k=1500"</span>,<span class="st">"k=2500"</span>)</span>
+<span id="cb3-9"><a href="#cb3-9" aria-hidden="true" tabindex="-1"></a>Table<span class="ot">=</span><span class="fu">cbind</span>(Identifier,Characteristics,<span class="fu">apply</span>(resTOT,<span class="dv">2</span>,mean,<span class="at">na.rm=</span><span class="cn">TRUE</span>),<span class="fu">paste</span>(<span class="st">"("</span>,<span class="fu">round</span>(<span class="fu">apply</span>(resTOT,<span class="dv">2</span>,sd,<span class="at">na.rm=</span><span class="cn">TRUE</span>),<span class="dv">3</span>),<span class="st">")"</span>,<span class="at">sep=</span><span class="st">""</span>),<span class="fu">round</span>(<span class="fu">t</span>(resTime[<span class="dv">1</span>,]<span class="sc">/</span>resTime[,<span class="dv">2</span>]),<span class="dv">2</span>))</span>
+<span id="cb3-10"><a href="#cb3-10" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-11"><a href="#cb3-11" aria-hidden="true" tabindex="-1"></a>TableOrdered5<span class="ot">=</span>Table[<span class="fu">c</span>(<span class="dv">1</span><span class="sc">:</span><span class="dv">2</span>,<span class="dv">4</span><span class="sc">:</span><span class="dv">9</span>,<span class="dv">16</span><span class="sc">:</span><span class="dv">18</span>,<span class="dv">3</span>,<span class="dv">10</span><span class="sc">:</span><span class="dv">15</span>),]</span>
+<span id="cb3-12"><a href="#cb3-12" aria-hidden="true" tabindex="-1"></a><span class="co">#TableOrdered5=Table</span></span>
+<span id="cb3-13"><a href="#cb3-13" aria-hidden="true" tabindex="-1"></a><span class="fu">colnames</span>(TableOrdered5)<span class="ot">=</span><span class="fu">c</span>(<span class="st">"Method"</span>,<span class="st">"Parameters"</span>,<span class="st">"Error rate"</span>,<span class="st">"(sd)"</span>, <span class="st">"Runtime (fold RF)"</span>)</span>
+<span id="cb3-14"><a href="#cb3-14" aria-hidden="true" tabindex="-1"></a><span class="fu">rownames</span>(TableOrdered5)<span class="ot">=</span><span class="cn">NULL</span></span>
+<span id="cb3-15"><a href="#cb3-15" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-16"><a href="#cb3-16" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-17"><a href="#cb3-17" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-18"><a href="#cb3-18" aria-hidden="true" tabindex="-1"></a>Table5<span class="ot">=</span><span class="fu">cbind</span>(TableOrdered5)</span>
+<span id="cb3-19"><a href="#cb3-19" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-20"><a href="#cb3-20" aria-hidden="true" tabindex="-1"></a>knitr<span class="sc">::</span><span class="fu">kable</span>(Table5,<span class="at">caption=</span> <span class="st">"Spherical fragmented example: prediction error rate (percentage), with 10000 training data, and runtime comparison"</span>,<span class="at">booktabs=</span>T,<span class="at">label=</span> <span class="st">"Spherical"</span>,<span class="at">row.names=</span><span class="cn">NA</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<table class="table table-sm table-striped small">
+<caption>Spherical fragmented example: prediction error rate (percentage), with 10000 training data, and runtime comparison</caption>
+<colgroup>
+<col style="width: 20%">
+<col style="width: 23%">
+<col style="width: 16%">
+<col style="width: 11%">
+<col style="width: 26%">
+</colgroup>
+<thead>
+<tr class="header">
+<th style="text-align: left;">Method</th>
+<th style="text-align: left;">Parameters</th>
+<th style="text-align: left;">Error rate</th>
+<th style="text-align: left;">(sd)</th>
+<th style="text-align: left;">Runtime (fold RF)</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: left;">Bagged CARTs</td>
+<td style="text-align: left;"></td>
+<td style="text-align: left;">26.408</td>
+<td style="text-align: left;">(0.817)</td>
+<td style="text-align: left;">5.38</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Random forest</td>
+<td style="text-align: left;"></td>
+<td style="text-align: left;">31.58</td>
+<td style="text-align: left;">(0.821)</td>
+<td style="text-align: left;">1</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">CSRF</td>
+<td style="text-align: left;">Nmin=5</td>
+<td style="text-align: left;">28.464</td>
+<td style="text-align: left;">(0.785)</td>
+<td style="text-align: left;">5.68</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">CSRF</td>
+<td style="text-align: left;">Nmin=10</td>
+<td style="text-align: left;">28.206</td>
+<td style="text-align: left;">(0.814)</td>
+<td style="text-align: left;">5.58</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">CSRF</td>
+<td style="text-align: left;">Nmin=50</td>
+<td style="text-align: left;">27.94</td>
+<td style="text-align: left;">(0.783)</td>
+<td style="text-align: left;">5.22</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">CSRF</td>
+<td style="text-align: left;">Nmin=150</td>
+<td style="text-align: left;">28.248</td>
+<td style="text-align: left;">(0.953)</td>
+<td style="text-align: left;">3.98</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">CSRF</td>
+<td style="text-align: left;">Nmin=250</td>
+<td style="text-align: left;">28.504</td>
+<td style="text-align: left;">(0.762)</td>
+<td style="text-align: left;">2.94</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">CSRF</td>
+<td style="text-align: left;">Nmin=350</td>
+<td style="text-align: left;">28.682</td>
+<td style="text-align: left;">(0.957)</td>
+<td style="text-align: left;">2.35</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">NN-RF</td>
+<td style="text-align: left;">k=1000</td>
+<td style="text-align: left;">43.82</td>
+<td style="text-align: left;">(1.375)</td>
+<td style="text-align: left;">10.35</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">NN-RF</td>
+<td style="text-align: left;">k=1500</td>
+<td style="text-align: left;">41.436</td>
+<td style="text-align: left;">(1.305)</td>
+<td style="text-align: left;">10.39</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">NN-RF</td>
+<td style="text-align: left;">k=2500</td>
+<td style="text-align: left;">38.288</td>
+<td style="text-align: left;">(1.155)</td>
+<td style="text-align: left;">10.44</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">LVI-RF</td>
+<td style="text-align: left;"></td>
+<td style="text-align: left;">27.824</td>
+<td style="text-align: left;">(0.666)</td>
+<td style="text-align: left;">2.02</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">DVSRF</td>
+<td style="text-align: left;">k=3000,Bsel=100</td>
+<td style="text-align: left;">30.894</td>
+<td style="text-align: left;">(0.808)</td>
+<td style="text-align: left;">1.18</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">DVSRF</td>
+<td style="text-align: left;">k=3000,Bsel=50</td>
+<td style="text-align: left;">30.684</td>
+<td style="text-align: left;">(1.039)</td>
+<td style="text-align: left;">1.14</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">KV-RF</td>
+<td style="text-align: left;">alpha=1</td>
+<td style="text-align: left;">31.456</td>
+<td style="text-align: left;">(1.088)</td>
+<td style="text-align: left;">1.13</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">KV-RF</td>
+<td style="text-align: left;">alpha=0.75</td>
+<td style="text-align: left;">31.656</td>
+<td style="text-align: left;">(0.886)</td>
+<td style="text-align: left;">1.11</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">KV-RF</td>
+<td style="text-align: left;">alpha=0.5</td>
+<td style="text-align: left;">31.6</td>
+<td style="text-align: left;">(0.876)</td>
+<td style="text-align: left;">1.11</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">KV-RF</td>
+<td style="text-align: left;">alpha=0.25</td>
+<td style="text-align: left;">32.89</td>
+<td style="text-align: left;">(0.825)</td>
+<td style="text-align: left;">1.11</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+</section>
+<section id="subsec:geneticsExample" class="level2">
+<h2 class="anchored" data-anchor-id="subsec:geneticsExample">Population genetics example</h2>
+<p>We now compare a set of local strategies on a basic population genetics example introduced in <span class="citation" data-cites="pudlo:etal:2016">Pudlo et al. (<a href="#ref-pudlo:etal:2016" role="doc-biblioref">2016</a>)</span>. The historical link between three populations of a given species is of interest. More precisely, we are interested in studying whether a third population emerged from a first or a second population, or whether it emerged from a mixture between the first two. This problem is hence a three classes classification question. The data is made of <span class="math inline">\(1,000\)</span> autosomal single-nucleotide polymorphisms (SNPs). We assume that the distances between these loci on the genome are large enough to neglect linkage disequilibrium, we hence consider them as having independent ancestral genealogies.</p>
+<p>The data is summarized thanks to <span class="math inline">\(d=48\)</span> summary statistics available within the DIY-ABC software for SNP markers <span class="citation" data-cites="cornuet:etal:2014">(<a href="#ref-cornuet:etal:2014" role="doc-biblioref">Cornuet et al. 2014</a>)</span>, which is also used to simulate training and test sets respectively of size <span class="math inline">\(10,000\)</span> and <span class="math inline">\(1,000\)</span>, equally distributed among the three scenarios. Moreover, the data are constrained to be drawn in the <span class="math inline">\([-1;1]^2\)</span> square on the linear discriminant analysis (LDA) axes projections graph, which is a region where scenarios are hard to discriminate, see Figure @ref(fig:popGen-LDA).</p>
+<p>FIXME</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb4"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a>knitr<span class="sc">::</span><span class="fu">include_graphics</span>(<span class="st">"Fig4.png"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="Fig4.png" class="img-fluid figure-img" width="240"></p>
+<figcaption class="figure-caption">Population genetics example: projections on the LDA axes of the <span class="math inline">\(10,000\)</span> training instances ; colors represent scenario indices: sky-blue for model 1, sand for model 2 and purple for model 3 ; the hard to discriminate <span class="math inline">\([-1;1]^2\)</span> region is represented by black dashed lines.</figcaption>
+</figure>
+</div>
+</div>
+</div>
+<p>Similarly to the Gaussian mixture examples, the methods are run ten times on the same data. The averaged misclassification error rates and the associated standard deviation are displayed in Table @ref(tab:GenPopResults).</p>
+<p>In this example again, bagging CARTs outperforms a classic random forest. Most local approaches can be tuned to reach a classic RF performance, but none manage to significantly outperform it, let alone reach bagging CARTs results.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb5"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(xtable)</span>
+<span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a>resTOT<span class="ot">&lt;-</span><span class="fu">read.table</span>(<span class="st">"Population-Genetics/Example-Population-Genetics-Res.txt"</span>,<span class="at">header=</span>T)</span>
+<span id="cb5-3"><a href="#cb5-3" aria-hidden="true" tabindex="-1"></a>resTOT<span class="ot">&lt;-</span><span class="dv">100</span><span class="sc">*</span>resTOT</span>
+<span id="cb5-4"><a href="#cb5-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-5"><a href="#cb5-5" aria-hidden="true" tabindex="-1"></a>Identifier<span class="ot">&lt;-</span><span class="fu">c</span>(<span class="st">"Bagged CARTs"</span>,<span class="st">"Random forest"</span>,<span class="st">"LVI-RF"</span>,<span class="st">"CSRF"</span>,<span class="st">"CSRF"</span>,<span class="st">"CSRF"</span>,<span class="st">"DVSRF"</span>,<span class="st">"DVSRF"</span>,<span class="st">"KV-RF"</span>,<span class="st">"KV-RF"</span>,<span class="st">"KV-RF"</span>,<span class="st">"KV-RF"</span>,<span class="st">"NN-RF"</span>,<span class="st">"NN-RF"</span>,<span class="st">"NN-RF"</span>)</span>
+<span id="cb5-6"><a href="#cb5-6" aria-hidden="true" tabindex="-1"></a>Characteristics<span class="ot">&lt;-</span><span class="fu">c</span>(<span class="st">""</span>,<span class="st">""</span>,<span class="st">""</span>,<span class="st">"Nmin=50"</span>,<span class="st">"Nmin=150"</span>,<span class="st">"Nmin=250"</span>,<span class="st">"k=3000,Bsel=100"</span>,<span class="st">"k=3000,Bsel=50"</span>,<span class="st">"alpha=1"</span>,<span class="st">"alpha=0.75"</span>,<span class="st">"alpha=0.5"</span>,<span class="st">"alpha=0.25"</span>, <span class="st">"k=1000"</span>,<span class="st">"k=1500"</span>,<span class="st">"k=2500"</span>)</span>
+<span id="cb5-7"><a href="#cb5-7" aria-hidden="true" tabindex="-1"></a>Table<span class="ot">=</span><span class="fu">cbind</span>(Identifier,Characteristics,<span class="fu">apply</span>(resTOT,<span class="dv">2</span>,mean),<span class="fu">paste</span>(<span class="st">"("</span>,<span class="fu">round</span>(<span class="fu">apply</span>(resTOT,<span class="dv">2</span>,sd),<span class="dv">3</span>),<span class="st">")"</span>,<span class="at">sep=</span><span class="st">""</span>))</span>
+<span id="cb5-8"><a href="#cb5-8" aria-hidden="true" tabindex="-1"></a>TableOrdered<span class="ot">=</span>Table[<span class="fu">c</span>(<span class="dv">1</span><span class="sc">:</span><span class="dv">2</span>,<span class="dv">5</span><span class="sc">:</span><span class="dv">7</span>,<span class="dv">13</span><span class="sc">:</span><span class="dv">15</span>,<span class="dv">3</span>,<span class="dv">8</span><span class="sc">:</span><span class="dv">12</span>),]</span>
+<span id="cb5-9"><a href="#cb5-9" aria-hidden="true" tabindex="-1"></a><span class="fu">colnames</span>(TableOrdered)<span class="ot">=</span><span class="fu">c</span>(<span class="st">"Method"</span>,<span class="st">"Parameters"</span>,<span class="st">"Error rate"</span>,<span class="st">"(sd)"</span>)</span>
+<span id="cb5-10"><a href="#cb5-10" aria-hidden="true" tabindex="-1"></a><span class="fu">rownames</span>(TableOrdered)<span class="ot">=</span><span class="cn">NULL</span></span>
+<span id="cb5-11"><a href="#cb5-11" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-12"><a href="#cb5-12" aria-hidden="true" tabindex="-1"></a>knitr<span class="sc">::</span><span class="fu">kable</span>(TableOrdered,<span class="at">caption=</span> <span class="st">"Population Genetics example: prediction error rate (percentage), with 10000 training data and 1000 test data"</span>,<span class="at">booktabs=</span>T,<span class="at">label=</span> <span class="st">"GenPopResults"</span>,<span class="at">row.names=</span><span class="cn">NA</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<table class="table table-sm table-striped small">
+<caption>Population Genetics example: prediction error rate (percentage), with 10000 training data and 1000 test data</caption>
+<thead>
+<tr class="header">
+<th style="text-align: left;">Method</th>
+<th style="text-align: left;">Parameters</th>
+<th style="text-align: left;">Error rate</th>
+<th style="text-align: left;">(sd)</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: left;">Bagged CARTs</td>
+<td style="text-align: left;"></td>
+<td style="text-align: left;">36.626</td>
+<td style="text-align: left;">(0.859)</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Random forest</td>
+<td style="text-align: left;"></td>
+<td style="text-align: left;">38.288</td>
+<td style="text-align: left;">(0.935)</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">CSRF</td>
+<td style="text-align: left;">Nmin=150</td>
+<td style="text-align: left;">38.168</td>
+<td style="text-align: left;">(0.926)</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">CSRF</td>
+<td style="text-align: left;">Nmin=250</td>
+<td style="text-align: left;">38.078</td>
+<td style="text-align: left;">(0.682)</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">DVSRF</td>
+<td style="text-align: left;">k=3000,Bsel=100</td>
+<td style="text-align: left;">38.166</td>
+<td style="text-align: left;">(0.78)</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">NN-RF</td>
+<td style="text-align: left;">k=1000</td>
+<td style="text-align: left;">38.58</td>
+<td style="text-align: left;">(0.765)</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">NN-RF</td>
+<td style="text-align: left;">k=1500</td>
+<td style="text-align: left;">38.422</td>
+<td style="text-align: left;">(0.631)</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">NN-RF</td>
+<td style="text-align: left;">k=2500</td>
+<td style="text-align: left;">38.308</td>
+<td style="text-align: left;">(0.746)</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">LVI-RF</td>
+<td style="text-align: left;"></td>
+<td style="text-align: left;">38.046</td>
+<td style="text-align: left;">(1.054)</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">DVSRF</td>
+<td style="text-align: left;">k=3000,Bsel=50</td>
+<td style="text-align: left;">38.616</td>
+<td style="text-align: left;">(0.746)</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">KV-RF</td>
+<td style="text-align: left;">alpha=1</td>
+<td style="text-align: left;">37.848</td>
+<td style="text-align: left;">(0.766)</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">KV-RF</td>
+<td style="text-align: left;">alpha=0.75</td>
+<td style="text-align: left;">38.12</td>
+<td style="text-align: left;">(0.764)</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">KV-RF</td>
+<td style="text-align: left;">alpha=0.5</td>
+<td style="text-align: left;">38.12</td>
+<td style="text-align: left;">(0.888)</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">KV-RF</td>
+<td style="text-align: left;">alpha=0.25</td>
+<td style="text-align: left;">38.726</td>
+<td style="text-align: left;">(0.662)</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+</section>
+</section>
+<section id="reproducibility" class="level1">
+<h1>Data accessibility and reproducibility</h1>
+<p>The global computational time for the examples presented above represent several days of multiple cores usage and are therefore not directly proposed to the reader. All codes, data and session information are available at <a href="https://github.com/jmm34/computo-local-tree-methods-for-classification">github.com/jmm34/computo-local-tree-methods-for-classification</a>. Note that during the preparation of the manuscript we detect an <a href="https://github.com/imbs-hl/ranger/issues/615">issue</a> in the implementation of the Case Specific Random Forests function (csrf) function of the R package ranger and have to redo quite a lot of calculation to ensure reproducibility.</p>
+<p>In this section, we reproduce the first Gaussian example presented above (without additional noise) with only 500 training data, 100 test data and 5 replicates, to illustrate the methods and produce similar tables to Tables @ref(tab:gaussEqNoise10) to @ref(tab:GenPopResults). The results in themselves are not interpretable due to the low dimensionality of the test and training data, so most methods were only illustrated with one set of parameters. However, changing parameters value in the code is straightforward.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb6"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a><span class="do">######## Toy example : Small balanced Gaussian example without Noise  ########</span></span>
+<span id="cb6-2"><a href="#cb6-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb6-3"><a href="#cb6-3" aria-hidden="true" tabindex="-1"></a><span class="do">#### Required packages</span></span>
+<span id="cb6-4"><a href="#cb6-4" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(<span class="st">"xtable"</span>)</span>
+<span id="cb6-5"><a href="#cb6-5" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(mvtnorm)</span>
+<span id="cb6-6"><a href="#cb6-6" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(ranger)</span>
+<span id="cb6-7"><a href="#cb6-7" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(parallel)</span>
+<span id="cb6-8"><a href="#cb6-8" aria-hidden="true" tabindex="-1"></a>ncores <span class="ot">&lt;-</span> <span class="fu">detectCores</span>()</span>
+<span id="cb6-9"><a href="#cb6-9" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb6-10"><a href="#cb6-10" aria-hidden="true" tabindex="-1"></a><span class="do">#### Set the seed of R's random number generator</span></span>
+<span id="cb6-11"><a href="#cb6-11" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb6-12"><a href="#cb6-12" aria-hidden="true" tabindex="-1"></a>nReplicate <span class="ot">&lt;-</span> <span class="dv">5</span></span>
+<span id="cb6-13"><a href="#cb6-13" aria-hidden="true" tabindex="-1"></a>resBayes <span class="ot">&lt;-</span> resBagging <span class="ot">&lt;-</span> resRF <span class="ot">&lt;-</span> resLVIRF <span class="ot">&lt;-</span> resCsrf5 <span class="ot">&lt;-</span> resCsrf10 <span class="ot">&lt;-</span> resDVSRF1 <span class="ot">&lt;-</span> resKVRF1 <span class="ot">&lt;-</span> resNNRF1 <span class="ot">&lt;-</span> <span class="fu">rep</span>(<span class="dv">0</span>,nReplicate)</span>
+<span id="cb6-14"><a href="#cb6-14" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb6-15"><a href="#cb6-15" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> (k <span class="cf">in</span> <span class="dv">1</span><span class="sc">:</span>nReplicate)  {</span>
+<span id="cb6-16"><a href="#cb6-16" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb6-17"><a href="#cb6-17" aria-hidden="true" tabindex="-1"></a><span class="fu">set.seed</span>(<span class="dv">1974</span><span class="sc">+</span>k)</span>
+<span id="cb6-18"><a href="#cb6-18" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb6-19"><a href="#cb6-19" aria-hidden="true" tabindex="-1"></a><span class="do">### Training data generation</span></span>
+<span id="cb6-20"><a href="#cb6-20" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb6-21"><a href="#cb6-21" aria-hidden="true" tabindex="-1"></a>n <span class="ot">&lt;-</span> <span class="dv">500</span></span>
+<span id="cb6-22"><a href="#cb6-22" aria-hidden="true" tabindex="-1"></a>pi0 <span class="ot">&lt;-</span> <span class="fl">0.25</span></span>
+<span id="cb6-23"><a href="#cb6-23" aria-hidden="true" tabindex="-1"></a>pi1 <span class="ot">&lt;-</span> <span class="fl">0.25</span></span>
+<span id="cb6-24"><a href="#cb6-24" aria-hidden="true" tabindex="-1"></a>pi2 <span class="ot">&lt;-</span> <span class="fl">0.25</span></span>
+<span id="cb6-25"><a href="#cb6-25" aria-hidden="true" tabindex="-1"></a>pi3 <span class="ot">&lt;-</span> <span class="fl">0.25</span></span>
+<span id="cb6-26"><a href="#cb6-26" aria-hidden="true" tabindex="-1"></a>l <span class="ot">&lt;-</span> <span class="dv">20</span></span>
+<span id="cb6-27"><a href="#cb6-27" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb6-28"><a href="#cb6-28" aria-hidden="true" tabindex="-1"></a>mu0 <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="fu">c</span>(<span class="fl">0.8</span>,<span class="dv">3</span>), <span class="fu">rep</span>(<span class="fu">c</span>(<span class="dv">1</span>,<span class="fl">2.5</span>), l<span class="sc">/</span><span class="dv">2-1</span>))</span>
+<span id="cb6-29"><a href="#cb6-29" aria-hidden="true" tabindex="-1"></a>Sigma0 <span class="ot">&lt;-</span> <span class="fu">diag</span>(<span class="fu">c</span>(<span class="fu">c</span>(<span class="dv">3</span>,<span class="dv">3</span>), <span class="fu">rep</span>(<span class="fu">c</span>(<span class="dv">3</span>,<span class="dv">1</span>),l<span class="sc">/</span><span class="dv">2-1</span>)) )</span>
+<span id="cb6-30"><a href="#cb6-30" aria-hidden="true" tabindex="-1"></a>mu1 <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="fu">c</span>(<span class="fl">3.2</span>,<span class="dv">3</span>), <span class="fu">rep</span>(<span class="fu">c</span>(<span class="fl">2.5</span>,<span class="fl">2.5</span>), l<span class="sc">/</span><span class="dv">2-1</span>))</span>
+<span id="cb6-31"><a href="#cb6-31" aria-hidden="true" tabindex="-1"></a>Sigma1 <span class="ot">&lt;-</span> <span class="fu">diag</span>(<span class="fu">c</span>(<span class="fu">c</span>(<span class="dv">3</span>,<span class="dv">3</span>), <span class="fu">rep</span>(<span class="fu">c</span>(<span class="dv">3</span>,<span class="dv">5</span>),l<span class="sc">/</span><span class="dv">2-1</span>)) )</span>
+<span id="cb6-32"><a href="#cb6-32" aria-hidden="true" tabindex="-1"></a>mu2 <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="fu">c</span>(<span class="dv">2</span>,<span class="dv">1</span>), <span class="fu">rep</span>(<span class="fu">c</span>(<span class="dv">2</span>,<span class="fl">2.3</span>),l<span class="sc">/</span><span class="dv">2-1</span>))</span>
+<span id="cb6-33"><a href="#cb6-33" aria-hidden="true" tabindex="-1"></a>Sigma2 <span class="ot">&lt;-</span> <span class="fu">diag</span>( (<span class="fu">rep</span>(<span class="fu">c</span>(<span class="dv">4</span>,<span class="dv">1</span>),l<span class="sc">/</span><span class="dv">2</span>) ) )</span>
+<span id="cb6-34"><a href="#cb6-34" aria-hidden="true" tabindex="-1"></a>mu3 <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="fu">c</span>(<span class="dv">2</span>,<span class="dv">0</span>), <span class="fu">rep</span>(<span class="fu">c</span>(<span class="dv">2</span>,<span class="fl">1.8</span>),l<span class="sc">/</span><span class="dv">2-1</span>))</span>
+<span id="cb6-35"><a href="#cb6-35" aria-hidden="true" tabindex="-1"></a>Sigma3 <span class="ot">&lt;-</span> <span class="fu">diag</span>( (<span class="fu">rep</span>(<span class="fu">c</span>(<span class="fl">2.5</span>,<span class="dv">1</span>),l<span class="sc">/</span><span class="dv">2</span>) ) )</span>
+<span id="cb6-36"><a href="#cb6-36" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb6-37"><a href="#cb6-37" aria-hidden="true" tabindex="-1"></a>classe <span class="ot">&lt;-</span> <span class="fu">sample</span>(<span class="at">x =</span> <span class="fu">c</span>(<span class="dv">0</span>,<span class="dv">1</span>,<span class="dv">2</span>,<span class="dv">3</span>), <span class="at">size =</span> n, <span class="at">replace =</span> <span class="cn">TRUE</span>, <span class="at">prob =</span> <span class="fu">c</span>(pi0,pi1,pi2,pi3))</span>
+<span id="cb6-38"><a href="#cb6-38" aria-hidden="true" tabindex="-1"></a>classe <span class="ot">&lt;-</span> <span class="fu">sort</span>(classe)</span>
+<span id="cb6-39"><a href="#cb6-39" aria-hidden="true" tabindex="-1"></a>n0 <span class="ot">&lt;-</span> <span class="fu">sum</span>(classe<span class="sc">==</span><span class="dv">0</span>)</span>
+<span id="cb6-40"><a href="#cb6-40" aria-hidden="true" tabindex="-1"></a>n1 <span class="ot">&lt;-</span> <span class="fu">sum</span>(classe<span class="sc">==</span><span class="dv">1</span>)</span>
+<span id="cb6-41"><a href="#cb6-41" aria-hidden="true" tabindex="-1"></a>n2 <span class="ot">&lt;-</span> <span class="fu">sum</span>(classe<span class="sc">==</span><span class="dv">2</span>)</span>
+<span id="cb6-42"><a href="#cb6-42" aria-hidden="true" tabindex="-1"></a>n3 <span class="ot">&lt;-</span> <span class="fu">sum</span>(classe<span class="sc">==</span><span class="dv">3</span>)</span>
+<span id="cb6-43"><a href="#cb6-43" aria-hidden="true" tabindex="-1"></a>x.train <span class="ot">&lt;-</span> <span class="fu">rbind</span>(<span class="fu">rmvnorm</span>(n0, mu0, Sigma0), <span class="fu">rmvnorm</span>(n1, mu1, Sigma1), <span class="fu">rmvnorm</span>(n2, mu2, Sigma2), <span class="fu">rmvnorm</span>(n3, mu3, Sigma3))</span>
+<span id="cb6-44"><a href="#cb6-44" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb6-45"><a href="#cb6-45" aria-hidden="true" tabindex="-1"></a><span class="do">### Test data generation</span></span>
+<span id="cb6-46"><a href="#cb6-46" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb6-47"><a href="#cb6-47" aria-hidden="true" tabindex="-1"></a>nTest <span class="ot">&lt;-</span> <span class="dv">100</span></span>
+<span id="cb6-48"><a href="#cb6-48" aria-hidden="true" tabindex="-1"></a>classeTest <span class="ot">&lt;-</span> <span class="fu">sample</span>(<span class="fu">c</span>(<span class="dv">0</span>,<span class="dv">1</span>,<span class="dv">2</span>,<span class="dv">3</span>), <span class="at">size=</span>nTest, <span class="at">prob=</span><span class="fu">c</span>(pi0,pi1,pi2,pi3), <span class="at">replace=</span><span class="cn">TRUE</span>)</span>
+<span id="cb6-49"><a href="#cb6-49" aria-hidden="true" tabindex="-1"></a>classeTest <span class="ot">&lt;-</span> <span class="fu">sort</span>(classeTest)</span>
+<span id="cb6-50"><a href="#cb6-50" aria-hidden="true" tabindex="-1"></a>nTest0 <span class="ot">&lt;-</span> <span class="fu">sum</span>(classeTest<span class="sc">==</span><span class="dv">0</span>)</span>
+<span id="cb6-51"><a href="#cb6-51" aria-hidden="true" tabindex="-1"></a>nTest1 <span class="ot">&lt;-</span> <span class="fu">sum</span>(classeTest<span class="sc">==</span><span class="dv">1</span>)</span>
+<span id="cb6-52"><a href="#cb6-52" aria-hidden="true" tabindex="-1"></a>nTest2 <span class="ot">&lt;-</span> <span class="fu">sum</span>(classeTest<span class="sc">==</span><span class="dv">2</span>)</span>
+<span id="cb6-53"><a href="#cb6-53" aria-hidden="true" tabindex="-1"></a>nTest3 <span class="ot">&lt;-</span> <span class="fu">sum</span>(classeTest<span class="sc">==</span><span class="dv">3</span>)</span>
+<span id="cb6-54"><a href="#cb6-54" aria-hidden="true" tabindex="-1"></a>x.test <span class="ot">&lt;-</span> <span class="fu">rbind</span>(<span class="fu">rmvnorm</span>(nTest0, mu0, Sigma0),</span>
+<span id="cb6-55"><a href="#cb6-55" aria-hidden="true" tabindex="-1"></a>                <span class="fu">rmvnorm</span>(nTest1, mu1, Sigma1),</span>
+<span id="cb6-56"><a href="#cb6-56" aria-hidden="true" tabindex="-1"></a>                <span class="fu">rmvnorm</span>(nTest2, mu2, Sigma2),</span>
+<span id="cb6-57"><a href="#cb6-57" aria-hidden="true" tabindex="-1"></a>                <span class="fu">rmvnorm</span>(nTest3, mu3, Sigma3))</span>
+<span id="cb6-58"><a href="#cb6-58" aria-hidden="true" tabindex="-1"></a>data.train <span class="ot">&lt;-</span> <span class="fu">data.frame</span>(<span class="at">mod =</span> <span class="fu">as.factor</span>(classe), x.train)</span>
+<span id="cb6-59"><a href="#cb6-59" aria-hidden="true" tabindex="-1"></a><span class="fu">colnames</span>(x.test) <span class="ot">&lt;-</span> <span class="fu">colnames</span>(data.train)[<span class="sc">-</span><span class="dv">1</span>]</span>
+<span id="cb6-60"><a href="#cb6-60" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb6-61"><a href="#cb6-61" aria-hidden="true" tabindex="-1"></a><span class="do">#### Bayes classifier</span></span>
+<span id="cb6-62"><a href="#cb6-62" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb6-63"><a href="#cb6-63" aria-hidden="true" tabindex="-1"></a>BayesClassifieur <span class="ot">&lt;-</span> <span class="cf">function</span>(x){</span>
+<span id="cb6-64"><a href="#cb6-64" aria-hidden="true" tabindex="-1"></a>  c0 <span class="ot">&lt;-</span> pi0<span class="sc">*</span><span class="fu">dmvnorm</span>(x,<span class="at">mean=</span>mu0,<span class="at">sigma=</span>Sigma0)</span>
+<span id="cb6-65"><a href="#cb6-65" aria-hidden="true" tabindex="-1"></a>  c1 <span class="ot">&lt;-</span> pi1<span class="sc">*</span><span class="fu">dmvnorm</span>(x,<span class="at">mean=</span>mu1,<span class="at">sigma=</span>Sigma1)</span>
+<span id="cb6-66"><a href="#cb6-66" aria-hidden="true" tabindex="-1"></a>  c2 <span class="ot">&lt;-</span> pi2<span class="sc">*</span><span class="fu">dmvnorm</span>(x,<span class="at">mean=</span>mu2,<span class="at">sigma=</span>Sigma2)</span>
+<span id="cb6-67"><a href="#cb6-67" aria-hidden="true" tabindex="-1"></a>  c3 <span class="ot">&lt;-</span> pi3<span class="sc">*</span><span class="fu">dmvnorm</span>(x,<span class="at">mean=</span>mu3,<span class="at">sigma=</span>Sigma3)</span>
+<span id="cb6-68"><a href="#cb6-68" aria-hidden="true" tabindex="-1"></a>  <span class="fu">return</span>(<span class="fu">c</span>(<span class="dv">0</span>,<span class="dv">1</span>,<span class="dv">2</span>,<span class="dv">3</span>)[<span class="fu">which.max</span>(<span class="fu">c</span>(c0,c1,c2,c3))])</span>
+<span id="cb6-69"><a href="#cb6-69" aria-hidden="true" tabindex="-1"></a>}</span>
+<span id="cb6-70"><a href="#cb6-70" aria-hidden="true" tabindex="-1"></a>predBayes <span class="ot">&lt;-</span> <span class="fu">rep</span>(<span class="cn">NA</span>, nTest)</span>
+<span id="cb6-71"><a href="#cb6-71" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span>(i <span class="cf">in</span> <span class="dv">1</span><span class="sc">:</span>nTest) predBayes[i] <span class="ot">&lt;-</span> <span class="fu">BayesClassifieur</span>(x.test[i,])</span>
+<span id="cb6-72"><a href="#cb6-72" aria-hidden="true" tabindex="-1"></a>resBayes[k] <span class="ot">&lt;-</span> <span class="fu">mean</span>(predBayes <span class="sc">!=</span> classeTest)</span>
+<span id="cb6-73"><a href="#cb6-73" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb6-74"><a href="#cb6-74" aria-hidden="true" tabindex="-1"></a><span class="do">### Bagging</span></span>
+<span id="cb6-75"><a href="#cb6-75" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb6-76"><a href="#cb6-76" aria-hidden="true" tabindex="-1"></a>baggedRf <span class="ot">&lt;-</span> <span class="fu">ranger</span>(<span class="at">formula =</span> mod<span class="sc">~</span>., <span class="at">data =</span> data.train, <span class="at">num.trees =</span> <span class="dv">100</span>, </span>
+<span id="cb6-77"><a href="#cb6-77" aria-hidden="true" tabindex="-1"></a>                   <span class="at">mtry =</span> <span class="fu">dim</span>(x.train)[<span class="dv">2</span>], <span class="at">num.threads =</span> ncores)</span>
+<span id="cb6-78"><a href="#cb6-78" aria-hidden="true" tabindex="-1"></a>predBagging <span class="ot">&lt;-</span> <span class="fu">predict</span>(<span class="at">object =</span> baggedRf, <span class="at">data =</span> x.test, <span class="at">num.threads =</span> ncores)</span>
+<span id="cb6-79"><a href="#cb6-79" aria-hidden="true" tabindex="-1"></a>resBagging[k] <span class="ot">&lt;-</span> <span class="fu">mean</span>(predBagging<span class="sc">$</span>predictions <span class="sc">!=</span> classeTest)</span>
+<span id="cb6-80"><a href="#cb6-80" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb6-81"><a href="#cb6-81" aria-hidden="true" tabindex="-1"></a><span class="do">#### Random Forests</span></span>
+<span id="cb6-82"><a href="#cb6-82" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb6-83"><a href="#cb6-83" aria-hidden="true" tabindex="-1"></a>classicRF <span class="ot">&lt;-</span> <span class="fu">ranger</span>(<span class="at">formula =</span> mod<span class="sc">~</span>., <span class="at">data =</span> data.train,</span>
+<span id="cb6-84"><a href="#cb6-84" aria-hidden="true" tabindex="-1"></a>                    <span class="at">num.trees =</span> <span class="dv">100</span>, <span class="at">num.threads =</span> ncores)</span>
+<span id="cb6-85"><a href="#cb6-85" aria-hidden="true" tabindex="-1"></a>predRF <span class="ot">&lt;-</span> <span class="fu">predict</span>(<span class="at">object =</span> classicRF, <span class="at">data =</span> x.test, <span class="at">num.threads =</span> ncores)</span>
+<span id="cb6-86"><a href="#cb6-86" aria-hidden="true" tabindex="-1"></a>resRF[k] <span class="ot">&lt;-</span><span class="fu">mean</span>(predRF<span class="sc">$</span>predictions <span class="sc">!=</span> classeTest)</span>
+<span id="cb6-87"><a href="#cb6-87" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb6-88"><a href="#cb6-88" aria-hidden="true" tabindex="-1"></a><span class="do">#### Local variable importance RF</span></span>
+<span id="cb6-89"><a href="#cb6-89" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb6-90"><a href="#cb6-90" aria-hidden="true" tabindex="-1"></a><span class="fu">source</span>(<span class="st">"LocalVarImpRF.R"</span>)</span>
+<span id="cb6-91"><a href="#cb6-91" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb6-92"><a href="#cb6-92" aria-hidden="true" tabindex="-1"></a>rf.ranger <span class="ot">&lt;-</span> <span class="fu">ranger</span>(mod <span class="sc">~</span> ., <span class="at">data =</span> data.train, <span class="at">num.trees =</span> <span class="dv">100</span>, <span class="at">num.threads =</span> ncores)</span>
+<span id="cb6-93"><a href="#cb6-93" aria-hidden="true" tabindex="-1"></a>impxStd <span class="ot">&lt;-</span> <span class="fu">matrix</span>(<span class="cn">NA</span>, <span class="at">nrow =</span> nTest, <span class="at">ncol=</span><span class="fu">dim</span>(x.train)[<span class="dv">2</span>])</span>
+<span id="cb6-94"><a href="#cb6-94" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> (i <span class="cf">in</span> <span class="dv">1</span><span class="sc">:</span>nTest) </span>
+<span id="cb6-95"><a href="#cb6-95" aria-hidden="true" tabindex="-1"></a>  {</span>
+<span id="cb6-96"><a href="#cb6-96" aria-hidden="true" tabindex="-1"></a>  impxStd[i,] <span class="ot">&lt;-</span> <span class="fu">LocalVarImp</span>(rf.ranger, x.test[i,,<span class="at">drop=</span><span class="cn">FALSE</span>])</span>
+<span id="cb6-97"><a href="#cb6-97" aria-hidden="true" tabindex="-1"></a>  }</span>
+<span id="cb6-98"><a href="#cb6-98" aria-hidden="true" tabindex="-1"></a>predLVIRF <span class="ot">&lt;-</span> <span class="fu">factor</span>(<span class="fu">c</span>(),<span class="at">levels=</span><span class="fu">levels</span>(data.train<span class="sc">$</span>mod))</span>
+<span id="cb6-99"><a href="#cb6-99" aria-hidden="true" tabindex="-1"></a><span class="co"># tp &lt;- txtProgressBar(min = 1, max = nTest, style = 3, char = "*")</span></span>
+<span id="cb6-100"><a href="#cb6-100" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> (i <span class="cf">in</span> <span class="dv">1</span><span class="sc">:</span>nTest)</span>
+<span id="cb6-101"><a href="#cb6-101" aria-hidden="true" tabindex="-1"></a>  {</span>
+<span id="cb6-102"><a href="#cb6-102" aria-hidden="true" tabindex="-1"></a>  rf.local.ranger <span class="ot">&lt;-</span> <span class="fu">ranger</span>(mod <span class="sc">~</span> ., <span class="at">data =</span> data.train, <span class="at">num.trees =</span> <span class="dv">100</span>, </span>
+<span id="cb6-103"><a href="#cb6-103" aria-hidden="true" tabindex="-1"></a>                            <span class="at">split.select.weights =</span> impxStd[i,], <span class="at">num.threads =</span> ncores)</span>
+<span id="cb6-104"><a href="#cb6-104" aria-hidden="true" tabindex="-1"></a>  predLVIRF[i] <span class="ot">&lt;-</span> <span class="fu">predict</span>(rf.local.ranger, <span class="at">data=</span>x.test[i,,<span class="at">drop=</span><span class="cn">FALSE</span>])<span class="sc">$</span>predictions</span>
+<span id="cb6-105"><a href="#cb6-105" aria-hidden="true" tabindex="-1"></a><span class="co">#  setTxtProgressBar(tp, i)</span></span>
+<span id="cb6-106"><a href="#cb6-106" aria-hidden="true" tabindex="-1"></a>  }</span>
+<span id="cb6-107"><a href="#cb6-107" aria-hidden="true" tabindex="-1"></a>resLVIRF[k] <span class="ot">&lt;-</span> <span class="fu">mean</span>(predLVIRF <span class="sc">!=</span> classeTest)</span>
+<span id="cb6-108"><a href="#cb6-108" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb6-109"><a href="#cb6-109" aria-hidden="true" tabindex="-1"></a><span class="do">#### Case Specific Random Forests</span></span>
+<span id="cb6-110"><a href="#cb6-110" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb6-111"><a href="#cb6-111" aria-hidden="true" tabindex="-1"></a><span class="do">## Nmin = 5</span></span>
+<span id="cb6-112"><a href="#cb6-112" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb6-113"><a href="#cb6-113" aria-hidden="true" tabindex="-1"></a>predCsrf5 <span class="ot">&lt;-</span> <span class="fu">csrf</span>(mod<span class="sc">~</span>., <span class="at">training_data =</span> data.train, <span class="at">test_data =</span> <span class="fu">data.frame</span>(x.test), <span class="at">params1 =</span> <span class="fu">list</span>(<span class="at">num.trees=</span><span class="dv">100</span>, <span class="at">mtry =</span> <span class="fu">dim</span>(x.train)[<span class="dv">2</span>], <span class="at">min.node.size =</span> <span class="dv">5</span>, <span class="at">num.threads =</span> ncores), <span class="at">params2 =</span> <span class="fu">list</span>(<span class="at">num.trees=</span><span class="dv">100</span>, <span class="at">num.threads =</span> ncores))</span>
+<span id="cb6-114"><a href="#cb6-114" aria-hidden="true" tabindex="-1"></a>resCsrf5[k] <span class="ot">&lt;-</span> <span class="fu">mean</span>(predCsrf5 <span class="sc">!=</span> classeTest)</span>
+<span id="cb6-115"><a href="#cb6-115" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb6-116"><a href="#cb6-116" aria-hidden="true" tabindex="-1"></a><span class="do">## Nmin = 10</span></span>
+<span id="cb6-117"><a href="#cb6-117" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb6-118"><a href="#cb6-118" aria-hidden="true" tabindex="-1"></a>predCsrf10 <span class="ot">&lt;-</span> <span class="fu">csrf</span>(mod<span class="sc">~</span>., <span class="at">training_data =</span> data.train, <span class="at">test_data =</span> <span class="fu">data.frame</span>(x.test), <span class="at">params1 =</span> <span class="fu">list</span>(<span class="at">num.trees=</span><span class="dv">100</span>, <span class="at">mtry =</span> <span class="fu">dim</span>(x.train)[<span class="dv">2</span>], <span class="at">min.node.size =</span> <span class="dv">10</span>, <span class="at">num.threads =</span> ncores), <span class="at">params2 =</span> <span class="fu">list</span>(<span class="at">num.trees=</span><span class="dv">100</span>, <span class="at">num.threads =</span> ncores))</span>
+<span id="cb6-119"><a href="#cb6-119" aria-hidden="true" tabindex="-1"></a>resCsrf10[k] <span class="ot">&lt;-</span> <span class="fu">mean</span>(predCsrf10 <span class="sc">!=</span> classeTest)</span>
+<span id="cb6-120"><a href="#cb6-120" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb6-121"><a href="#cb6-121" aria-hidden="true" tabindex="-1"></a><span class="do">#### Local dynamic selection RF</span></span>
+<span id="cb6-122"><a href="#cb6-122" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb6-123"><a href="#cb6-123" aria-hidden="true" tabindex="-1"></a><span class="fu">source</span>(<span class="st">"DynamicVotingWithSelectionRF.R"</span>)</span>
+<span id="cb6-124"><a href="#cb6-124" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb6-125"><a href="#cb6-125" aria-hidden="true" tabindex="-1"></a><span class="do">## 100 neighbors, we keep 100 best trees (all)</span></span>
+<span id="cb6-126"><a href="#cb6-126" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb6-127"><a href="#cb6-127" aria-hidden="true" tabindex="-1"></a>predDVSRF1 <span class="ot">&lt;-</span> <span class="fu">dynamicVoting</span>(<span class="at">formula =</span> mod<span class="sc">~</span>., <span class="at">data =</span> data.train, <span class="at">dataTest =</span> <span class="fu">data.frame</span>(x.test), <span class="at">K =</span> <span class="dv">100</span>, <span class="at">ntree =</span> <span class="dv">100</span>, <span class="at">ntreeToKeep =</span> <span class="dv">100</span>, <span class="at">ncores =</span> ncores)</span>
+<span id="cb6-128"><a href="#cb6-128" aria-hidden="true" tabindex="-1"></a>resDVSRF1[k] <span class="ot">&lt;-</span> <span class="fu">mean</span>(predDVSRF1<span class="sc">$</span>prediction <span class="sc">!=</span>  classeTest)</span>
+<span id="cb6-129"><a href="#cb6-129" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb6-130"><a href="#cb6-130" aria-hidden="true" tabindex="-1"></a><span class="fu">source</span>(<span class="st">"KernelVotingRF.R"</span>)</span>
+<span id="cb6-131"><a href="#cb6-131" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb6-132"><a href="#cb6-132" aria-hidden="true" tabindex="-1"></a><span class="do">## alpha = 0.5</span></span>
+<span id="cb6-133"><a href="#cb6-133" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb6-134"><a href="#cb6-134" aria-hidden="true" tabindex="-1"></a>predKVRF1 <span class="ot">&lt;-</span> <span class="fu">kernelVoting</span>(<span class="at">formula =</span> mod<span class="sc">~</span>., <span class="at">data =</span> data.train, <span class="at">dataTest =</span> <span class="fu">data.frame</span>(x.test), <span class="at">ntree =</span> <span class="dv">100</span>, <span class="at">ncores =</span> ncores, <span class="at">rule =</span> <span class="st">"quantile"</span>, <span class="at">alpha =</span> <span class="fl">0.5</span>)</span>
+<span id="cb6-135"><a href="#cb6-135" aria-hidden="true" tabindex="-1"></a>resKVRF1[k] <span class="ot">&lt;-</span> <span class="fu">mean</span>(predKVRF1<span class="sc">$</span>prediction <span class="sc">!=</span> classeTest)</span>
+<span id="cb6-136"><a href="#cb6-136" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb6-137"><a href="#cb6-137" aria-hidden="true" tabindex="-1"></a><span class="do">#### Nearest-neighbors followed by classic RF</span></span>
+<span id="cb6-138"><a href="#cb6-138" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb6-139"><a href="#cb6-139" aria-hidden="true" tabindex="-1"></a>madInit <span class="ot">&lt;-</span> <span class="fu">apply</span>(<span class="at">X =</span> x.train, <span class="dv">2</span>, mad)</span>
+<span id="cb6-140"><a href="#cb6-140" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb6-141"><a href="#cb6-141" aria-hidden="true" tabindex="-1"></a><span class="do">## 100 NN</span></span>
+<span id="cb6-142"><a href="#cb6-142" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb6-143"><a href="#cb6-143" aria-hidden="true" tabindex="-1"></a>K <span class="ot">&lt;-</span> <span class="dv">250</span></span>
+<span id="cb6-144"><a href="#cb6-144" aria-hidden="true" tabindex="-1"></a>predNNRF1 <span class="ot">&lt;-</span> <span class="fu">factor</span>(<span class="fu">c</span>(),<span class="at">levels=</span><span class="fu">levels</span>(data.train<span class="sc">$</span>mod))</span>
+<span id="cb6-145"><a href="#cb6-145" aria-hidden="true" tabindex="-1"></a><span class="co"># tp &lt;- txtProgressBar(min = 1, max = nTest, style = 3, char = "*")</span></span>
+<span id="cb6-146"><a href="#cb6-146" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span>(i <span class="cf">in</span> <span class="dv">1</span><span class="sc">:</span>nTest)</span>
+<span id="cb6-147"><a href="#cb6-147" aria-hidden="true" tabindex="-1"></a>  {</span>
+<span id="cb6-148"><a href="#cb6-148" aria-hidden="true" tabindex="-1"></a>  distances <span class="ot">&lt;-</span> <span class="fu">sapply</span>(<span class="dv">1</span><span class="sc">:</span>n, <span class="cf">function</span>(X) <span class="fu">sqrt</span>(<span class="fu">mean</span>( ( (x.train[X,]<span class="sc">-</span>x.test[i,])<span class="sc">/</span>madInit )<span class="sc">^</span><span class="dv">2</span>)) )</span>
+<span id="cb6-149"><a href="#cb6-149" aria-hidden="true" tabindex="-1"></a>  ord <span class="ot">&lt;-</span> <span class="fu">order</span>(distances)</span>
+<span id="cb6-150"><a href="#cb6-150" aria-hidden="true" tabindex="-1"></a>  toKeep <span class="ot">&lt;-</span> ord[<span class="dv">1</span><span class="sc">:</span>K]</span>
+<span id="cb6-151"><a href="#cb6-151" aria-hidden="true" tabindex="-1"></a>  data.trainNN <span class="ot">&lt;-</span> data.train[toKeep,]</span>
+<span id="cb6-152"><a href="#cb6-152" aria-hidden="true" tabindex="-1"></a>  rfNN <span class="ot">&lt;-</span> <span class="fu">ranger</span>(<span class="at">formula =</span> mod<span class="sc">~</span>., <span class="at">data =</span> data.trainNN, <span class="at">num.trees =</span> <span class="dv">100</span>, <span class="at">num.threads=</span>ncores)</span>
+<span id="cb6-153"><a href="#cb6-153" aria-hidden="true" tabindex="-1"></a>  predNNRF1[i] <span class="ot">&lt;-</span> <span class="fu">predict</span>(rfNN, <span class="at">data=</span><span class="fu">data.frame</span>(x.test[i,,<span class="at">drop=</span><span class="cn">FALSE</span>]), <span class="at">num.threads=</span>ncores)<span class="sc">$</span>predictions</span>
+<span id="cb6-154"><a href="#cb6-154" aria-hidden="true" tabindex="-1"></a><span class="co">#  setTxtProgressBar(tp, i)</span></span>
+<span id="cb6-155"><a href="#cb6-155" aria-hidden="true" tabindex="-1"></a>  }</span>
+<span id="cb6-156"><a href="#cb6-156" aria-hidden="true" tabindex="-1"></a>resNNRF1[k] <span class="ot">&lt;-</span> <span class="fu">mean</span>(predNNRF1 <span class="sc">!=</span> classeTest)</span>
+<span id="cb6-157"><a href="#cb6-157" aria-hidden="true" tabindex="-1"></a>}</span>
+<span id="cb6-158"><a href="#cb6-158" aria-hidden="true" tabindex="-1"></a>resTOT <span class="ot">&lt;-</span> <span class="fu">cbind</span>(resBayes,resBagging,resRF,resLVIRF,resCsrf5,resCsrf10,resDVSRF1,resKVRF1,resNNRF1)</span>
+<span id="cb6-159"><a href="#cb6-159" aria-hidden="true" tabindex="-1"></a>resTOT<span class="ot">&lt;-</span><span class="dv">100</span><span class="sc">*</span>resTOT</span>
+<span id="cb6-160"><a href="#cb6-160" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb6-161"><a href="#cb6-161" aria-hidden="true" tabindex="-1"></a>Identifier<span class="ot">&lt;-</span><span class="fu">c</span>(<span class="st">"Bayes classifier"</span>,<span class="st">"Bagged CARTs"</span>,<span class="st">"Random forest"</span>,<span class="st">"LVI-RF"</span>,<span class="st">"CSRF"</span>,<span class="st">"CSRF"</span>,<span class="st">"DVSRF"</span>,<span class="st">"KV-RF"</span>,<span class="st">"NN-RF"</span>)</span>
+<span id="cb6-162"><a href="#cb6-162" aria-hidden="true" tabindex="-1"></a>Characteristics<span class="ot">&lt;-</span><span class="fu">c</span>(<span class="st">""</span>,<span class="st">""</span>,<span class="st">""</span>,<span class="st">""</span>,<span class="st">"Nmin=5"</span>,<span class="st">"Nmin=10"</span>,<span class="st">"k=100,Bsel=100"</span>,<span class="st">""</span>,<span class="st">"k=250"</span>)</span>
+<span id="cb6-163"><a href="#cb6-163" aria-hidden="true" tabindex="-1"></a>Table<span class="ot">=</span><span class="fu">cbind</span>(Identifier,Characteristics,<span class="fu">apply</span>(resTOT,<span class="dv">2</span>,mean),<span class="fu">paste</span>(<span class="st">"("</span>,<span class="fu">round</span>(<span class="fu">apply</span>(resTOT,<span class="dv">2</span>,sd),<span class="dv">2</span>),<span class="st">")"</span>,<span class="at">sep=</span><span class="st">""</span>))</span>
+<span id="cb6-164"><a href="#cb6-164" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb6-165"><a href="#cb6-165" aria-hidden="true" tabindex="-1"></a>TableOrdered<span class="ot">=</span>Table[<span class="fu">c</span>(<span class="dv">1</span><span class="sc">:</span><span class="dv">3</span>,<span class="dv">5</span><span class="sc">:</span><span class="dv">6</span>,<span class="dv">9</span>,<span class="dv">4</span>,<span class="dv">7</span>,<span class="dv">8</span>),]</span>
+<span id="cb6-166"><a href="#cb6-166" aria-hidden="true" tabindex="-1"></a><span class="fu">colnames</span>(TableOrdered)<span class="ot">=</span><span class="fu">c</span>(<span class="st">"Method"</span>,<span class="st">"Parameters"</span>,<span class="st">"Error rate"</span>,<span class="st">"(sd)"</span>)</span>
+<span id="cb6-167"><a href="#cb6-167" aria-hidden="true" tabindex="-1"></a><span class="fu">rownames</span>(TableOrdered)<span class="ot">=</span><span class="cn">NULL</span></span>
+<span id="cb6-168"><a href="#cb6-168" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb6-169"><a href="#cb6-169" aria-hidden="true" tabindex="-1"></a>knitr<span class="sc">::</span><span class="fu">kable</span>(TableOrdered,<span class="at">caption=</span> <span class="st">"Toy example: prediction error rate (percentage)"</span>,<span class="at">booktabs=</span>T,<span class="at">label=</span> <span class="st">"ToyEx"</span>,<span class="at">row.names=</span><span class="cn">NA</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<table class="table table-sm table-striped small">
+<caption>Toy example: prediction error rate (percentage)</caption>
+<thead>
+<tr class="header">
+<th style="text-align: left;">Method</th>
+<th style="text-align: left;">Parameters</th>
+<th style="text-align: left;">Error rate</th>
+<th style="text-align: left;">(sd)</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: left;">Bayes classifier</td>
+<td style="text-align: left;"></td>
+<td style="text-align: left;">14.6</td>
+<td style="text-align: left;">(3.78)</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Bagged CARTs</td>
+<td style="text-align: left;"></td>
+<td style="text-align: left;">29.4</td>
+<td style="text-align: left;">(2.07)</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">Random forest</td>
+<td style="text-align: left;"></td>
+<td style="text-align: left;">27.4</td>
+<td style="text-align: left;">(1.82)</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">CSRF</td>
+<td style="text-align: left;">Nmin=5</td>
+<td style="text-align: left;">29.2</td>
+<td style="text-align: left;">(3.35)</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">CSRF</td>
+<td style="text-align: left;">Nmin=10</td>
+<td style="text-align: left;">29.6</td>
+<td style="text-align: left;">(3.21)</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">NN-RF</td>
+<td style="text-align: left;">k=250</td>
+<td style="text-align: left;">26.8</td>
+<td style="text-align: left;">(4.32)</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">LVI-RF</td>
+<td style="text-align: left;"></td>
+<td style="text-align: left;">28.2</td>
+<td style="text-align: left;">(5.45)</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">DVSRF</td>
+<td style="text-align: left;">k=100,Bsel=100</td>
+<td style="text-align: left;">25.2</td>
+<td style="text-align: left;">(1.64)</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">KV-RF</td>
+<td style="text-align: left;"></td>
+<td style="text-align: left;">25</td>
+<td style="text-align: left;">(2.55)</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+</section>
+<section id="sec:discussions" class="level1">
+<h1>Discussions</h1>
+<p>In this paper, we review, discuss and propose local tree-based methods strategies taking into account a specific instance during the learning process in the context of classification problems. The results are not up to our expectations. We considered four examples where local methods seemed useful but we did not obtained conclusive results.</p>
+<p>Our proposal to introduce weights in the splitting criterion (see Section @ref(sec:localSplittingRules): LazyDT and kernel approaches) is problematic. Putting too high weights around <span class="math inline">\(\xs\)</span> results in irrelevant cut-points, closer to <span class="math inline">\(\xs\)</span> compared to RF. It induces large correlations between the trees in the forest, and the quality of prediction is impacted negatively. This is why for the kernel approaches a bandwith of quantile <span class="math inline">\(\alpha=1\)</span> is preferred. With this choice, even if it localized the trees, we obtained results very similar if not worse than those of RF, at the cost of very high computational complexity. Less computationally intensive but as disappointing is the kernel voting RF strategy.</p>
+<p>The CSRF of <span class="citation" data-cites="xu:etal:2016">Xu, Nettleton, and Nordman (<a href="#ref-xu:etal:2016" role="doc-biblioref">2016</a>)</span> (see Section @ref(subsec:weightingIndividuals)), the nearest neighbor weights (Section @ref(subsec:nearest-neighbours)) and the local weighting of covariates (Section @ref(sec:weightingCovariates)) strategies can give good performance but depend on tuning parameters. For instance, the CSRF brings better performance when the tree depth is low, i.e.&nbsp;high <span class="math inline">\(\Nmin\)</span>. However, generally, results provided by these local methods are very similar to eager ones, and no great benefit is observed on our three examples. When looking at the very small benefits in terms of prediction error rate compared to the non-local approaches, we can say that local strategies are clearly not worth the additional computational cost. Especially since most of them require the choice of a tuning parameter, characterizing the weights given to instances surrounding <span class="math inline">\(\xs\)</span>.</p>
+<p>We have not considered here the case of regression problems, for which local tree-based methods have also been proposed. For instance the CSRF, the nearest neighbor weights and the dynamic voting with selection random forests are directly applicable to regression forests, and in most cases already implemented. Similarly, our propositions regarding local weighting of covariates, and local splitting criterion using kernels would easily be extendable to regression problems. In a local regression framework, <span class="citation" data-cites="friedberg2020local">Friedberg et al. (<a href="#ref-friedberg2020local" role="doc-biblioref">2020</a>)</span> consider a two-step approach where the response <span class="math inline">\(y^\star\)</span> is predicted from a locally weighted ridge regression using weights from a modified random forest. This forest is built with a modified splitting criterion which minimizes the residuals in each leaf after fitting a ridge regression to predict <span class="math inline">\(y_j\)</span> from <span class="math inline">\(x_j\)</span>. Whether these methods improve the original random forest in the case of regression is still an open question, but our results in the case of classification are not optimistic.</p>
+<p>:::</p>
+</section>
+<section id="references" class="level1 unnumbered">
+<h1 class="unnumbered">References</h1>
+<div id="refs" class="references csl-bib-body hanging-indent" role="list">
+<div id="ref-aha:etal:1991" class="csl-entry" role="listitem">
+Aha, D. W., D. Kibler, and M. K. Albert. 1991. <span>“<span class="nocase">Instance-based learning algorithms</span>.”</span> <em>Machine Learning</em> 6: 37–66.
+</div>
+<div id="ref-amaratunga:etal:2008" class="csl-entry" role="listitem">
+Amaratunga, D., J. Cabrera, and Y.-S. Lee. 2008. <span>“Enriched Random Forests.”</span> <em>Bioinformatics</em> 24 (18): 2010–14.
+</div>
+<div id="ref-armano:tamponi:2018" class="csl-entry" role="listitem">
+Armano, G., and E. Tamponi. 2018. <span>“Building Forests of Local Trees.”</span> <em>Pattern Recognition</em> 76: 380–90.
+</div>
+<div id="ref-beaumont:etal:2002" class="csl-entry" role="listitem">
+Beaumont, M., W. Zhang, and D. Balding. 2002. <span>“Approximate <span>Bayesian</span> Computation in Population Genetics.”</span> <em>Genetics</em> 162 (4): 2025–35.
+</div>
+<div id="ref-biau:2012" class="csl-entry" role="listitem">
+Biau, G. 2012. <span>“Analysis of a Random Forest Model.”</span> <em>Journal of Machine Learning Research</em> 13: 1063–95.
+</div>
+<div id="ref-blum:francois:2010" class="csl-entry" role="listitem">
+Blum, M. G. B., and O. François. 2010. <span>“Non-Linear Regression Models for Approximate <span>B</span>ayesian Computation.”</span> <em>Statistics and Computing</em> 20: 63–73.
+</div>
+<div id="ref-blum:etal:2013" class="csl-entry" role="listitem">
+Blum, M. G. B., M. Nunes, D. Prangle, and S. A. Sisson. 2013. <span>“A Comparative Review of Dimension Reduction Methods in Approximate <span>Bayesian</span> Computation.”</span> <em>Statistical Science</em> 28 (2): 189–208.
+</div>
+<div id="ref-breiman:1996" class="csl-entry" role="listitem">
+Breiman. 1996. <span>“Bagging Predictors.”</span> <em>Machine Learning</em> 24: 123–40.
+</div>
+<div id="ref-breiman:2001" class="csl-entry" role="listitem">
+———. 2001. <span>“Random Forests.”</span> <em>Machine Learning</em> 45: 5–32.
+</div>
+<div id="ref-breiman:etal:1984" class="csl-entry" role="listitem">
+Breiman, L., J. Friedman, C. J. Stone, and R. A. Olshen. 1984. <em>Classification and Regression Trees</em>. The Wadsworth and Brooks-Cole Statistics-Probability Series. Taylor &amp; Francis.
+</div>
+<div id="ref-chapelle:etal:2010" class="csl-entry" role="listitem">
+Chapelle, O., B. Schölkopf, and A. Zien. 2010. <em>Semi-Supervised Learning</em>. Adaptive Computation and Machine Learning. MIT Press.
+</div>
+<div id="ref-cleveland:1979" class="csl-entry" role="listitem">
+Cleveland, W. 1979. <span>“<span class="nocase">Robust Locally Weighted Regression and Smoothing Scatterplots</span>.”</span> <em>Journal of the American Statistical Association</em> 74 (368): 829–36.
+</div>
+<div id="ref-cleveland:devlin:1988" class="csl-entry" role="listitem">
+———. 1988. <span>“<span class="nocase">Locally Weighted Regression: An Approach to Regression Analysis by Local Fitting</span>.”</span> <em>Journal of the American Statistical Association</em> 83 (403): 596–610.
+</div>
+<div id="ref-cornuet:etal:2014" class="csl-entry" role="listitem">
+Cornuet, J.-M., P. Pudlo, J. Veyssier, A. Dehne-Garcia, M. Gautier, R. Leblois, J.-M. Marin, and A. Estoup. 2014. <span>“DIYABC V2.0: A Software to Make Approximate Bayesian Computation Inferences about Population History Using Single Nucleotide Polymorphism, <span>DNA</span> Sequence and Microsatellite Data.”</span> <em>Bioinformatics</em> 30 (8): 1187–89.
+</div>
+<div id="ref-fan:1993" class="csl-entry" role="listitem">
+Fan, J. 1993. <span>“Local Linear Regression Smoothers and Their Minimax Efficiencies.”</span> <em>The Annals of Statistics</em> 21 (1): 196?216.
+</div>
+<div id="ref-fayyad:irani:1995" class="csl-entry" role="listitem">
+Fayyad, U. M., and K. B. Irani. 1995. <span>“Multi-Interval Discretization of Continuous-Valued Attributes for Classification Learning.”</span> <em>Proceedings of the 13th International Joint Conference on Artificial Intelligence</em> 2: 1022–27.
+</div>
+<div id="ref-fern:etal:2003" class="csl-entry" role="listitem">
+Fern, X. Z, and C. E Brodley. 2003. <span>“Boosting Lazy Decision Trees.”</span> <em>Proceedings of the Twentieth International Conference on Machine Learning</em> 20 (1): 178–85.
+</div>
+<div id="ref-friedberg2020local" class="csl-entry" role="listitem">
+Friedberg, Rina, Julie Tibshirani, Susan Athey, and Stefan Wager. 2020. <span>“Local Linear Forests.”</span> <em>Journal of Computational and Graphical Statistics</em> 30 (2): 503–17.
+</div>
+<div id="ref-friedman:etal:1997" class="csl-entry" role="listitem">
+Friedman, J. H., R. Kohavi, and Y. Yun. 1997. <span>“Lazy Decision Trees.”</span> <em>Proceedings of the 13th National Conference on AAAI</em>, 717–24.
+</div>
+<div id="ref-fulton:etal:1996" class="csl-entry" role="listitem">
+Fulton, T., S. Kasif, S. Salzberg, and D. L. Waltz. 1996. <span>“Local Induction of Decision Trees: Towards Interactive Data Mining.”</span> In <em>Proceedings of the Second International Conference on Knowledge Discovery and Data Mining</em>, 14–19. AAAI Press.
+</div>
+<div id="ref-galvan:etal:2009" class="csl-entry" role="listitem">
+Galván, I. M., J. M. Valls, N. Lecomte, and P. Isasi. 2009. <span>“A Lazy Approach for Machine Learning Algorithms.”</span> <em>IFIP International Federation for Information Processing</em> 296: 517–22.
+</div>
+<div id="ref-gammerman:etal:1998" class="csl-entry" role="listitem">
+Gammerman, A., V. Vovk, and V. Vapnik. 1998. <span>“Learning by Transduction.”</span> In <em>Proceedings of the Fourteenth Conference on Uncertainty in Artificial Intelligence</em>, 148–55. UAI’98. San Francisco, CA, USA: Morgan Kaufmann Publishers Inc.
+</div>
+<div id="ref-hastie:loader:1993" class="csl-entry" role="listitem">
+Hastie, T., and C. Loader. 1993. <span>“Local Regression: Automatic Kernel Carpentry (with Discussion).”</span> <em>Statistical Science</em> 8 (2): 120–29.
+</div>
+<div id="ref-margineantu:dietterich:2003" class="csl-entry" role="listitem">
+Margineantu, D. D., and T. G. Dietterich. 2003. <span>“Improved Class Probability Estimates from Decision Tree Models.”</span> <em>Lecture Notes in Statistics - Nonlinear Estimation and Classification</em> 171: 173–88.
+</div>
+<div id="ref-maudes:etal:2012" class="csl-entry" role="listitem">
+Maudes, J., J. J. Rodríguez, C. Carcía-Osorio, and N. Garcá-Pedrajas. 2012. <span>“<span>R</span>andom Feature Weights for Decision Tree Ensemble Construction.”</span> <em>Information Fusion</em> 13 (1): 20–30.
+</div>
+<div id="ref-pritchard:etal:1999" class="csl-entry" role="listitem">
+Pritchard, J. K., M. T. Seielstad, A. Perez-Lezaun, and M. W. Feldman. 1999. <span>“Population Growth of Human <span>Y</span> Chromosomes: A Study of <span>Y</span> Chromosome Microsatellites.”</span> <em>Molecular Biology and Evolution</em> 16: 1791–98.
+</div>
+<div id="ref-pudlo:etal:2016" class="csl-entry" role="listitem">
+Pudlo, P., J.-M. Marin, A. Estoup, J.-M. Cornuet, M. Gautier, and C. P. Robert. 2016. <span>“Reliable <span>ABC</span> Model Choice via Random Forests.”</span> <em>Bioinformatics</em> 32 (6): 859–66.
+</div>
+<div id="ref-raynal:etal:2019" class="csl-entry" role="listitem">
+Raynal, L., J.-M. Marin, P. Pudlo, M. Ribatet, C. P. Robert, and A. Estoup. 2019. <span>“<span>ABC</span> Random Forests for <span>B</span>ayesian Parameter Inference.”</span> <em>Bioinformatics</em> 35 (10): 1720–28.
+</div>
+<div id="ref-robnik:2004" class="csl-entry" role="listitem">
+Robnik-Šikonja, M. 2004. <span>“Improving Random Forests.”</span> In <em>Machine Learning: ECML 2004</em>, edited by Jean-François Boulicaut, Floriana Esposito, Fosca Giannotti, and Dino Pedreschi, 359–70. Berlin, Heidelberg: Springer Berlin, Heidelberg.
+</div>
+<div id="ref-salles:etal:2018" class="csl-entry" role="listitem">
+Salles, T., M. Gonçalves, V. Rodrigues, and L. Rocha. 2018. <span>“Improving Random Forests by Neighborhood Projection for Effective Text Classification.”</span> <em>Information Systems</em> 77: 1–21.
+</div>
+<div id="ref-scornet:etal:2015" class="csl-entry" role="listitem">
+Scornet, E., G. Biau, and J.-P. Vert. 2015. <span>“Consistency of Random Forests.”</span> <em>Annals of Statistics</em> 43 (4): 1716–41.
+</div>
+<div id="ref-tavare:etal:1997" class="csl-entry" role="listitem">
+Tavaré, S., D. Balding, R. Griffiths, and P. Donnelly. 1997. <span>“Inferring Coalescence Times from DNA Sequence Data.”</span> <em>Genetics</em> 145 (2): 505–18.
+</div>
+<div id="ref-tsymbal:etal:2006" class="csl-entry" role="listitem">
+Tsymbal, A., M. Pechenizkiy, and Pádraig Cunningham. 2006. <span>“Dynamic Integration with Random Forests.”</span> In <em>Machine Learning: ECML 2006. ECML 2006. Lecture Notes in Computer Science</em>, edited by J. Fürnkranz, T. Scheffer, and M. Spiliopoulou, 801–8. Berlin, Heidelberg: Springer Berlin, Heidelberg.
+</div>
+<div id="ref-wright:ziegler:2017" class="csl-entry" role="listitem">
+Wright, M. N., and A. Ziegler. 2017. <span>“Ranger: A Fast Implementation of Random Forests for High Dimensional Data in <span>C</span>++ and <span>R</span>.”</span> <em>Journal of Statistical Software</em> 77 (1): 1–17.
+</div>
+<div id="ref-xu:etal:2016" class="csl-entry" role="listitem">
+Xu, R., D. Nettleton, and D. J. Nordman. 2016. <span>“Case-Specific Random Forests.”</span> <em>Journal of Computational and Graphical Statistics</em> 25 (1): 49–65.
+</div>
+<div id="ref-zhang:etal:2013" class="csl-entry" role="listitem">
+Zhang, L., Y. Ren, and P. N. Suganthan. 2013. <span>“Instance Based Random Forest with Rotated Feature Space.”</span> In <em>2013 IEEE Symposium on Computational Intelligence and Ensemble Learning (CIEL)</em>, 31–35.
+</div>
+</div>
+</section>
+
+
+<div id="quarto-appendix" class="default"><section id="session-information" class="level1 appendix unnumbered"><h2 class="anchored quarto-appendix-heading">Session information</h2><div class="quarto-appendix-contents">
+
+<div class="cell">
+<div class="sourceCode cell-code" id="cb7"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a><span class="fu">sessionInfo</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>R version 4.3.2 (2023-10-31)
+Platform: x86_64-conda-linux-gnu (64-bit)
+Running under: Ubuntu 22.04.3 LTS
+
+Matrix products: default
+BLAS/LAPACK: /home/runner/micromamba-root/envs/computorbuild/lib/libopenblasp-r0.3.25.so;  LAPACK version 3.11.0
+
+locale:
+ [1] LC_CTYPE=C.UTF-8       LC_NUMERIC=C           LC_TIME=C.UTF-8       
+ [4] LC_COLLATE=C.UTF-8     LC_MONETARY=C.UTF-8    LC_MESSAGES=C.UTF-8   
+ [7] LC_PAPER=C.UTF-8       LC_NAME=C              LC_ADDRESS=C          
+[10] LC_TELEPHONE=C         LC_MEASUREMENT=C.UTF-8 LC_IDENTIFICATION=C   
+
+time zone: Etc/UTC
+tzcode source: system (glibc)
+
+attached base packages:
+[1] parallel  stats     graphics  grDevices utils     datasets  methods  
+[8] base     
+
+other attached packages:
+[1] Rcpp_1.0.11   ranger_0.16.0 xtable_1.8-4  mvtnorm_1.2-3
+
+loaded via a namespace (and not attached):
+ [1] digest_0.6.33     fastmap_1.1.1     Matrix_1.6-3      xfun_0.41        
+ [5] lattice_0.22-5    knitr_1.45        htmltools_0.5.7   png_0.1-8        
+ [9] rmarkdown_2.25    cli_3.6.1         grid_4.3.2        compiler_4.3.2   
+[13] tools_4.3.2       evaluate_0.23     yaml_2.3.7        rlang_1.1.2      
+[17] jsonlite_1.8.7    htmlwidgets_1.6.2</code></pre>
+</div>
+</div>
+</div></section><section class="quarto-appendix-contents"><h2 class="anchored quarto-appendix-heading">Citation</h2><div><div class="quarto-appendix-secondary-label">BibTeX citation:</div><pre class="sourceCode code-with-copy quarto-appendix-bibtex"><code class="sourceCode bibtex">@article{cleynen2023,
+  author = {Cleynen, Alice and Raynal, Louis and Marin, Jean-Michel},
+  publisher = {Société Française de Statistique},
+  title = {Local Tree Methods for Classification: A Review and Some Dead
+    Ends},
+  journal = {Computo},
+  date = {2023-11-22},
+  url = {https://computo.sfds.asso.fr/template-computo-quarto},
+  doi = {xxxx},
+  issn = {2824-7795},
+  langid = {en},
+  abstract = {Random Forests (RF) {[}@breiman:2001{]} are very popular
+    machine learning methods. They perform well even with little or no
+    tuning, and have some theoretical guarantees, especially for sparse
+    problems {[}@biau:2012;@scornet:etal:2015{]}. These learning
+    strategies have been used in several contexts, also outside the
+    field of classification and regression. To perform Bayesian model
+    selection in the case of intractable likelihoods, the ABC Random
+    Forests (ABC-RF) strategy of @pudlo:etal:2016 consists in applying
+    Random Forests on training sets composed of simulations coming from
+    the Bayesian generative models. The ABC-RF technique is based on an
+    underlying RF for which the training and prediction phases are
+    separated. The training phase does not take into account the data to
+    be predicted. This seems to be suboptimal as in the ABC framework
+    only one observation is of interest for the prediction. In this
+    paper, we study tree-based methods that are built to predict a
+    specific instance in a classification setting. This type of methods
+    falls within the scope of local (lazy/instance-based/case specific)
+    classification learning. We review some existing strategies and
+    propose two new ones. The first consists in modifying the tree
+    splitting rule by using kernels, the second in using a first RF to
+    compute some local variable importance that is used to train a
+    second, more local, RF. Unfortunately, these approaches, although
+    interesting, do not provide conclusive results.}
+}
+</code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre><div class="quarto-appendix-secondary-label">For attribution, please cite this work as:</div><div id="ref-cleynen2023" class="csl-entry quarto-appendix-citeas" role="listitem">
+Cleynen, Alice, Louis Raynal, and Jean-Michel Marin. 2023. <span>“Local
+Tree Methods for Classification: A Review and Some Dead Ends.”</span>
+<em>Computo</em>, November. <a href="https://doi.org/xxxx">https://doi.org/xxxx</a>.
+</div></div></section></div></main>
+<!-- /main column -->
+<script id="quarto-html-after-body" type="application/javascript">
+window.document.addEventListener("DOMContentLoaded", function (event) {
+  const toggleBodyColorMode = (bsSheetEl) => {
+    const mode = bsSheetEl.getAttribute("data-mode");
+    const bodyEl = window.document.querySelector("body");
+    if (mode === "dark") {
+      bodyEl.classList.add("quarto-dark");
+      bodyEl.classList.remove("quarto-light");
+    } else {
+      bodyEl.classList.add("quarto-light");
+      bodyEl.classList.remove("quarto-dark");
+    }
+  }
+  const toggleBodyColorPrimary = () => {
+    const bsSheetEl = window.document.querySelector("link#quarto-bootstrap");
+    if (bsSheetEl) {
+      toggleBodyColorMode(bsSheetEl);
+    }
+  }
+  toggleBodyColorPrimary();  
+  const icon = "";
+  const anchorJS = new window.AnchorJS();
+  anchorJS.options = {
+    placement: 'right',
+    icon: icon
+  };
+  anchorJS.add('.anchored');
+  const isCodeAnnotation = (el) => {
+    for (const clz of el.classList) {
+      if (clz.startsWith('code-annotation-')) {                     
+        return true;
+      }
+    }
+    return false;
+  }
+  const clipboard = new window.ClipboardJS('.code-copy-button', {
+    text: function(trigger) {
+      const codeEl = trigger.previousElementSibling.cloneNode(true);
+      for (const childEl of codeEl.children) {
+        if (isCodeAnnotation(childEl)) {
+          childEl.remove();
+        }
+      }
+      return codeEl.innerText;
+    }
+  });
+  clipboard.on('success', function(e) {
+    // button target
+    const button = e.trigger;
+    // don't keep focus
+    button.blur();
+    // flash "checked"
+    button.classList.add('code-copy-button-checked');
+    var currentTitle = button.getAttribute("title");
+    button.setAttribute("title", "Copied!");
+    let tooltip;
+    if (window.bootstrap) {
+      button.setAttribute("data-bs-toggle", "tooltip");
+      button.setAttribute("data-bs-placement", "left");
+      button.setAttribute("data-bs-title", "Copied!");
+      tooltip = new bootstrap.Tooltip(button, 
+        { trigger: "manual", 
+          customClass: "code-copy-button-tooltip",
+          offset: [0, -8]});
+      tooltip.show();    
+    }
+    setTimeout(function() {
+      if (tooltip) {
+        tooltip.hide();
+        button.removeAttribute("data-bs-title");
+        button.removeAttribute("data-bs-toggle");
+        button.removeAttribute("data-bs-placement");
+      }
+      button.setAttribute("title", currentTitle);
+      button.classList.remove('code-copy-button-checked');
+    }, 1000);
+    // clear code selection
+    e.clearSelection();
+  });
+  function tippyHover(el, contentFn) {
+    const config = {
+      allowHTML: true,
+      content: contentFn,
+      maxWidth: 500,
+      delay: 100,
+      arrow: false,
+      appendTo: function(el) {
+          return el.parentElement;
+      },
+      interactive: true,
+      interactiveBorder: 10,
+      theme: 'quarto',
+      placement: 'bottom-start'
+    };
+    window.tippy(el, config); 
+  }
+  const noterefs = window.document.querySelectorAll('a[role="doc-noteref"]');
+  for (var i=0; i<noterefs.length; i++) {
+    const ref = noterefs[i];
+    tippyHover(ref, function() {
+      // use id or data attribute instead here
+      let href = ref.getAttribute('data-footnote-href') || ref.getAttribute('href');
+      try { href = new URL(href).hash; } catch {}
+      const id = href.replace(/^#\/?/, "");
+      const note = window.document.getElementById(id);
+      return note.innerHTML;
+    });
+  }
+      let selectedAnnoteEl;
+      const selectorForAnnotation = ( cell, annotation) => {
+        let cellAttr = 'data-code-cell="' + cell + '"';
+        let lineAttr = 'data-code-annotation="' +  annotation + '"';
+        const selector = 'span[' + cellAttr + '][' + lineAttr + ']';
+        return selector;
+      }
+      const selectCodeLines = (annoteEl) => {
+        const doc = window.document;
+        const targetCell = annoteEl.getAttribute("data-target-cell");
+        const targetAnnotation = annoteEl.getAttribute("data-target-annotation");
+        const annoteSpan = window.document.querySelector(selectorForAnnotation(targetCell, targetAnnotation));
+        const lines = annoteSpan.getAttribute("data-code-lines").split(",");
+        const lineIds = lines.map((line) => {
+          return targetCell + "-" + line;
+        })
+        let top = null;
+        let height = null;
+        let parent = null;
+        if (lineIds.length > 0) {
+            //compute the position of the single el (top and bottom and make a div)
+            const el = window.document.getElementById(lineIds[0]);
+            top = el.offsetTop;
+            height = el.offsetHeight;
+            parent = el.parentElement.parentElement;
+          if (lineIds.length > 1) {
+            const lastEl = window.document.getElementById(lineIds[lineIds.length - 1]);
+            const bottom = lastEl.offsetTop + lastEl.offsetHeight;
+            height = bottom - top;
+          }
+          if (top !== null && height !== null && parent !== null) {
+            // cook up a div (if necessary) and position it 
+            let div = window.document.getElementById("code-annotation-line-highlight");
+            if (div === null) {
+              div = window.document.createElement("div");
+              div.setAttribute("id", "code-annotation-line-highlight");
+              div.style.position = 'absolute';
+              parent.appendChild(div);
+            }
+            div.style.top = top - 2 + "px";
+            div.style.height = height + 4 + "px";
+            let gutterDiv = window.document.getElementById("code-annotation-line-highlight-gutter");
+            if (gutterDiv === null) {
+              gutterDiv = window.document.createElement("div");
+              gutterDiv.setAttribute("id", "code-annotation-line-highlight-gutter");
+              gutterDiv.style.position = 'absolute';
+              const codeCell = window.document.getElementById(targetCell);
+              const gutter = codeCell.querySelector('.code-annotation-gutter');
+              gutter.appendChild(gutterDiv);
+            }
+            gutterDiv.style.top = top - 2 + "px";
+            gutterDiv.style.height = height + 4 + "px";
+          }
+          selectedAnnoteEl = annoteEl;
+        }
+      };
+      const unselectCodeLines = () => {
+        const elementsIds = ["code-annotation-line-highlight", "code-annotation-line-highlight-gutter"];
+        elementsIds.forEach((elId) => {
+          const div = window.document.getElementById(elId);
+          if (div) {
+            div.remove();
+          }
+        });
+        selectedAnnoteEl = undefined;
+      };
+      // Attach click handler to the DT
+      const annoteDls = window.document.querySelectorAll('dt[data-target-cell]');
+      for (const annoteDlNode of annoteDls) {
+        annoteDlNode.addEventListener('click', (event) => {
+          const clickedEl = event.target;
+          if (clickedEl !== selectedAnnoteEl) {
+            unselectCodeLines();
+            const activeEl = window.document.querySelector('dt[data-target-cell].code-annotation-active');
+            if (activeEl) {
+              activeEl.classList.remove('code-annotation-active');
+            }
+            selectCodeLines(clickedEl);
+            clickedEl.classList.add('code-annotation-active');
+          } else {
+            // Unselect the line
+            unselectCodeLines();
+            clickedEl.classList.remove('code-annotation-active');
+          }
+        });
+      }
+  const findCites = (el) => {
+    const parentEl = el.parentElement;
+    if (parentEl) {
+      const cites = parentEl.dataset.cites;
+      if (cites) {
+        return {
+          el,
+          cites: cites.split(' ')
+        };
+      } else {
+        return findCites(el.parentElement)
+      }
+    } else {
+      return undefined;
+    }
+  };
+  var bibliorefs = window.document.querySelectorAll('a[role="doc-biblioref"]');
+  for (var i=0; i<bibliorefs.length; i++) {
+    const ref = bibliorefs[i];
+    const citeInfo = findCites(ref);
+    if (citeInfo) {
+      tippyHover(citeInfo.el, function() {
+        var popup = window.document.createElement('div');
+        citeInfo.cites.forEach(function(cite) {
+          var citeDiv = window.document.createElement('div');
+          citeDiv.classList.add('hanging-indent');
+          citeDiv.classList.add('csl-entry');
+          var biblioDiv = window.document.getElementById('ref-' + cite);
+          if (biblioDiv) {
+            citeDiv.innerHTML = biblioDiv.innerHTML;
+          }
+          popup.appendChild(citeDiv);
+        });
+        return popup.innerHTML;
+      });
+    }
+  }
+});
+</script>
+</div> <!-- /content -->
+
+
+
+</body></html>

@@ -19,12 +19,10 @@ jobs:
       - name: Checking out repository
         uses: actions/checkout@v3
 
-      - name: Installing dependencies with Micromamba
-        uses: mamba-org/provision-with-micromamba@v14
-        with:
-          cache-env: true
+      - name: Install system dependencies
+        run: sudo apt-get install -y libcurl4-openssl-dev libharfbuzz-dev libfribidi-dev
 
-      - name: Installing quarto
+      - name: Set up quarto
         uses: quarto-dev/quarto-actions/setup@v2
         with:
           tinytex: true
@@ -39,11 +37,10 @@ jobs:
         with:
           r-version: '4.3.1'
 
-      - name: Installing dependencies
-        shell: bash -l {0}
-        run: |
-            Rscript r-addons.R
-
+      - name: Install R Dependencies with renv
+        uses: r-lib/actions/setup-renv@v2
+        with:
+          cache-version: 1
       - name: Render and Publish
         uses: quarto-dev/quarto-actions/publish@v2
         with:

@@ -1,8 +1,13 @@
+.Rproj.user
+.Rprofile
+.Rhistory
+.RData
+.Ruserdata
 *.swp
-_build
-template-computo-quarto.html
-template-computo-quarto.pdf
-template-computo-quarto_files/
+published-202312-cleynen-local.html
+published-202312-cleynen-local.pdf
+published-202312-cleynen-local_files/
 /.quarto/
 _extensions/
 .Rproj.user
+renv/

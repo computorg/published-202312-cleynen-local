@@ -56,8 +56,7 @@ format:
 
 
 ::: {.content-hidden unless-format="html"}
-$\newcommand{\argmin}{\operatorname{argmin}}$
-$\newcommand{\argmax}{\operatorname{argmax}}$
+$\DeclareMathOperator*{\argmax}{argmax}$
 $\newcommand{\diag}{\operatorname{diag}}$
 $\newcommand{\var}{\mathrm{Var}}$
 $\newcommand{\xs}{x^*}$
@@ -72,7 +71,6 @@ $\renewcommand{\P}{\mathbb{P}}$
 :::
 
 ::: {.content-hidden unless-format="pdf"}
-\newcommand{\argmin}{\operatorname{argmin}}
 \newcommand{\argmax}{\operatorname{argmax}}
 \newcommand{\diag}{\operatorname{diag}}
 \newcommand{\var}{\mathrm{Var}}

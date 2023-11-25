@@ -591,7 +591,7 @@ similarity measure (presented in @sec-localKernelMultiDim and we replace the mar
 Using the same notations as above, the $b$-th tree weight is hence computed in the following way:
 
 $$
-w_b(\xs) = \frac{ \sum_{i=1}^N \mathbf{1}\{x\idxi \in \text{OOB}_b\} \, K_V(x^{(i)}-x^*) \, \mathbf{1} \{\hat{y}\idxi_b=y\idxi\} }{\sum_{\ell=1}^N \mathbf{1}\{x^{(\ell)} \in \text{OOB}_b\} \, K_V(x^{({\ell)}-x^*)}.
+w_b(\xs) = \frac{ \sum_{i=1}^N \mathbf{1}\{x\idxi \in \text{OOB}_b\} \, K_V(x^{(i)}-x^*) \, \mathbf{1} \{\hat{y}\idxi_b=y\idxi\} }{\sum_{\ell=1}^N \mathbf{1}\{x^{(\ell)} \in \text{OOB}_b\} \, K_V(x^{(\ell)}-x^*)}.
 $${#eq-weightsKernelTree}
 
 All $N$ labeled data are used for the weight computation, their importance being measured by the kernel. $\alpha$ is again set to $1$ and tree selection is not performed.

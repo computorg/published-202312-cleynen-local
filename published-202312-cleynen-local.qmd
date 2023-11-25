@@ -717,7 +717,7 @@ TableOrdered=Table[c(1:3,5:10,17:19,4,11:16),]
 colnames(TableOrdered)=c("Method","Parameters","Error rate","(sd)")
 rownames(TableOrdered)=NULL
 
-#knitr::kable(TableOrdered,caption= "First Gaussian example: prediction error rate (percentage), with 10000 training data",booktabs=T,label= "gaussEq10",row.names=NA)
+#kableExtra::kable(TableOrdered,caption= "First Gaussian example: prediction error rate (percentage), with 10000 training data",booktabs=T,label= "gaussEq10",row.names=NA)
 
 
 resTOT<-read.table("Gaussian-Balanced-With-Noise/Example-Gaussian-Balanced-With-Noise-Res-10000.txt",header=T)
@@ -734,7 +734,7 @@ rownames(TableOrdered2)=NULL
 
 Table2=cbind(TableOrdered,TableOrdered2[,3:4])
 
-knitr::kable(Table2, booktabs=T, row.names=NA)
+kableExtra::kable(Table2, booktabs=T, row.names=NA)
 
 ```
 
@@ -841,7 +841,7 @@ rownames(TableOrdered4)=NULL
 
 Table4=cbind(TableOrdered3,TableOrdered4[,3:4])
 
-knitr::kable(Table4, booktabs=T, row.names=NA)
+kableExtra::kable(Table4, booktabs=T, row.names=NA)
 
 ```
 
@@ -873,7 +873,7 @@ colnames(TableOrderedS)=c("Method","Parameters","Error rate","(sd)","RunTime (se
 rownames(TableOrderedS)=NULL
 
 
-knitr::kable(TableOrderedS, booktabs=T, row.names=NA)
+kableExtra::kable(TableOrderedS, booktabs=T, row.names=NA)
 
 ```
 
@@ -981,7 +981,7 @@ rownames(TableOrdered5)=NULL
 
 Table5=cbind(TableOrdered5)
 
-knitr::kable(Table5, booktabs=T, row.names=NA)
+kableExtra::kable(Table5, booktabs=T, row.names=NA)
 
 ```
 
@@ -1034,7 +1034,7 @@ TableOrdered=Table[c(1:2,5:7,13:15,3,8:12),]
 colnames(TableOrdered)=c("Method","Parameters","Error rate","(sd)")
 rownames(TableOrdered)=NULL
 
-knitr::kable(TableOrdered, booktabs=T, row.names=NA)
+kableExtra::kable(TableOrdered, booktabs=T, row.names=NA)
 
 ```
 
@@ -1223,7 +1223,7 @@ TableOrdered=Table[c(1:3,5:6,9,4,7,8),]
 colnames(TableOrdered)=c("Method","Parameters","Error rate","(sd)")
 rownames(TableOrdered)=NULL
 
-knitr::kable(TableOrdered, booktabs=T, row.names=NA)
+kableExtra::kable(TableOrdered, booktabs=T, row.names=NA)
 ```
 
 

@@ -56,9 +56,9 @@ format:
 
 
 ::: {.content-hidden unless-format="html"}
-$\DeclareMathOperator*{\argmin}{argmin}$
-$\DeclareMathOperator*{\argmax}{argmax}$
-$\DeclareMathOperator*{\diag}{diag}$
+$\newcommand{\argmin}{\operatorname{argmin}}$
+$\newcommand{\argmax}{\operatorname{argmax}}$
+$\newcommand{\diag}{\operatorname{diag}}$
 $\newcommand{\var}{\mathrm{Var}}$
 $\newcommand{\xs}{x^*}$
 $\newcommand{\xsj}{x_j^*}$
@@ -72,9 +72,9 @@ $\renewcommand{\P}{\mathbb{P}}$
 :::
 
 ::: {.content-hidden unless-format="pdf"}
-\DeclareMathOperator*{\argmin}{argmin}
-\DeclareMathOperator*{\argmax}{argmax}
-\DeclareMathOperator*{\diag}{diag}
+\newcommand{\argmin}{\operatorname{argmin}}
+\newcommand{\argmax}{\operatorname{argmax}}
+\newcommand{\diag}{\operatorname{diag}}
 \newcommand{\var}{\mathrm{Var}}
 \newcommand{\xs}{x^*}
 \newcommand{\xsj}{x_j^*}

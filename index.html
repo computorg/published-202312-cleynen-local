@@ -1369,7 +1369,7 @@ Table&nbsp;5: Population Genetics example: prediction error rate (percentage), w
 </section>
 <section id="sec-reproducibility" class="level1" data-number="8">
 <h1 data-number="8"><span class="header-section-number">8</span> Data accessibility and reproducibility</h1>
-<p>The global computational time for the examples presented above represent several days of multiple cores usage and are therefore not directly proposed to the reader. All codes, data and session information are available at <a href="https://github.com/jmm34/computo-local-tree-methods-for-classification">github.com/jmm34/computo-local-tree-methods-for-classification</a>. Note that during the preparation of the manuscript we detect an <a href="https://github.com/imbs-hl/ranger/issues/615">issue</a> in the implementation of the Case Specific Random Forests function (csrf) function of the R package ranger and have to redo quite a lot of calculation to ensure reproducibility.</p>
+<p>The global computational time for the examples presented above represent several days of multiple cores usage and are therefore not directly proposed to the reader. All codes, data and session information are available at <a href="https://github.com/computorg/published-202312-cleynen-local">github.com/computorg/published-202312-cleynen-local</a>. Note that during the preparation of the manuscript we detect an <a href="https://github.com/imbs-hl/ranger/issues/615">issue</a> in the implementation of the Case Specific Random Forests function (csrf) function of the R package ranger and have to redo quite a lot of calculation to ensure reproducibility.</p>
 <p>In this section, we reproduce the first Gaussian example presented above (without additional noise) with only 500 training data, 100 test data and 5 replicates, to illustrate the methods and produce similar tables to <a href="#tbl-gaussEqNoise10" class="quarto-xref">Table&nbsp;1</a> to <a href="#tbl-GenPopResults" class="quarto-xref">Table&nbsp;5</a>. The results in themselves are not interpretable due to the low dimensionality of the test and training data, so most methods were only illustrated with one set of parameters. However, changing parameters value in the code is straightforward.</p>
 <div class="cell">
 <div id="tbl-ToyEx" class="cell anchored">
@@ -3160,228 +3160,235 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
 <span id="cb3-1050"><a href="#cb3-1050" aria-hidden="true" tabindex="-1"></a><span class="fu"># Data accessibility and reproducibility {#sec-reproducibility}</span></span>
 <span id="cb3-1051"><a href="#cb3-1051" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb3-1052"><a href="#cb3-1052" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb3-1053"><a href="#cb3-1053" aria-hidden="true" tabindex="-1"></a>The global computational time for the examples presented above represent several days of multiple cores usage and are therefore not directly proposed to the reader. All codes, data and session information are available at <span class="co">[</span><span class="ot">github.com/jmm34/computo-local-tree-methods-for-classification</span><span class="co">](https://github.com/jmm34/computo-local-tree-methods-for-classification)</span>. Note that during the preparation of the manuscript we detect an <span class="co">[</span><span class="ot">issue</span><span class="co">](https://github.com/imbs-hl/ranger/issues/615)</span> in the implementation of the Case Specific Random Forests function (csrf) function of the R package ranger and have to redo quite a lot of calculation to ensure reproducibility. </span>
-<span id="cb3-1054"><a href="#cb3-1054" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb3-1055"><a href="#cb3-1055" aria-hidden="true" tabindex="-1"></a>In this section, we reproduce the first Gaussian example presented above</span>
-<span id="cb3-1056"><a href="#cb3-1056" aria-hidden="true" tabindex="-1"></a>(without additional noise) with only 500 training data, 100 test data and 5</span>
-<span id="cb3-1057"><a href="#cb3-1057" aria-hidden="true" tabindex="-1"></a>replicates, to illustrate the methods and produce similar tables to</span>
-<span id="cb3-1058"><a href="#cb3-1058" aria-hidden="true" tabindex="-1"></a>@tbl-gaussEqNoise10 to @tbl-GenPopResults.</span>
-<span id="cb3-1059"><a href="#cb3-1059" aria-hidden="true" tabindex="-1"></a>The results in themselves are not interpretable due to the low dimensionality of the test and training data, so most methods were only illustrated with one set of parameters. However, changing parameters value in the code is straightforward.</span>
-<span id="cb3-1060"><a href="#cb3-1060" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb3-1063"><a href="#cb3-1063" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
-<span id="cb3-1064"><a href="#cb3-1064" aria-hidden="true" tabindex="-1"></a><span class="co">#| label: tbl-ToyEx</span></span>
-<span id="cb3-1065"><a href="#cb3-1065" aria-hidden="true" tabindex="-1"></a><span class="co">#| echo: false</span></span>
-<span id="cb3-1066"><a href="#cb3-1066" aria-hidden="true" tabindex="-1"></a><span class="co">#| tbl-cap: "Toy example: prediction error rate (percentage)"</span></span>
+<span id="cb3-1053"><a href="#cb3-1053" aria-hidden="true" tabindex="-1"></a>The global computational time for the examples presented above represent</span>
+<span id="cb3-1054"><a href="#cb3-1054" aria-hidden="true" tabindex="-1"></a>several days of multiple cores usage and are therefore not directly proposed</span>
+<span id="cb3-1055"><a href="#cb3-1055" aria-hidden="true" tabindex="-1"></a>to the reader. All codes, data and session information are available at</span>
+<span id="cb3-1056"><a href="#cb3-1056" aria-hidden="true" tabindex="-1"></a><span class="co">[</span><span class="ot">github.com/computorg/published-202312-cleynen-local</span><span class="co">](https://github.com/computorg/published-202312-cleynen-local)</span>.</span>
+<span id="cb3-1057"><a href="#cb3-1057" aria-hidden="true" tabindex="-1"></a>Note that during the preparation of the manuscript we detect an</span>
+<span id="cb3-1058"><a href="#cb3-1058" aria-hidden="true" tabindex="-1"></a><span class="co">[</span><span class="ot">issue</span><span class="co">](https://github.com/imbs-hl/ranger/issues/615)</span> in the implementation of</span>
+<span id="cb3-1059"><a href="#cb3-1059" aria-hidden="true" tabindex="-1"></a>the Case Specific Random Forests function (csrf) function of the R package</span>
+<span id="cb3-1060"><a href="#cb3-1060" aria-hidden="true" tabindex="-1"></a>ranger and have to redo quite a lot of calculation to ensure reproducibility. </span>
+<span id="cb3-1061"><a href="#cb3-1061" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-1062"><a href="#cb3-1062" aria-hidden="true" tabindex="-1"></a>In this section, we reproduce the first Gaussian example presented above</span>
+<span id="cb3-1063"><a href="#cb3-1063" aria-hidden="true" tabindex="-1"></a>(without additional noise) with only 500 training data, 100 test data and 5</span>
+<span id="cb3-1064"><a href="#cb3-1064" aria-hidden="true" tabindex="-1"></a>replicates, to illustrate the methods and produce similar tables to</span>
+<span id="cb3-1065"><a href="#cb3-1065" aria-hidden="true" tabindex="-1"></a>@tbl-gaussEqNoise10 to @tbl-GenPopResults.</span>
+<span id="cb3-1066"><a href="#cb3-1066" aria-hidden="true" tabindex="-1"></a>The results in themselves are not interpretable due to the low dimensionality of the test and training data, so most methods were only illustrated with one set of parameters. However, changing parameters value in the code is straightforward.</span>
 <span id="cb3-1067"><a href="#cb3-1067" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb3-1068"><a href="#cb3-1068" aria-hidden="true" tabindex="-1"></a><span class="do">######## Toy example : Small balanced Gaussian example without Noise  ########</span></span>
-<span id="cb3-1069"><a href="#cb3-1069" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb3-1070"><a href="#cb3-1070" aria-hidden="true" tabindex="-1"></a><span class="do">#### Required packages</span></span>
-<span id="cb3-1071"><a href="#cb3-1071" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(<span class="st">"xtable"</span>)</span>
-<span id="cb3-1072"><a href="#cb3-1072" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(mvtnorm)</span>
-<span id="cb3-1073"><a href="#cb3-1073" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(ranger)</span>
-<span id="cb3-1074"><a href="#cb3-1074" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(parallel)</span>
-<span id="cb3-1075"><a href="#cb3-1075" aria-hidden="true" tabindex="-1"></a>ncores <span class="ot">&lt;-</span> <span class="fu">detectCores</span>()</span>
+<span id="cb3-1070"><a href="#cb3-1070" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
+<span id="cb3-1071"><a href="#cb3-1071" aria-hidden="true" tabindex="-1"></a><span class="co">#| label: tbl-ToyEx</span></span>
+<span id="cb3-1072"><a href="#cb3-1072" aria-hidden="true" tabindex="-1"></a><span class="co">#| echo: false</span></span>
+<span id="cb3-1073"><a href="#cb3-1073" aria-hidden="true" tabindex="-1"></a><span class="co">#| tbl-cap: "Toy example: prediction error rate (percentage)"</span></span>
+<span id="cb3-1074"><a href="#cb3-1074" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-1075"><a href="#cb3-1075" aria-hidden="true" tabindex="-1"></a><span class="do">######## Toy example : Small balanced Gaussian example without Noise  ########</span></span>
 <span id="cb3-1076"><a href="#cb3-1076" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb3-1077"><a href="#cb3-1077" aria-hidden="true" tabindex="-1"></a><span class="do">#### Set the seed of R's random number generator</span></span>
-<span id="cb3-1078"><a href="#cb3-1078" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb3-1079"><a href="#cb3-1079" aria-hidden="true" tabindex="-1"></a>nReplicate <span class="ot">&lt;-</span> <span class="dv">5</span></span>
-<span id="cb3-1080"><a href="#cb3-1080" aria-hidden="true" tabindex="-1"></a>resBayes <span class="ot">&lt;-</span> resBagging <span class="ot">&lt;-</span> resRF <span class="ot">&lt;-</span> resLVIRF <span class="ot">&lt;-</span> resCsrf5 <span class="ot">&lt;-</span> resCsrf10 <span class="ot">&lt;-</span> resDVSRF1 <span class="ot">&lt;-</span> resKVRF1 <span class="ot">&lt;-</span> resNNRF1 <span class="ot">&lt;-</span> <span class="fu">rep</span>(<span class="dv">0</span>,nReplicate)</span>
-<span id="cb3-1081"><a href="#cb3-1081" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb3-1082"><a href="#cb3-1082" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> (k <span class="cf">in</span> <span class="dv">1</span><span class="sc">:</span>nReplicate)  {</span>
+<span id="cb3-1077"><a href="#cb3-1077" aria-hidden="true" tabindex="-1"></a><span class="do">#### Required packages</span></span>
+<span id="cb3-1078"><a href="#cb3-1078" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(<span class="st">"xtable"</span>)</span>
+<span id="cb3-1079"><a href="#cb3-1079" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(mvtnorm)</span>
+<span id="cb3-1080"><a href="#cb3-1080" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(ranger)</span>
+<span id="cb3-1081"><a href="#cb3-1081" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(parallel)</span>
+<span id="cb3-1082"><a href="#cb3-1082" aria-hidden="true" tabindex="-1"></a>ncores <span class="ot">&lt;-</span> <span class="fu">detectCores</span>()</span>
 <span id="cb3-1083"><a href="#cb3-1083" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb3-1084"><a href="#cb3-1084" aria-hidden="true" tabindex="-1"></a><span class="fu">set.seed</span>(<span class="dv">1974</span><span class="sc">+</span>k)</span>
+<span id="cb3-1084"><a href="#cb3-1084" aria-hidden="true" tabindex="-1"></a><span class="do">#### Set the seed of R's random number generator</span></span>
 <span id="cb3-1085"><a href="#cb3-1085" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb3-1086"><a href="#cb3-1086" aria-hidden="true" tabindex="-1"></a><span class="do">### Training data generation</span></span>
-<span id="cb3-1087"><a href="#cb3-1087" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb3-1088"><a href="#cb3-1088" aria-hidden="true" tabindex="-1"></a>n <span class="ot">&lt;-</span> <span class="dv">500</span></span>
-<span id="cb3-1089"><a href="#cb3-1089" aria-hidden="true" tabindex="-1"></a>pi0 <span class="ot">&lt;-</span> <span class="fl">0.25</span></span>
-<span id="cb3-1090"><a href="#cb3-1090" aria-hidden="true" tabindex="-1"></a>pi1 <span class="ot">&lt;-</span> <span class="fl">0.25</span></span>
-<span id="cb3-1091"><a href="#cb3-1091" aria-hidden="true" tabindex="-1"></a>pi2 <span class="ot">&lt;-</span> <span class="fl">0.25</span></span>
-<span id="cb3-1092"><a href="#cb3-1092" aria-hidden="true" tabindex="-1"></a>pi3 <span class="ot">&lt;-</span> <span class="fl">0.25</span></span>
-<span id="cb3-1093"><a href="#cb3-1093" aria-hidden="true" tabindex="-1"></a>l <span class="ot">&lt;-</span> <span class="dv">20</span></span>
+<span id="cb3-1086"><a href="#cb3-1086" aria-hidden="true" tabindex="-1"></a>nReplicate <span class="ot">&lt;-</span> <span class="dv">5</span></span>
+<span id="cb3-1087"><a href="#cb3-1087" aria-hidden="true" tabindex="-1"></a>resBayes <span class="ot">&lt;-</span> resBagging <span class="ot">&lt;-</span> resRF <span class="ot">&lt;-</span> resLVIRF <span class="ot">&lt;-</span> resCsrf5 <span class="ot">&lt;-</span> resCsrf10 <span class="ot">&lt;-</span> resDVSRF1 <span class="ot">&lt;-</span> resKVRF1 <span class="ot">&lt;-</span> resNNRF1 <span class="ot">&lt;-</span> <span class="fu">rep</span>(<span class="dv">0</span>,nReplicate)</span>
+<span id="cb3-1088"><a href="#cb3-1088" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-1089"><a href="#cb3-1089" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> (k <span class="cf">in</span> <span class="dv">1</span><span class="sc">:</span>nReplicate)  {</span>
+<span id="cb3-1090"><a href="#cb3-1090" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-1091"><a href="#cb3-1091" aria-hidden="true" tabindex="-1"></a><span class="fu">set.seed</span>(<span class="dv">1974</span><span class="sc">+</span>k)</span>
+<span id="cb3-1092"><a href="#cb3-1092" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-1093"><a href="#cb3-1093" aria-hidden="true" tabindex="-1"></a><span class="do">### Training data generation</span></span>
 <span id="cb3-1094"><a href="#cb3-1094" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb3-1095"><a href="#cb3-1095" aria-hidden="true" tabindex="-1"></a>mu0 <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="fu">c</span>(<span class="fl">0.8</span>,<span class="dv">3</span>), <span class="fu">rep</span>(<span class="fu">c</span>(<span class="dv">1</span>,<span class="fl">2.5</span>), l<span class="sc">/</span><span class="dv">2-1</span>))</span>
-<span id="cb3-1096"><a href="#cb3-1096" aria-hidden="true" tabindex="-1"></a>Sigma0 <span class="ot">&lt;-</span> <span class="fu">diag</span>(<span class="fu">c</span>(<span class="fu">c</span>(<span class="dv">3</span>,<span class="dv">3</span>), <span class="fu">rep</span>(<span class="fu">c</span>(<span class="dv">3</span>,<span class="dv">1</span>),l<span class="sc">/</span><span class="dv">2-1</span>)) )</span>
-<span id="cb3-1097"><a href="#cb3-1097" aria-hidden="true" tabindex="-1"></a>mu1 <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="fu">c</span>(<span class="fl">3.2</span>,<span class="dv">3</span>), <span class="fu">rep</span>(<span class="fu">c</span>(<span class="fl">2.5</span>,<span class="fl">2.5</span>), l<span class="sc">/</span><span class="dv">2-1</span>))</span>
-<span id="cb3-1098"><a href="#cb3-1098" aria-hidden="true" tabindex="-1"></a>Sigma1 <span class="ot">&lt;-</span> <span class="fu">diag</span>(<span class="fu">c</span>(<span class="fu">c</span>(<span class="dv">3</span>,<span class="dv">3</span>), <span class="fu">rep</span>(<span class="fu">c</span>(<span class="dv">3</span>,<span class="dv">5</span>),l<span class="sc">/</span><span class="dv">2-1</span>)) )</span>
-<span id="cb3-1099"><a href="#cb3-1099" aria-hidden="true" tabindex="-1"></a>mu2 <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="fu">c</span>(<span class="dv">2</span>,<span class="dv">1</span>), <span class="fu">rep</span>(<span class="fu">c</span>(<span class="dv">2</span>,<span class="fl">2.3</span>),l<span class="sc">/</span><span class="dv">2-1</span>))</span>
-<span id="cb3-1100"><a href="#cb3-1100" aria-hidden="true" tabindex="-1"></a>Sigma2 <span class="ot">&lt;-</span> <span class="fu">diag</span>( (<span class="fu">rep</span>(<span class="fu">c</span>(<span class="dv">4</span>,<span class="dv">1</span>),l<span class="sc">/</span><span class="dv">2</span>) ) )</span>
-<span id="cb3-1101"><a href="#cb3-1101" aria-hidden="true" tabindex="-1"></a>mu3 <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="fu">c</span>(<span class="dv">2</span>,<span class="dv">0</span>), <span class="fu">rep</span>(<span class="fu">c</span>(<span class="dv">2</span>,<span class="fl">1.8</span>),l<span class="sc">/</span><span class="dv">2-1</span>))</span>
-<span id="cb3-1102"><a href="#cb3-1102" aria-hidden="true" tabindex="-1"></a>Sigma3 <span class="ot">&lt;-</span> <span class="fu">diag</span>( (<span class="fu">rep</span>(<span class="fu">c</span>(<span class="fl">2.5</span>,<span class="dv">1</span>),l<span class="sc">/</span><span class="dv">2</span>) ) )</span>
-<span id="cb3-1103"><a href="#cb3-1103" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb3-1104"><a href="#cb3-1104" aria-hidden="true" tabindex="-1"></a>classe <span class="ot">&lt;-</span> <span class="fu">sample</span>(<span class="at">x =</span> <span class="fu">c</span>(<span class="dv">0</span>,<span class="dv">1</span>,<span class="dv">2</span>,<span class="dv">3</span>), <span class="at">size =</span> n, <span class="at">replace =</span> <span class="cn">TRUE</span>, <span class="at">prob =</span> <span class="fu">c</span>(pi0,pi1,pi2,pi3))</span>
-<span id="cb3-1105"><a href="#cb3-1105" aria-hidden="true" tabindex="-1"></a>classe <span class="ot">&lt;-</span> <span class="fu">sort</span>(classe)</span>
-<span id="cb3-1106"><a href="#cb3-1106" aria-hidden="true" tabindex="-1"></a>n0 <span class="ot">&lt;-</span> <span class="fu">sum</span>(classe<span class="sc">==</span><span class="dv">0</span>)</span>
-<span id="cb3-1107"><a href="#cb3-1107" aria-hidden="true" tabindex="-1"></a>n1 <span class="ot">&lt;-</span> <span class="fu">sum</span>(classe<span class="sc">==</span><span class="dv">1</span>)</span>
-<span id="cb3-1108"><a href="#cb3-1108" aria-hidden="true" tabindex="-1"></a>n2 <span class="ot">&lt;-</span> <span class="fu">sum</span>(classe<span class="sc">==</span><span class="dv">2</span>)</span>
-<span id="cb3-1109"><a href="#cb3-1109" aria-hidden="true" tabindex="-1"></a>n3 <span class="ot">&lt;-</span> <span class="fu">sum</span>(classe<span class="sc">==</span><span class="dv">3</span>)</span>
-<span id="cb3-1110"><a href="#cb3-1110" aria-hidden="true" tabindex="-1"></a>x.train <span class="ot">&lt;-</span> <span class="fu">rbind</span>(<span class="fu">rmvnorm</span>(n0, mu0, Sigma0), <span class="fu">rmvnorm</span>(n1, mu1, Sigma1), <span class="fu">rmvnorm</span>(n2, mu2, Sigma2), <span class="fu">rmvnorm</span>(n3, mu3, Sigma3))</span>
-<span id="cb3-1111"><a href="#cb3-1111" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb3-1112"><a href="#cb3-1112" aria-hidden="true" tabindex="-1"></a><span class="do">### Test data generation</span></span>
-<span id="cb3-1113"><a href="#cb3-1113" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb3-1114"><a href="#cb3-1114" aria-hidden="true" tabindex="-1"></a>nTest <span class="ot">&lt;-</span> <span class="dv">100</span></span>
-<span id="cb3-1115"><a href="#cb3-1115" aria-hidden="true" tabindex="-1"></a>classeTest <span class="ot">&lt;-</span> <span class="fu">sample</span>(<span class="fu">c</span>(<span class="dv">0</span>,<span class="dv">1</span>,<span class="dv">2</span>,<span class="dv">3</span>), <span class="at">size=</span>nTest, <span class="at">prob=</span><span class="fu">c</span>(pi0,pi1,pi2,pi3), <span class="at">replace=</span><span class="cn">TRUE</span>)</span>
-<span id="cb3-1116"><a href="#cb3-1116" aria-hidden="true" tabindex="-1"></a>classeTest <span class="ot">&lt;-</span> <span class="fu">sort</span>(classeTest)</span>
-<span id="cb3-1117"><a href="#cb3-1117" aria-hidden="true" tabindex="-1"></a>nTest0 <span class="ot">&lt;-</span> <span class="fu">sum</span>(classeTest<span class="sc">==</span><span class="dv">0</span>)</span>
-<span id="cb3-1118"><a href="#cb3-1118" aria-hidden="true" tabindex="-1"></a>nTest1 <span class="ot">&lt;-</span> <span class="fu">sum</span>(classeTest<span class="sc">==</span><span class="dv">1</span>)</span>
-<span id="cb3-1119"><a href="#cb3-1119" aria-hidden="true" tabindex="-1"></a>nTest2 <span class="ot">&lt;-</span> <span class="fu">sum</span>(classeTest<span class="sc">==</span><span class="dv">2</span>)</span>
-<span id="cb3-1120"><a href="#cb3-1120" aria-hidden="true" tabindex="-1"></a>nTest3 <span class="ot">&lt;-</span> <span class="fu">sum</span>(classeTest<span class="sc">==</span><span class="dv">3</span>)</span>
-<span id="cb3-1121"><a href="#cb3-1121" aria-hidden="true" tabindex="-1"></a>x.test <span class="ot">&lt;-</span> <span class="fu">rbind</span>(<span class="fu">rmvnorm</span>(nTest0, mu0, Sigma0),</span>
-<span id="cb3-1122"><a href="#cb3-1122" aria-hidden="true" tabindex="-1"></a>                <span class="fu">rmvnorm</span>(nTest1, mu1, Sigma1),</span>
-<span id="cb3-1123"><a href="#cb3-1123" aria-hidden="true" tabindex="-1"></a>                <span class="fu">rmvnorm</span>(nTest2, mu2, Sigma2),</span>
-<span id="cb3-1124"><a href="#cb3-1124" aria-hidden="true" tabindex="-1"></a>                <span class="fu">rmvnorm</span>(nTest3, mu3, Sigma3))</span>
-<span id="cb3-1125"><a href="#cb3-1125" aria-hidden="true" tabindex="-1"></a>data.train <span class="ot">&lt;-</span> <span class="fu">data.frame</span>(<span class="at">mod =</span> <span class="fu">as.factor</span>(classe), x.train)</span>
-<span id="cb3-1126"><a href="#cb3-1126" aria-hidden="true" tabindex="-1"></a><span class="fu">colnames</span>(x.test) <span class="ot">&lt;-</span> <span class="fu">colnames</span>(data.train)[<span class="sc">-</span><span class="dv">1</span>]</span>
-<span id="cb3-1127"><a href="#cb3-1127" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb3-1128"><a href="#cb3-1128" aria-hidden="true" tabindex="-1"></a><span class="do">#### Bayes classifier</span></span>
-<span id="cb3-1129"><a href="#cb3-1129" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb3-1130"><a href="#cb3-1130" aria-hidden="true" tabindex="-1"></a>BayesClassifieur <span class="ot">&lt;-</span> <span class="cf">function</span>(x){</span>
-<span id="cb3-1131"><a href="#cb3-1131" aria-hidden="true" tabindex="-1"></a>  c0 <span class="ot">&lt;-</span> pi0<span class="sc">*</span><span class="fu">dmvnorm</span>(x,<span class="at">mean=</span>mu0,<span class="at">sigma=</span>Sigma0)</span>
-<span id="cb3-1132"><a href="#cb3-1132" aria-hidden="true" tabindex="-1"></a>  c1 <span class="ot">&lt;-</span> pi1<span class="sc">*</span><span class="fu">dmvnorm</span>(x,<span class="at">mean=</span>mu1,<span class="at">sigma=</span>Sigma1)</span>
-<span id="cb3-1133"><a href="#cb3-1133" aria-hidden="true" tabindex="-1"></a>  c2 <span class="ot">&lt;-</span> pi2<span class="sc">*</span><span class="fu">dmvnorm</span>(x,<span class="at">mean=</span>mu2,<span class="at">sigma=</span>Sigma2)</span>
-<span id="cb3-1134"><a href="#cb3-1134" aria-hidden="true" tabindex="-1"></a>  c3 <span class="ot">&lt;-</span> pi3<span class="sc">*</span><span class="fu">dmvnorm</span>(x,<span class="at">mean=</span>mu3,<span class="at">sigma=</span>Sigma3)</span>
-<span id="cb3-1135"><a href="#cb3-1135" aria-hidden="true" tabindex="-1"></a>  <span class="fu">return</span>(<span class="fu">c</span>(<span class="dv">0</span>,<span class="dv">1</span>,<span class="dv">2</span>,<span class="dv">3</span>)[<span class="fu">which.max</span>(<span class="fu">c</span>(c0,c1,c2,c3))])</span>
-<span id="cb3-1136"><a href="#cb3-1136" aria-hidden="true" tabindex="-1"></a>}</span>
-<span id="cb3-1137"><a href="#cb3-1137" aria-hidden="true" tabindex="-1"></a>predBayes <span class="ot">&lt;-</span> <span class="fu">rep</span>(<span class="cn">NA</span>, nTest)</span>
-<span id="cb3-1138"><a href="#cb3-1138" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span>(i <span class="cf">in</span> <span class="dv">1</span><span class="sc">:</span>nTest) predBayes[i] <span class="ot">&lt;-</span> <span class="fu">BayesClassifieur</span>(x.test[i,])</span>
-<span id="cb3-1139"><a href="#cb3-1139" aria-hidden="true" tabindex="-1"></a>resBayes[k] <span class="ot">&lt;-</span> <span class="fu">mean</span>(predBayes <span class="sc">!=</span> classeTest)</span>
-<span id="cb3-1140"><a href="#cb3-1140" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb3-1141"><a href="#cb3-1141" aria-hidden="true" tabindex="-1"></a><span class="do">### Bagging</span></span>
-<span id="cb3-1142"><a href="#cb3-1142" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb3-1143"><a href="#cb3-1143" aria-hidden="true" tabindex="-1"></a>baggedRf <span class="ot">&lt;-</span> <span class="fu">ranger</span>(<span class="at">formula =</span> mod<span class="sc">~</span>., <span class="at">data =</span> data.train, <span class="at">num.trees =</span> <span class="dv">100</span>, </span>
-<span id="cb3-1144"><a href="#cb3-1144" aria-hidden="true" tabindex="-1"></a>                   <span class="at">mtry =</span> <span class="fu">dim</span>(x.train)[<span class="dv">2</span>], <span class="at">num.threads =</span> ncores)</span>
-<span id="cb3-1145"><a href="#cb3-1145" aria-hidden="true" tabindex="-1"></a>predBagging <span class="ot">&lt;-</span> <span class="fu">predict</span>(<span class="at">object =</span> baggedRf, <span class="at">data =</span> x.test, <span class="at">num.threads =</span> ncores)</span>
-<span id="cb3-1146"><a href="#cb3-1146" aria-hidden="true" tabindex="-1"></a>resBagging[k] <span class="ot">&lt;-</span> <span class="fu">mean</span>(predBagging<span class="sc">$</span>predictions <span class="sc">!=</span> classeTest)</span>
+<span id="cb3-1095"><a href="#cb3-1095" aria-hidden="true" tabindex="-1"></a>n <span class="ot">&lt;-</span> <span class="dv">500</span></span>
+<span id="cb3-1096"><a href="#cb3-1096" aria-hidden="true" tabindex="-1"></a>pi0 <span class="ot">&lt;-</span> <span class="fl">0.25</span></span>
+<span id="cb3-1097"><a href="#cb3-1097" aria-hidden="true" tabindex="-1"></a>pi1 <span class="ot">&lt;-</span> <span class="fl">0.25</span></span>
+<span id="cb3-1098"><a href="#cb3-1098" aria-hidden="true" tabindex="-1"></a>pi2 <span class="ot">&lt;-</span> <span class="fl">0.25</span></span>
+<span id="cb3-1099"><a href="#cb3-1099" aria-hidden="true" tabindex="-1"></a>pi3 <span class="ot">&lt;-</span> <span class="fl">0.25</span></span>
+<span id="cb3-1100"><a href="#cb3-1100" aria-hidden="true" tabindex="-1"></a>l <span class="ot">&lt;-</span> <span class="dv">20</span></span>
+<span id="cb3-1101"><a href="#cb3-1101" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-1102"><a href="#cb3-1102" aria-hidden="true" tabindex="-1"></a>mu0 <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="fu">c</span>(<span class="fl">0.8</span>,<span class="dv">3</span>), <span class="fu">rep</span>(<span class="fu">c</span>(<span class="dv">1</span>,<span class="fl">2.5</span>), l<span class="sc">/</span><span class="dv">2-1</span>))</span>
+<span id="cb3-1103"><a href="#cb3-1103" aria-hidden="true" tabindex="-1"></a>Sigma0 <span class="ot">&lt;-</span> <span class="fu">diag</span>(<span class="fu">c</span>(<span class="fu">c</span>(<span class="dv">3</span>,<span class="dv">3</span>), <span class="fu">rep</span>(<span class="fu">c</span>(<span class="dv">3</span>,<span class="dv">1</span>),l<span class="sc">/</span><span class="dv">2-1</span>)) )</span>
+<span id="cb3-1104"><a href="#cb3-1104" aria-hidden="true" tabindex="-1"></a>mu1 <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="fu">c</span>(<span class="fl">3.2</span>,<span class="dv">3</span>), <span class="fu">rep</span>(<span class="fu">c</span>(<span class="fl">2.5</span>,<span class="fl">2.5</span>), l<span class="sc">/</span><span class="dv">2-1</span>))</span>
+<span id="cb3-1105"><a href="#cb3-1105" aria-hidden="true" tabindex="-1"></a>Sigma1 <span class="ot">&lt;-</span> <span class="fu">diag</span>(<span class="fu">c</span>(<span class="fu">c</span>(<span class="dv">3</span>,<span class="dv">3</span>), <span class="fu">rep</span>(<span class="fu">c</span>(<span class="dv">3</span>,<span class="dv">5</span>),l<span class="sc">/</span><span class="dv">2-1</span>)) )</span>
+<span id="cb3-1106"><a href="#cb3-1106" aria-hidden="true" tabindex="-1"></a>mu2 <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="fu">c</span>(<span class="dv">2</span>,<span class="dv">1</span>), <span class="fu">rep</span>(<span class="fu">c</span>(<span class="dv">2</span>,<span class="fl">2.3</span>),l<span class="sc">/</span><span class="dv">2-1</span>))</span>
+<span id="cb3-1107"><a href="#cb3-1107" aria-hidden="true" tabindex="-1"></a>Sigma2 <span class="ot">&lt;-</span> <span class="fu">diag</span>( (<span class="fu">rep</span>(<span class="fu">c</span>(<span class="dv">4</span>,<span class="dv">1</span>),l<span class="sc">/</span><span class="dv">2</span>) ) )</span>
+<span id="cb3-1108"><a href="#cb3-1108" aria-hidden="true" tabindex="-1"></a>mu3 <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="fu">c</span>(<span class="dv">2</span>,<span class="dv">0</span>), <span class="fu">rep</span>(<span class="fu">c</span>(<span class="dv">2</span>,<span class="fl">1.8</span>),l<span class="sc">/</span><span class="dv">2-1</span>))</span>
+<span id="cb3-1109"><a href="#cb3-1109" aria-hidden="true" tabindex="-1"></a>Sigma3 <span class="ot">&lt;-</span> <span class="fu">diag</span>( (<span class="fu">rep</span>(<span class="fu">c</span>(<span class="fl">2.5</span>,<span class="dv">1</span>),l<span class="sc">/</span><span class="dv">2</span>) ) )</span>
+<span id="cb3-1110"><a href="#cb3-1110" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-1111"><a href="#cb3-1111" aria-hidden="true" tabindex="-1"></a>classe <span class="ot">&lt;-</span> <span class="fu">sample</span>(<span class="at">x =</span> <span class="fu">c</span>(<span class="dv">0</span>,<span class="dv">1</span>,<span class="dv">2</span>,<span class="dv">3</span>), <span class="at">size =</span> n, <span class="at">replace =</span> <span class="cn">TRUE</span>, <span class="at">prob =</span> <span class="fu">c</span>(pi0,pi1,pi2,pi3))</span>
+<span id="cb3-1112"><a href="#cb3-1112" aria-hidden="true" tabindex="-1"></a>classe <span class="ot">&lt;-</span> <span class="fu">sort</span>(classe)</span>
+<span id="cb3-1113"><a href="#cb3-1113" aria-hidden="true" tabindex="-1"></a>n0 <span class="ot">&lt;-</span> <span class="fu">sum</span>(classe<span class="sc">==</span><span class="dv">0</span>)</span>
+<span id="cb3-1114"><a href="#cb3-1114" aria-hidden="true" tabindex="-1"></a>n1 <span class="ot">&lt;-</span> <span class="fu">sum</span>(classe<span class="sc">==</span><span class="dv">1</span>)</span>
+<span id="cb3-1115"><a href="#cb3-1115" aria-hidden="true" tabindex="-1"></a>n2 <span class="ot">&lt;-</span> <span class="fu">sum</span>(classe<span class="sc">==</span><span class="dv">2</span>)</span>
+<span id="cb3-1116"><a href="#cb3-1116" aria-hidden="true" tabindex="-1"></a>n3 <span class="ot">&lt;-</span> <span class="fu">sum</span>(classe<span class="sc">==</span><span class="dv">3</span>)</span>
+<span id="cb3-1117"><a href="#cb3-1117" aria-hidden="true" tabindex="-1"></a>x.train <span class="ot">&lt;-</span> <span class="fu">rbind</span>(<span class="fu">rmvnorm</span>(n0, mu0, Sigma0), <span class="fu">rmvnorm</span>(n1, mu1, Sigma1), <span class="fu">rmvnorm</span>(n2, mu2, Sigma2), <span class="fu">rmvnorm</span>(n3, mu3, Sigma3))</span>
+<span id="cb3-1118"><a href="#cb3-1118" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-1119"><a href="#cb3-1119" aria-hidden="true" tabindex="-1"></a><span class="do">### Test data generation</span></span>
+<span id="cb3-1120"><a href="#cb3-1120" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-1121"><a href="#cb3-1121" aria-hidden="true" tabindex="-1"></a>nTest <span class="ot">&lt;-</span> <span class="dv">100</span></span>
+<span id="cb3-1122"><a href="#cb3-1122" aria-hidden="true" tabindex="-1"></a>classeTest <span class="ot">&lt;-</span> <span class="fu">sample</span>(<span class="fu">c</span>(<span class="dv">0</span>,<span class="dv">1</span>,<span class="dv">2</span>,<span class="dv">3</span>), <span class="at">size=</span>nTest, <span class="at">prob=</span><span class="fu">c</span>(pi0,pi1,pi2,pi3), <span class="at">replace=</span><span class="cn">TRUE</span>)</span>
+<span id="cb3-1123"><a href="#cb3-1123" aria-hidden="true" tabindex="-1"></a>classeTest <span class="ot">&lt;-</span> <span class="fu">sort</span>(classeTest)</span>
+<span id="cb3-1124"><a href="#cb3-1124" aria-hidden="true" tabindex="-1"></a>nTest0 <span class="ot">&lt;-</span> <span class="fu">sum</span>(classeTest<span class="sc">==</span><span class="dv">0</span>)</span>
+<span id="cb3-1125"><a href="#cb3-1125" aria-hidden="true" tabindex="-1"></a>nTest1 <span class="ot">&lt;-</span> <span class="fu">sum</span>(classeTest<span class="sc">==</span><span class="dv">1</span>)</span>
+<span id="cb3-1126"><a href="#cb3-1126" aria-hidden="true" tabindex="-1"></a>nTest2 <span class="ot">&lt;-</span> <span class="fu">sum</span>(classeTest<span class="sc">==</span><span class="dv">2</span>)</span>
+<span id="cb3-1127"><a href="#cb3-1127" aria-hidden="true" tabindex="-1"></a>nTest3 <span class="ot">&lt;-</span> <span class="fu">sum</span>(classeTest<span class="sc">==</span><span class="dv">3</span>)</span>
+<span id="cb3-1128"><a href="#cb3-1128" aria-hidden="true" tabindex="-1"></a>x.test <span class="ot">&lt;-</span> <span class="fu">rbind</span>(<span class="fu">rmvnorm</span>(nTest0, mu0, Sigma0),</span>
+<span id="cb3-1129"><a href="#cb3-1129" aria-hidden="true" tabindex="-1"></a>                <span class="fu">rmvnorm</span>(nTest1, mu1, Sigma1),</span>
+<span id="cb3-1130"><a href="#cb3-1130" aria-hidden="true" tabindex="-1"></a>                <span class="fu">rmvnorm</span>(nTest2, mu2, Sigma2),</span>
+<span id="cb3-1131"><a href="#cb3-1131" aria-hidden="true" tabindex="-1"></a>                <span class="fu">rmvnorm</span>(nTest3, mu3, Sigma3))</span>
+<span id="cb3-1132"><a href="#cb3-1132" aria-hidden="true" tabindex="-1"></a>data.train <span class="ot">&lt;-</span> <span class="fu">data.frame</span>(<span class="at">mod =</span> <span class="fu">as.factor</span>(classe), x.train)</span>
+<span id="cb3-1133"><a href="#cb3-1133" aria-hidden="true" tabindex="-1"></a><span class="fu">colnames</span>(x.test) <span class="ot">&lt;-</span> <span class="fu">colnames</span>(data.train)[<span class="sc">-</span><span class="dv">1</span>]</span>
+<span id="cb3-1134"><a href="#cb3-1134" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-1135"><a href="#cb3-1135" aria-hidden="true" tabindex="-1"></a><span class="do">#### Bayes classifier</span></span>
+<span id="cb3-1136"><a href="#cb3-1136" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-1137"><a href="#cb3-1137" aria-hidden="true" tabindex="-1"></a>BayesClassifieur <span class="ot">&lt;-</span> <span class="cf">function</span>(x){</span>
+<span id="cb3-1138"><a href="#cb3-1138" aria-hidden="true" tabindex="-1"></a>  c0 <span class="ot">&lt;-</span> pi0<span class="sc">*</span><span class="fu">dmvnorm</span>(x,<span class="at">mean=</span>mu0,<span class="at">sigma=</span>Sigma0)</span>
+<span id="cb3-1139"><a href="#cb3-1139" aria-hidden="true" tabindex="-1"></a>  c1 <span class="ot">&lt;-</span> pi1<span class="sc">*</span><span class="fu">dmvnorm</span>(x,<span class="at">mean=</span>mu1,<span class="at">sigma=</span>Sigma1)</span>
+<span id="cb3-1140"><a href="#cb3-1140" aria-hidden="true" tabindex="-1"></a>  c2 <span class="ot">&lt;-</span> pi2<span class="sc">*</span><span class="fu">dmvnorm</span>(x,<span class="at">mean=</span>mu2,<span class="at">sigma=</span>Sigma2)</span>
+<span id="cb3-1141"><a href="#cb3-1141" aria-hidden="true" tabindex="-1"></a>  c3 <span class="ot">&lt;-</span> pi3<span class="sc">*</span><span class="fu">dmvnorm</span>(x,<span class="at">mean=</span>mu3,<span class="at">sigma=</span>Sigma3)</span>
+<span id="cb3-1142"><a href="#cb3-1142" aria-hidden="true" tabindex="-1"></a>  <span class="fu">return</span>(<span class="fu">c</span>(<span class="dv">0</span>,<span class="dv">1</span>,<span class="dv">2</span>,<span class="dv">3</span>)[<span class="fu">which.max</span>(<span class="fu">c</span>(c0,c1,c2,c3))])</span>
+<span id="cb3-1143"><a href="#cb3-1143" aria-hidden="true" tabindex="-1"></a>}</span>
+<span id="cb3-1144"><a href="#cb3-1144" aria-hidden="true" tabindex="-1"></a>predBayes <span class="ot">&lt;-</span> <span class="fu">rep</span>(<span class="cn">NA</span>, nTest)</span>
+<span id="cb3-1145"><a href="#cb3-1145" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span>(i <span class="cf">in</span> <span class="dv">1</span><span class="sc">:</span>nTest) predBayes[i] <span class="ot">&lt;-</span> <span class="fu">BayesClassifieur</span>(x.test[i,])</span>
+<span id="cb3-1146"><a href="#cb3-1146" aria-hidden="true" tabindex="-1"></a>resBayes[k] <span class="ot">&lt;-</span> <span class="fu">mean</span>(predBayes <span class="sc">!=</span> classeTest)</span>
 <span id="cb3-1147"><a href="#cb3-1147" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb3-1148"><a href="#cb3-1148" aria-hidden="true" tabindex="-1"></a><span class="do">#### Random Forests</span></span>
+<span id="cb3-1148"><a href="#cb3-1148" aria-hidden="true" tabindex="-1"></a><span class="do">### Bagging</span></span>
 <span id="cb3-1149"><a href="#cb3-1149" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb3-1150"><a href="#cb3-1150" aria-hidden="true" tabindex="-1"></a>classicRF <span class="ot">&lt;-</span> <span class="fu">ranger</span>(<span class="at">formula =</span> mod<span class="sc">~</span>., <span class="at">data =</span> data.train,</span>
-<span id="cb3-1151"><a href="#cb3-1151" aria-hidden="true" tabindex="-1"></a>                    <span class="at">num.trees =</span> <span class="dv">100</span>, <span class="at">num.threads =</span> ncores)</span>
-<span id="cb3-1152"><a href="#cb3-1152" aria-hidden="true" tabindex="-1"></a>predRF <span class="ot">&lt;-</span> <span class="fu">predict</span>(<span class="at">object =</span> classicRF, <span class="at">data =</span> x.test, <span class="at">num.threads =</span> ncores)</span>
-<span id="cb3-1153"><a href="#cb3-1153" aria-hidden="true" tabindex="-1"></a>resRF[k] <span class="ot">&lt;-</span><span class="fu">mean</span>(predRF<span class="sc">$</span>predictions <span class="sc">!=</span> classeTest)</span>
+<span id="cb3-1150"><a href="#cb3-1150" aria-hidden="true" tabindex="-1"></a>baggedRf <span class="ot">&lt;-</span> <span class="fu">ranger</span>(<span class="at">formula =</span> mod<span class="sc">~</span>., <span class="at">data =</span> data.train, <span class="at">num.trees =</span> <span class="dv">100</span>, </span>
+<span id="cb3-1151"><a href="#cb3-1151" aria-hidden="true" tabindex="-1"></a>                   <span class="at">mtry =</span> <span class="fu">dim</span>(x.train)[<span class="dv">2</span>], <span class="at">num.threads =</span> ncores)</span>
+<span id="cb3-1152"><a href="#cb3-1152" aria-hidden="true" tabindex="-1"></a>predBagging <span class="ot">&lt;-</span> <span class="fu">predict</span>(<span class="at">object =</span> baggedRf, <span class="at">data =</span> x.test, <span class="at">num.threads =</span> ncores)</span>
+<span id="cb3-1153"><a href="#cb3-1153" aria-hidden="true" tabindex="-1"></a>resBagging[k] <span class="ot">&lt;-</span> <span class="fu">mean</span>(predBagging<span class="sc">$</span>predictions <span class="sc">!=</span> classeTest)</span>
 <span id="cb3-1154"><a href="#cb3-1154" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb3-1155"><a href="#cb3-1155" aria-hidden="true" tabindex="-1"></a><span class="do">#### Local variable importance RF</span></span>
+<span id="cb3-1155"><a href="#cb3-1155" aria-hidden="true" tabindex="-1"></a><span class="do">#### Random Forests</span></span>
 <span id="cb3-1156"><a href="#cb3-1156" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb3-1157"><a href="#cb3-1157" aria-hidden="true" tabindex="-1"></a><span class="fu">source</span>(<span class="st">"LocalVarImpRF.R"</span>)</span>
-<span id="cb3-1158"><a href="#cb3-1158" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb3-1159"><a href="#cb3-1159" aria-hidden="true" tabindex="-1"></a>rf.ranger <span class="ot">&lt;-</span> <span class="fu">ranger</span>(mod <span class="sc">~</span> ., <span class="at">data =</span> data.train, <span class="at">num.trees =</span> <span class="dv">100</span>, <span class="at">num.threads =</span> ncores)</span>
-<span id="cb3-1160"><a href="#cb3-1160" aria-hidden="true" tabindex="-1"></a>impxStd <span class="ot">&lt;-</span> <span class="fu">matrix</span>(<span class="cn">NA</span>, <span class="at">nrow =</span> nTest, <span class="at">ncol=</span><span class="fu">dim</span>(x.train)[<span class="dv">2</span>])</span>
-<span id="cb3-1161"><a href="#cb3-1161" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> (i <span class="cf">in</span> <span class="dv">1</span><span class="sc">:</span>nTest) </span>
-<span id="cb3-1162"><a href="#cb3-1162" aria-hidden="true" tabindex="-1"></a>  {</span>
-<span id="cb3-1163"><a href="#cb3-1163" aria-hidden="true" tabindex="-1"></a>  impxStd[i,] <span class="ot">&lt;-</span> <span class="fu">LocalVarImp</span>(rf.ranger, x.test[i,,<span class="at">drop=</span><span class="cn">FALSE</span>])</span>
-<span id="cb3-1164"><a href="#cb3-1164" aria-hidden="true" tabindex="-1"></a>  }</span>
-<span id="cb3-1165"><a href="#cb3-1165" aria-hidden="true" tabindex="-1"></a>predLVIRF <span class="ot">&lt;-</span> <span class="fu">factor</span>(<span class="fu">c</span>(),<span class="at">levels=</span><span class="fu">levels</span>(data.train<span class="sc">$</span>mod))</span>
-<span id="cb3-1166"><a href="#cb3-1166" aria-hidden="true" tabindex="-1"></a><span class="co"># tp &lt;- txtProgressBar(min = 1, max = nTest, style = 3, char = "*")</span></span>
-<span id="cb3-1167"><a href="#cb3-1167" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> (i <span class="cf">in</span> <span class="dv">1</span><span class="sc">:</span>nTest)</span>
-<span id="cb3-1168"><a href="#cb3-1168" aria-hidden="true" tabindex="-1"></a>  {</span>
-<span id="cb3-1169"><a href="#cb3-1169" aria-hidden="true" tabindex="-1"></a>  rf.local.ranger <span class="ot">&lt;-</span> <span class="fu">ranger</span>(mod <span class="sc">~</span> ., <span class="at">data =</span> data.train, <span class="at">num.trees =</span> <span class="dv">100</span>, </span>
-<span id="cb3-1170"><a href="#cb3-1170" aria-hidden="true" tabindex="-1"></a>                            <span class="at">split.select.weights =</span> impxStd[i,], <span class="at">num.threads =</span> ncores)</span>
-<span id="cb3-1171"><a href="#cb3-1171" aria-hidden="true" tabindex="-1"></a>  predLVIRF[i] <span class="ot">&lt;-</span> <span class="fu">predict</span>(rf.local.ranger, <span class="at">data=</span>x.test[i,,<span class="at">drop=</span><span class="cn">FALSE</span>])<span class="sc">$</span>predictions</span>
-<span id="cb3-1172"><a href="#cb3-1172" aria-hidden="true" tabindex="-1"></a><span class="co">#  setTxtProgressBar(tp, i)</span></span>
-<span id="cb3-1173"><a href="#cb3-1173" aria-hidden="true" tabindex="-1"></a>  }</span>
-<span id="cb3-1174"><a href="#cb3-1174" aria-hidden="true" tabindex="-1"></a>resLVIRF[k] <span class="ot">&lt;-</span> <span class="fu">mean</span>(predLVIRF <span class="sc">!=</span> classeTest)</span>
-<span id="cb3-1175"><a href="#cb3-1175" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb3-1176"><a href="#cb3-1176" aria-hidden="true" tabindex="-1"></a><span class="do">#### Case Specific Random Forests</span></span>
-<span id="cb3-1177"><a href="#cb3-1177" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb3-1178"><a href="#cb3-1178" aria-hidden="true" tabindex="-1"></a><span class="do">## Nmin = 5</span></span>
-<span id="cb3-1179"><a href="#cb3-1179" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb3-1180"><a href="#cb3-1180" aria-hidden="true" tabindex="-1"></a>predCsrf5 <span class="ot">&lt;-</span> <span class="fu">csrf</span>(mod<span class="sc">~</span>., <span class="at">training_data =</span> data.train, <span class="at">test_data =</span> <span class="fu">data.frame</span>(x.test), <span class="at">params1 =</span> <span class="fu">list</span>(<span class="at">num.trees=</span><span class="dv">100</span>, <span class="at">mtry =</span> <span class="fu">dim</span>(x.train)[<span class="dv">2</span>], <span class="at">min.node.size =</span> <span class="dv">5</span>, <span class="at">num.threads =</span> ncores), <span class="at">params2 =</span> <span class="fu">list</span>(<span class="at">num.trees=</span><span class="dv">100</span>, <span class="at">num.threads =</span> ncores))</span>
-<span id="cb3-1181"><a href="#cb3-1181" aria-hidden="true" tabindex="-1"></a>resCsrf5[k] <span class="ot">&lt;-</span> <span class="fu">mean</span>(predCsrf5 <span class="sc">!=</span> classeTest)</span>
+<span id="cb3-1157"><a href="#cb3-1157" aria-hidden="true" tabindex="-1"></a>classicRF <span class="ot">&lt;-</span> <span class="fu">ranger</span>(<span class="at">formula =</span> mod<span class="sc">~</span>., <span class="at">data =</span> data.train,</span>
+<span id="cb3-1158"><a href="#cb3-1158" aria-hidden="true" tabindex="-1"></a>                    <span class="at">num.trees =</span> <span class="dv">100</span>, <span class="at">num.threads =</span> ncores)</span>
+<span id="cb3-1159"><a href="#cb3-1159" aria-hidden="true" tabindex="-1"></a>predRF <span class="ot">&lt;-</span> <span class="fu">predict</span>(<span class="at">object =</span> classicRF, <span class="at">data =</span> x.test, <span class="at">num.threads =</span> ncores)</span>
+<span id="cb3-1160"><a href="#cb3-1160" aria-hidden="true" tabindex="-1"></a>resRF[k] <span class="ot">&lt;-</span><span class="fu">mean</span>(predRF<span class="sc">$</span>predictions <span class="sc">!=</span> classeTest)</span>
+<span id="cb3-1161"><a href="#cb3-1161" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-1162"><a href="#cb3-1162" aria-hidden="true" tabindex="-1"></a><span class="do">#### Local variable importance RF</span></span>
+<span id="cb3-1163"><a href="#cb3-1163" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-1164"><a href="#cb3-1164" aria-hidden="true" tabindex="-1"></a><span class="fu">source</span>(<span class="st">"LocalVarImpRF.R"</span>)</span>
+<span id="cb3-1165"><a href="#cb3-1165" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-1166"><a href="#cb3-1166" aria-hidden="true" tabindex="-1"></a>rf.ranger <span class="ot">&lt;-</span> <span class="fu">ranger</span>(mod <span class="sc">~</span> ., <span class="at">data =</span> data.train, <span class="at">num.trees =</span> <span class="dv">100</span>, <span class="at">num.threads =</span> ncores)</span>
+<span id="cb3-1167"><a href="#cb3-1167" aria-hidden="true" tabindex="-1"></a>impxStd <span class="ot">&lt;-</span> <span class="fu">matrix</span>(<span class="cn">NA</span>, <span class="at">nrow =</span> nTest, <span class="at">ncol=</span><span class="fu">dim</span>(x.train)[<span class="dv">2</span>])</span>
+<span id="cb3-1168"><a href="#cb3-1168" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> (i <span class="cf">in</span> <span class="dv">1</span><span class="sc">:</span>nTest) </span>
+<span id="cb3-1169"><a href="#cb3-1169" aria-hidden="true" tabindex="-1"></a>  {</span>
+<span id="cb3-1170"><a href="#cb3-1170" aria-hidden="true" tabindex="-1"></a>  impxStd[i,] <span class="ot">&lt;-</span> <span class="fu">LocalVarImp</span>(rf.ranger, x.test[i,,<span class="at">drop=</span><span class="cn">FALSE</span>])</span>
+<span id="cb3-1171"><a href="#cb3-1171" aria-hidden="true" tabindex="-1"></a>  }</span>
+<span id="cb3-1172"><a href="#cb3-1172" aria-hidden="true" tabindex="-1"></a>predLVIRF <span class="ot">&lt;-</span> <span class="fu">factor</span>(<span class="fu">c</span>(),<span class="at">levels=</span><span class="fu">levels</span>(data.train<span class="sc">$</span>mod))</span>
+<span id="cb3-1173"><a href="#cb3-1173" aria-hidden="true" tabindex="-1"></a><span class="co"># tp &lt;- txtProgressBar(min = 1, max = nTest, style = 3, char = "*")</span></span>
+<span id="cb3-1174"><a href="#cb3-1174" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> (i <span class="cf">in</span> <span class="dv">1</span><span class="sc">:</span>nTest)</span>
+<span id="cb3-1175"><a href="#cb3-1175" aria-hidden="true" tabindex="-1"></a>  {</span>
+<span id="cb3-1176"><a href="#cb3-1176" aria-hidden="true" tabindex="-1"></a>  rf.local.ranger <span class="ot">&lt;-</span> <span class="fu">ranger</span>(mod <span class="sc">~</span> ., <span class="at">data =</span> data.train, <span class="at">num.trees =</span> <span class="dv">100</span>, </span>
+<span id="cb3-1177"><a href="#cb3-1177" aria-hidden="true" tabindex="-1"></a>                            <span class="at">split.select.weights =</span> impxStd[i,], <span class="at">num.threads =</span> ncores)</span>
+<span id="cb3-1178"><a href="#cb3-1178" aria-hidden="true" tabindex="-1"></a>  predLVIRF[i] <span class="ot">&lt;-</span> <span class="fu">predict</span>(rf.local.ranger, <span class="at">data=</span>x.test[i,,<span class="at">drop=</span><span class="cn">FALSE</span>])<span class="sc">$</span>predictions</span>
+<span id="cb3-1179"><a href="#cb3-1179" aria-hidden="true" tabindex="-1"></a><span class="co">#  setTxtProgressBar(tp, i)</span></span>
+<span id="cb3-1180"><a href="#cb3-1180" aria-hidden="true" tabindex="-1"></a>  }</span>
+<span id="cb3-1181"><a href="#cb3-1181" aria-hidden="true" tabindex="-1"></a>resLVIRF[k] <span class="ot">&lt;-</span> <span class="fu">mean</span>(predLVIRF <span class="sc">!=</span> classeTest)</span>
 <span id="cb3-1182"><a href="#cb3-1182" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb3-1183"><a href="#cb3-1183" aria-hidden="true" tabindex="-1"></a><span class="do">## Nmin = 10</span></span>
+<span id="cb3-1183"><a href="#cb3-1183" aria-hidden="true" tabindex="-1"></a><span class="do">#### Case Specific Random Forests</span></span>
 <span id="cb3-1184"><a href="#cb3-1184" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb3-1185"><a href="#cb3-1185" aria-hidden="true" tabindex="-1"></a>predCsrf10 <span class="ot">&lt;-</span> <span class="fu">csrf</span>(mod<span class="sc">~</span>., <span class="at">training_data =</span> data.train, <span class="at">test_data =</span> <span class="fu">data.frame</span>(x.test), <span class="at">params1 =</span> <span class="fu">list</span>(<span class="at">num.trees=</span><span class="dv">100</span>, <span class="at">mtry =</span> <span class="fu">dim</span>(x.train)[<span class="dv">2</span>], <span class="at">min.node.size =</span> <span class="dv">10</span>, <span class="at">num.threads =</span> ncores), <span class="at">params2 =</span> <span class="fu">list</span>(<span class="at">num.trees=</span><span class="dv">100</span>, <span class="at">num.threads =</span> ncores))</span>
-<span id="cb3-1186"><a href="#cb3-1186" aria-hidden="true" tabindex="-1"></a>resCsrf10[k] <span class="ot">&lt;-</span> <span class="fu">mean</span>(predCsrf10 <span class="sc">!=</span> classeTest)</span>
-<span id="cb3-1187"><a href="#cb3-1187" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb3-1188"><a href="#cb3-1188" aria-hidden="true" tabindex="-1"></a><span class="do">#### Local dynamic selection RF</span></span>
+<span id="cb3-1185"><a href="#cb3-1185" aria-hidden="true" tabindex="-1"></a><span class="do">## Nmin = 5</span></span>
+<span id="cb3-1186"><a href="#cb3-1186" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-1187"><a href="#cb3-1187" aria-hidden="true" tabindex="-1"></a>predCsrf5 <span class="ot">&lt;-</span> <span class="fu">csrf</span>(mod<span class="sc">~</span>., <span class="at">training_data =</span> data.train, <span class="at">test_data =</span> <span class="fu">data.frame</span>(x.test), <span class="at">params1 =</span> <span class="fu">list</span>(<span class="at">num.trees=</span><span class="dv">100</span>, <span class="at">mtry =</span> <span class="fu">dim</span>(x.train)[<span class="dv">2</span>], <span class="at">min.node.size =</span> <span class="dv">5</span>, <span class="at">num.threads =</span> ncores), <span class="at">params2 =</span> <span class="fu">list</span>(<span class="at">num.trees=</span><span class="dv">100</span>, <span class="at">num.threads =</span> ncores))</span>
+<span id="cb3-1188"><a href="#cb3-1188" aria-hidden="true" tabindex="-1"></a>resCsrf5[k] <span class="ot">&lt;-</span> <span class="fu">mean</span>(predCsrf5 <span class="sc">!=</span> classeTest)</span>
 <span id="cb3-1189"><a href="#cb3-1189" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb3-1190"><a href="#cb3-1190" aria-hidden="true" tabindex="-1"></a><span class="fu">source</span>(<span class="st">"DynamicVotingWithSelectionRF.R"</span>)</span>
+<span id="cb3-1190"><a href="#cb3-1190" aria-hidden="true" tabindex="-1"></a><span class="do">## Nmin = 10</span></span>
 <span id="cb3-1191"><a href="#cb3-1191" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb3-1192"><a href="#cb3-1192" aria-hidden="true" tabindex="-1"></a><span class="do">## 100 neighbors, we keep 100 best trees (all)</span></span>
-<span id="cb3-1193"><a href="#cb3-1193" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb3-1194"><a href="#cb3-1194" aria-hidden="true" tabindex="-1"></a>predDVSRF1 <span class="ot">&lt;-</span> <span class="fu">dynamicVoting</span>(<span class="at">formula =</span> mod<span class="sc">~</span>., <span class="at">data =</span> data.train, <span class="at">dataTest =</span> <span class="fu">data.frame</span>(x.test), <span class="at">K =</span> <span class="dv">100</span>, <span class="at">ntree =</span> <span class="dv">100</span>, <span class="at">ntreeToKeep =</span> <span class="dv">100</span>, <span class="at">ncores =</span> ncores)</span>
-<span id="cb3-1195"><a href="#cb3-1195" aria-hidden="true" tabindex="-1"></a>resDVSRF1[k] <span class="ot">&lt;-</span> <span class="fu">mean</span>(predDVSRF1<span class="sc">$</span>prediction <span class="sc">!=</span>  classeTest)</span>
+<span id="cb3-1192"><a href="#cb3-1192" aria-hidden="true" tabindex="-1"></a>predCsrf10 <span class="ot">&lt;-</span> <span class="fu">csrf</span>(mod<span class="sc">~</span>., <span class="at">training_data =</span> data.train, <span class="at">test_data =</span> <span class="fu">data.frame</span>(x.test), <span class="at">params1 =</span> <span class="fu">list</span>(<span class="at">num.trees=</span><span class="dv">100</span>, <span class="at">mtry =</span> <span class="fu">dim</span>(x.train)[<span class="dv">2</span>], <span class="at">min.node.size =</span> <span class="dv">10</span>, <span class="at">num.threads =</span> ncores), <span class="at">params2 =</span> <span class="fu">list</span>(<span class="at">num.trees=</span><span class="dv">100</span>, <span class="at">num.threads =</span> ncores))</span>
+<span id="cb3-1193"><a href="#cb3-1193" aria-hidden="true" tabindex="-1"></a>resCsrf10[k] <span class="ot">&lt;-</span> <span class="fu">mean</span>(predCsrf10 <span class="sc">!=</span> classeTest)</span>
+<span id="cb3-1194"><a href="#cb3-1194" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-1195"><a href="#cb3-1195" aria-hidden="true" tabindex="-1"></a><span class="do">#### Local dynamic selection RF</span></span>
 <span id="cb3-1196"><a href="#cb3-1196" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb3-1197"><a href="#cb3-1197" aria-hidden="true" tabindex="-1"></a><span class="fu">source</span>(<span class="st">"KernelVotingRF.R"</span>)</span>
+<span id="cb3-1197"><a href="#cb3-1197" aria-hidden="true" tabindex="-1"></a><span class="fu">source</span>(<span class="st">"DynamicVotingWithSelectionRF.R"</span>)</span>
 <span id="cb3-1198"><a href="#cb3-1198" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb3-1199"><a href="#cb3-1199" aria-hidden="true" tabindex="-1"></a><span class="do">## alpha = 0.5</span></span>
+<span id="cb3-1199"><a href="#cb3-1199" aria-hidden="true" tabindex="-1"></a><span class="do">## 100 neighbors, we keep 100 best trees (all)</span></span>
 <span id="cb3-1200"><a href="#cb3-1200" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb3-1201"><a href="#cb3-1201" aria-hidden="true" tabindex="-1"></a>predKVRF1 <span class="ot">&lt;-</span> <span class="fu">kernelVoting</span>(<span class="at">formula =</span> mod<span class="sc">~</span>., <span class="at">data =</span> data.train, <span class="at">dataTest =</span> <span class="fu">data.frame</span>(x.test), <span class="at">ntree =</span> <span class="dv">100</span>, <span class="at">ncores =</span> ncores, <span class="at">rule =</span> <span class="st">"quantile"</span>, <span class="at">alpha =</span> <span class="fl">0.5</span>)</span>
-<span id="cb3-1202"><a href="#cb3-1202" aria-hidden="true" tabindex="-1"></a>resKVRF1[k] <span class="ot">&lt;-</span> <span class="fu">mean</span>(predKVRF1<span class="sc">$</span>prediction <span class="sc">!=</span> classeTest)</span>
+<span id="cb3-1201"><a href="#cb3-1201" aria-hidden="true" tabindex="-1"></a>predDVSRF1 <span class="ot">&lt;-</span> <span class="fu">dynamicVoting</span>(<span class="at">formula =</span> mod<span class="sc">~</span>., <span class="at">data =</span> data.train, <span class="at">dataTest =</span> <span class="fu">data.frame</span>(x.test), <span class="at">K =</span> <span class="dv">100</span>, <span class="at">ntree =</span> <span class="dv">100</span>, <span class="at">ntreeToKeep =</span> <span class="dv">100</span>, <span class="at">ncores =</span> ncores)</span>
+<span id="cb3-1202"><a href="#cb3-1202" aria-hidden="true" tabindex="-1"></a>resDVSRF1[k] <span class="ot">&lt;-</span> <span class="fu">mean</span>(predDVSRF1<span class="sc">$</span>prediction <span class="sc">!=</span>  classeTest)</span>
 <span id="cb3-1203"><a href="#cb3-1203" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb3-1204"><a href="#cb3-1204" aria-hidden="true" tabindex="-1"></a><span class="do">#### Nearest-neighbors followed by classic RF</span></span>
+<span id="cb3-1204"><a href="#cb3-1204" aria-hidden="true" tabindex="-1"></a><span class="fu">source</span>(<span class="st">"KernelVotingRF.R"</span>)</span>
 <span id="cb3-1205"><a href="#cb3-1205" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb3-1206"><a href="#cb3-1206" aria-hidden="true" tabindex="-1"></a>madInit <span class="ot">&lt;-</span> <span class="fu">apply</span>(<span class="at">X =</span> x.train, <span class="dv">2</span>, mad)</span>
+<span id="cb3-1206"><a href="#cb3-1206" aria-hidden="true" tabindex="-1"></a><span class="do">## alpha = 0.5</span></span>
 <span id="cb3-1207"><a href="#cb3-1207" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb3-1208"><a href="#cb3-1208" aria-hidden="true" tabindex="-1"></a><span class="do">## 100 NN</span></span>
-<span id="cb3-1209"><a href="#cb3-1209" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb3-1210"><a href="#cb3-1210" aria-hidden="true" tabindex="-1"></a>K <span class="ot">&lt;-</span> <span class="dv">250</span></span>
-<span id="cb3-1211"><a href="#cb3-1211" aria-hidden="true" tabindex="-1"></a>predNNRF1 <span class="ot">&lt;-</span> <span class="fu">factor</span>(<span class="fu">c</span>(),<span class="at">levels=</span><span class="fu">levels</span>(data.train<span class="sc">$</span>mod))</span>
-<span id="cb3-1212"><a href="#cb3-1212" aria-hidden="true" tabindex="-1"></a><span class="co"># tp &lt;- txtProgressBar(min = 1, max = nTest, style = 3, char = "*")</span></span>
-<span id="cb3-1213"><a href="#cb3-1213" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span>(i <span class="cf">in</span> <span class="dv">1</span><span class="sc">:</span>nTest)</span>
-<span id="cb3-1214"><a href="#cb3-1214" aria-hidden="true" tabindex="-1"></a>  {</span>
-<span id="cb3-1215"><a href="#cb3-1215" aria-hidden="true" tabindex="-1"></a>  distances <span class="ot">&lt;-</span> <span class="fu">sapply</span>(<span class="dv">1</span><span class="sc">:</span>n, <span class="cf">function</span>(X) <span class="fu">sqrt</span>(<span class="fu">mean</span>( ( (x.train[X,]<span class="sc">-</span>x.test[i,])<span class="sc">/</span>madInit )<span class="sc">^</span><span class="dv">2</span>)) )</span>
-<span id="cb3-1216"><a href="#cb3-1216" aria-hidden="true" tabindex="-1"></a>  ord <span class="ot">&lt;-</span> <span class="fu">order</span>(distances)</span>
-<span id="cb3-1217"><a href="#cb3-1217" aria-hidden="true" tabindex="-1"></a>  toKeep <span class="ot">&lt;-</span> ord[<span class="dv">1</span><span class="sc">:</span>K]</span>
-<span id="cb3-1218"><a href="#cb3-1218" aria-hidden="true" tabindex="-1"></a>  data.trainNN <span class="ot">&lt;-</span> data.train[toKeep,]</span>
-<span id="cb3-1219"><a href="#cb3-1219" aria-hidden="true" tabindex="-1"></a>  rfNN <span class="ot">&lt;-</span> <span class="fu">ranger</span>(<span class="at">formula =</span> mod<span class="sc">~</span>., <span class="at">data =</span> data.trainNN, <span class="at">num.trees =</span> <span class="dv">100</span>, <span class="at">num.threads=</span>ncores)</span>
-<span id="cb3-1220"><a href="#cb3-1220" aria-hidden="true" tabindex="-1"></a>  predNNRF1[i] <span class="ot">&lt;-</span> <span class="fu">predict</span>(rfNN, <span class="at">data=</span><span class="fu">data.frame</span>(x.test[i,,<span class="at">drop=</span><span class="cn">FALSE</span>]), <span class="at">num.threads=</span>ncores)<span class="sc">$</span>predictions</span>
-<span id="cb3-1221"><a href="#cb3-1221" aria-hidden="true" tabindex="-1"></a><span class="co">#  setTxtProgressBar(tp, i)</span></span>
-<span id="cb3-1222"><a href="#cb3-1222" aria-hidden="true" tabindex="-1"></a>  }</span>
-<span id="cb3-1223"><a href="#cb3-1223" aria-hidden="true" tabindex="-1"></a>resNNRF1[k] <span class="ot">&lt;-</span> <span class="fu">mean</span>(predNNRF1 <span class="sc">!=</span> classeTest)</span>
-<span id="cb3-1224"><a href="#cb3-1224" aria-hidden="true" tabindex="-1"></a>}</span>
-<span id="cb3-1225"><a href="#cb3-1225" aria-hidden="true" tabindex="-1"></a>resTOT <span class="ot">&lt;-</span> <span class="fu">cbind</span>(resBayes,resBagging,resRF,resLVIRF,resCsrf5,resCsrf10,resDVSRF1,resKVRF1,resNNRF1)</span>
-<span id="cb3-1226"><a href="#cb3-1226" aria-hidden="true" tabindex="-1"></a>resTOT<span class="ot">&lt;-</span><span class="dv">100</span><span class="sc">*</span>resTOT</span>
-<span id="cb3-1227"><a href="#cb3-1227" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb3-1228"><a href="#cb3-1228" aria-hidden="true" tabindex="-1"></a>Identifier<span class="ot">&lt;-</span><span class="fu">c</span>(<span class="st">"Bayes classifier"</span>,<span class="st">"Bagged CARTs"</span>,<span class="st">"Random forest"</span>,<span class="st">"LVI-RF"</span>,<span class="st">"CSRF"</span>,<span class="st">"CSRF"</span>,<span class="st">"DVSRF"</span>,<span class="st">"KV-RF"</span>,<span class="st">"NN-RF"</span>)</span>
-<span id="cb3-1229"><a href="#cb3-1229" aria-hidden="true" tabindex="-1"></a>Characteristics<span class="ot">&lt;-</span><span class="fu">c</span>(<span class="st">""</span>,<span class="st">""</span>,<span class="st">""</span>,<span class="st">""</span>,<span class="st">"Nmin=5"</span>,<span class="st">"Nmin=10"</span>,<span class="st">"k=100,Bsel=100"</span>,<span class="st">""</span>,<span class="st">"k=250"</span>)</span>
-<span id="cb3-1230"><a href="#cb3-1230" aria-hidden="true" tabindex="-1"></a>Table<span class="ot">=</span><span class="fu">cbind</span>(Identifier,Characteristics,<span class="fu">apply</span>(resTOT,<span class="dv">2</span>,mean),<span class="fu">paste</span>(<span class="st">"("</span>,<span class="fu">round</span>(<span class="fu">apply</span>(resTOT,<span class="dv">2</span>,sd),<span class="dv">2</span>),<span class="st">")"</span>,<span class="at">sep=</span><span class="st">""</span>))</span>
-<span id="cb3-1231"><a href="#cb3-1231" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb3-1232"><a href="#cb3-1232" aria-hidden="true" tabindex="-1"></a>TableOrdered<span class="ot">=</span>Table[<span class="fu">c</span>(<span class="dv">1</span><span class="sc">:</span><span class="dv">3</span>,<span class="dv">5</span><span class="sc">:</span><span class="dv">6</span>,<span class="dv">9</span>,<span class="dv">4</span>,<span class="dv">7</span>,<span class="dv">8</span>),]</span>
-<span id="cb3-1233"><a href="#cb3-1233" aria-hidden="true" tabindex="-1"></a><span class="fu">colnames</span>(TableOrdered)<span class="ot">=</span><span class="fu">c</span>(<span class="st">"Method"</span>,<span class="st">"Parameters"</span>,<span class="st">"Error rate"</span>,<span class="st">"(sd)"</span>)</span>
-<span id="cb3-1234"><a href="#cb3-1234" aria-hidden="true" tabindex="-1"></a><span class="fu">rownames</span>(TableOrdered)<span class="ot">=</span><span class="cn">NULL</span></span>
-<span id="cb3-1235"><a href="#cb3-1235" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb3-1236"><a href="#cb3-1236" aria-hidden="true" tabindex="-1"></a>kableExtra<span class="sc">::</span><span class="fu">kable</span>(TableOrdered, <span class="at">booktabs=</span>T, <span class="at">row.names=</span><span class="cn">NA</span>)</span>
-<span id="cb3-1237"><a href="#cb3-1237" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb3-1208"><a href="#cb3-1208" aria-hidden="true" tabindex="-1"></a>predKVRF1 <span class="ot">&lt;-</span> <span class="fu">kernelVoting</span>(<span class="at">formula =</span> mod<span class="sc">~</span>., <span class="at">data =</span> data.train, <span class="at">dataTest =</span> <span class="fu">data.frame</span>(x.test), <span class="at">ntree =</span> <span class="dv">100</span>, <span class="at">ncores =</span> ncores, <span class="at">rule =</span> <span class="st">"quantile"</span>, <span class="at">alpha =</span> <span class="fl">0.5</span>)</span>
+<span id="cb3-1209"><a href="#cb3-1209" aria-hidden="true" tabindex="-1"></a>resKVRF1[k] <span class="ot">&lt;-</span> <span class="fu">mean</span>(predKVRF1<span class="sc">$</span>prediction <span class="sc">!=</span> classeTest)</span>
+<span id="cb3-1210"><a href="#cb3-1210" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-1211"><a href="#cb3-1211" aria-hidden="true" tabindex="-1"></a><span class="do">#### Nearest-neighbors followed by classic RF</span></span>
+<span id="cb3-1212"><a href="#cb3-1212" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-1213"><a href="#cb3-1213" aria-hidden="true" tabindex="-1"></a>madInit <span class="ot">&lt;-</span> <span class="fu">apply</span>(<span class="at">X =</span> x.train, <span class="dv">2</span>, mad)</span>
+<span id="cb3-1214"><a href="#cb3-1214" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-1215"><a href="#cb3-1215" aria-hidden="true" tabindex="-1"></a><span class="do">## 100 NN</span></span>
+<span id="cb3-1216"><a href="#cb3-1216" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-1217"><a href="#cb3-1217" aria-hidden="true" tabindex="-1"></a>K <span class="ot">&lt;-</span> <span class="dv">250</span></span>
+<span id="cb3-1218"><a href="#cb3-1218" aria-hidden="true" tabindex="-1"></a>predNNRF1 <span class="ot">&lt;-</span> <span class="fu">factor</span>(<span class="fu">c</span>(),<span class="at">levels=</span><span class="fu">levels</span>(data.train<span class="sc">$</span>mod))</span>
+<span id="cb3-1219"><a href="#cb3-1219" aria-hidden="true" tabindex="-1"></a><span class="co"># tp &lt;- txtProgressBar(min = 1, max = nTest, style = 3, char = "*")</span></span>
+<span id="cb3-1220"><a href="#cb3-1220" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span>(i <span class="cf">in</span> <span class="dv">1</span><span class="sc">:</span>nTest)</span>
+<span id="cb3-1221"><a href="#cb3-1221" aria-hidden="true" tabindex="-1"></a>  {</span>
+<span id="cb3-1222"><a href="#cb3-1222" aria-hidden="true" tabindex="-1"></a>  distances <span class="ot">&lt;-</span> <span class="fu">sapply</span>(<span class="dv">1</span><span class="sc">:</span>n, <span class="cf">function</span>(X) <span class="fu">sqrt</span>(<span class="fu">mean</span>( ( (x.train[X,]<span class="sc">-</span>x.test[i,])<span class="sc">/</span>madInit )<span class="sc">^</span><span class="dv">2</span>)) )</span>
+<span id="cb3-1223"><a href="#cb3-1223" aria-hidden="true" tabindex="-1"></a>  ord <span class="ot">&lt;-</span> <span class="fu">order</span>(distances)</span>
+<span id="cb3-1224"><a href="#cb3-1224" aria-hidden="true" tabindex="-1"></a>  toKeep <span class="ot">&lt;-</span> ord[<span class="dv">1</span><span class="sc">:</span>K]</span>
+<span id="cb3-1225"><a href="#cb3-1225" aria-hidden="true" tabindex="-1"></a>  data.trainNN <span class="ot">&lt;-</span> data.train[toKeep,]</span>
+<span id="cb3-1226"><a href="#cb3-1226" aria-hidden="true" tabindex="-1"></a>  rfNN <span class="ot">&lt;-</span> <span class="fu">ranger</span>(<span class="at">formula =</span> mod<span class="sc">~</span>., <span class="at">data =</span> data.trainNN, <span class="at">num.trees =</span> <span class="dv">100</span>, <span class="at">num.threads=</span>ncores)</span>
+<span id="cb3-1227"><a href="#cb3-1227" aria-hidden="true" tabindex="-1"></a>  predNNRF1[i] <span class="ot">&lt;-</span> <span class="fu">predict</span>(rfNN, <span class="at">data=</span><span class="fu">data.frame</span>(x.test[i,,<span class="at">drop=</span><span class="cn">FALSE</span>]), <span class="at">num.threads=</span>ncores)<span class="sc">$</span>predictions</span>
+<span id="cb3-1228"><a href="#cb3-1228" aria-hidden="true" tabindex="-1"></a><span class="co">#  setTxtProgressBar(tp, i)</span></span>
+<span id="cb3-1229"><a href="#cb3-1229" aria-hidden="true" tabindex="-1"></a>  }</span>
+<span id="cb3-1230"><a href="#cb3-1230" aria-hidden="true" tabindex="-1"></a>resNNRF1[k] <span class="ot">&lt;-</span> <span class="fu">mean</span>(predNNRF1 <span class="sc">!=</span> classeTest)</span>
+<span id="cb3-1231"><a href="#cb3-1231" aria-hidden="true" tabindex="-1"></a>}</span>
+<span id="cb3-1232"><a href="#cb3-1232" aria-hidden="true" tabindex="-1"></a>resTOT <span class="ot">&lt;-</span> <span class="fu">cbind</span>(resBayes,resBagging,resRF,resLVIRF,resCsrf5,resCsrf10,resDVSRF1,resKVRF1,resNNRF1)</span>
+<span id="cb3-1233"><a href="#cb3-1233" aria-hidden="true" tabindex="-1"></a>resTOT<span class="ot">&lt;-</span><span class="dv">100</span><span class="sc">*</span>resTOT</span>
+<span id="cb3-1234"><a href="#cb3-1234" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-1235"><a href="#cb3-1235" aria-hidden="true" tabindex="-1"></a>Identifier<span class="ot">&lt;-</span><span class="fu">c</span>(<span class="st">"Bayes classifier"</span>,<span class="st">"Bagged CARTs"</span>,<span class="st">"Random forest"</span>,<span class="st">"LVI-RF"</span>,<span class="st">"CSRF"</span>,<span class="st">"CSRF"</span>,<span class="st">"DVSRF"</span>,<span class="st">"KV-RF"</span>,<span class="st">"NN-RF"</span>)</span>
+<span id="cb3-1236"><a href="#cb3-1236" aria-hidden="true" tabindex="-1"></a>Characteristics<span class="ot">&lt;-</span><span class="fu">c</span>(<span class="st">""</span>,<span class="st">""</span>,<span class="st">""</span>,<span class="st">""</span>,<span class="st">"Nmin=5"</span>,<span class="st">"Nmin=10"</span>,<span class="st">"k=100,Bsel=100"</span>,<span class="st">""</span>,<span class="st">"k=250"</span>)</span>
+<span id="cb3-1237"><a href="#cb3-1237" aria-hidden="true" tabindex="-1"></a>Table<span class="ot">=</span><span class="fu">cbind</span>(Identifier,Characteristics,<span class="fu">apply</span>(resTOT,<span class="dv">2</span>,mean),<span class="fu">paste</span>(<span class="st">"("</span>,<span class="fu">round</span>(<span class="fu">apply</span>(resTOT,<span class="dv">2</span>,sd),<span class="dv">2</span>),<span class="st">")"</span>,<span class="at">sep=</span><span class="st">""</span>))</span>
 <span id="cb3-1238"><a href="#cb3-1238" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb3-1239"><a href="#cb3-1239" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb3-1240"><a href="#cb3-1240" aria-hidden="true" tabindex="-1"></a><span class="fu"># Discussions {#sec-discussions}</span></span>
-<span id="cb3-1241"><a href="#cb3-1241" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb3-1242"><a href="#cb3-1242" aria-hidden="true" tabindex="-1"></a>In this paper, we review, discuss and propose local tree-based methods strategies taking into account a specific instance during the learning process in the context of classification problems. </span>
-<span id="cb3-1243"><a href="#cb3-1243" aria-hidden="true" tabindex="-1"></a>The results are not up to our expectations. We considered four examples where local methods seemed useful but we did not obtained conclusive results.</span>
-<span id="cb3-1244"><a href="#cb3-1244" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb3-1245"><a href="#cb3-1245" aria-hidden="true" tabindex="-1"></a>Our proposal to introduce weights in the splitting criterion (see @sec-localSplittingRules): LazyDT and kernel approaches) is problematic. </span>
-<span id="cb3-1246"><a href="#cb3-1246" aria-hidden="true" tabindex="-1"></a>Putting too high weights around $\xs$ results in irrelevant cut-points, closer to $\xs$ </span>
-<span id="cb3-1247"><a href="#cb3-1247" aria-hidden="true" tabindex="-1"></a>compared to RF. It induces large correlations between the trees in the forest, and the </span>
-<span id="cb3-1248"><a href="#cb3-1248" aria-hidden="true" tabindex="-1"></a>quality of prediction is impacted negatively. This is why for the kernel approaches a bandwith of quantile $\alpha=1$ is preferred. With this choice, </span>
-<span id="cb3-1249"><a href="#cb3-1249" aria-hidden="true" tabindex="-1"></a>even if it localized the trees, we obtained results very similar if not worse than those of RF, at the cost of very high computational complexity. Less computationally intensive but as disappointing is the kernel voting RF strategy.</span>
-<span id="cb3-1250"><a href="#cb3-1250" aria-hidden="true" tabindex="-1"></a> </span>
-<span id="cb3-1251"><a href="#cb3-1251" aria-hidden="true" tabindex="-1"></a>The CSRF of @xu:etal:2016 (see @sec-weightingIndividuals), the nearest</span>
-<span id="cb3-1252"><a href="#cb3-1252" aria-hidden="true" tabindex="-1"></a>neighbor weights (@sec-nearest-neighbours) and the local weighting </span>
-<span id="cb3-1253"><a href="#cb3-1253" aria-hidden="true" tabindex="-1"></a>of covariates (@sec-weightingCovariates) strategies can give good performance but depend on tuning parameters.</span>
-<span id="cb3-1254"><a href="#cb3-1254" aria-hidden="true" tabindex="-1"></a>For instance, the CSRF brings better performance when the tree depth is low, i.e. high $\Nmin$.</span>
-<span id="cb3-1255"><a href="#cb3-1255" aria-hidden="true" tabindex="-1"></a>However, generally, results provided by these local methods are very similar to eager ones, and no great benefit is observed on our three examples.</span>
-<span id="cb3-1256"><a href="#cb3-1256" aria-hidden="true" tabindex="-1"></a>When looking at the very small benefits in terms of prediction error rate compared to the non-local approaches, we can say that local strategies are clearly not worth the additional computational cost. Especially since most of them require the choice </span>
-<span id="cb3-1257"><a href="#cb3-1257" aria-hidden="true" tabindex="-1"></a>of a tuning parameter, characterizing the weights given to instances surrounding $\xs$.</span>
-<span id="cb3-1258"><a href="#cb3-1258" aria-hidden="true" tabindex="-1"></a> </span>
-<span id="cb3-1259"><a href="#cb3-1259" aria-hidden="true" tabindex="-1"></a>We have not considered here the case of regression problems, for which local tree-based methods have also been proposed. For instance the CSRF, the nearest neighbor weights and the dynamic voting with selection random forests are directly applicable to regression forests, and in most cases already implemented. Similarly, our propositions regarding local weighting of covariates, and local splitting criterion using kernels would easily be extendable to regression problems. In a local regression framework, @friedberg2020local consider a two-step approach where the response $y^\star$ is predicted from a locally weighted ridge regression using weights from a modified random forest. This forest is built with a modified splitting criterion which minimizes the residuals in each leaf after fitting a ridge regression to predict $y_j$ from $x_j$.</span>
-<span id="cb3-1260"><a href="#cb3-1260" aria-hidden="true" tabindex="-1"></a>Whether these methods improve the original random forest in the case of regression is still an open question, but our results in the case of classification are not optimistic.</span>
-<span id="cb3-1261"><a href="#cb3-1261" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb3-1262"><a href="#cb3-1262" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb3-1263"><a href="#cb3-1263" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb3-1264"><a href="#cb3-1264" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb3-1265"><a href="#cb3-1265" aria-hidden="true" tabindex="-1"></a>:::</span>
-<span id="cb3-1266"><a href="#cb3-1266" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb3-1267"><a href="#cb3-1267" aria-hidden="true" tabindex="-1"></a><span class="fu"># References {.unnumbered}</span></span>
+<span id="cb3-1239"><a href="#cb3-1239" aria-hidden="true" tabindex="-1"></a>TableOrdered<span class="ot">=</span>Table[<span class="fu">c</span>(<span class="dv">1</span><span class="sc">:</span><span class="dv">3</span>,<span class="dv">5</span><span class="sc">:</span><span class="dv">6</span>,<span class="dv">9</span>,<span class="dv">4</span>,<span class="dv">7</span>,<span class="dv">8</span>),]</span>
+<span id="cb3-1240"><a href="#cb3-1240" aria-hidden="true" tabindex="-1"></a><span class="fu">colnames</span>(TableOrdered)<span class="ot">=</span><span class="fu">c</span>(<span class="st">"Method"</span>,<span class="st">"Parameters"</span>,<span class="st">"Error rate"</span>,<span class="st">"(sd)"</span>)</span>
+<span id="cb3-1241"><a href="#cb3-1241" aria-hidden="true" tabindex="-1"></a><span class="fu">rownames</span>(TableOrdered)<span class="ot">=</span><span class="cn">NULL</span></span>
+<span id="cb3-1242"><a href="#cb3-1242" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-1243"><a href="#cb3-1243" aria-hidden="true" tabindex="-1"></a>kableExtra<span class="sc">::</span><span class="fu">kable</span>(TableOrdered, <span class="at">booktabs=</span>T, <span class="at">row.names=</span><span class="cn">NA</span>)</span>
+<span id="cb3-1244"><a href="#cb3-1244" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb3-1245"><a href="#cb3-1245" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-1246"><a href="#cb3-1246" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-1247"><a href="#cb3-1247" aria-hidden="true" tabindex="-1"></a><span class="fu"># Discussions {#sec-discussions}</span></span>
+<span id="cb3-1248"><a href="#cb3-1248" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-1249"><a href="#cb3-1249" aria-hidden="true" tabindex="-1"></a>In this paper, we review, discuss and propose local tree-based methods strategies taking into account a specific instance during the learning process in the context of classification problems. </span>
+<span id="cb3-1250"><a href="#cb3-1250" aria-hidden="true" tabindex="-1"></a>The results are not up to our expectations. We considered four examples where local methods seemed useful but we did not obtained conclusive results.</span>
+<span id="cb3-1251"><a href="#cb3-1251" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-1252"><a href="#cb3-1252" aria-hidden="true" tabindex="-1"></a>Our proposal to introduce weights in the splitting criterion (see @sec-localSplittingRules): LazyDT and kernel approaches) is problematic. </span>
+<span id="cb3-1253"><a href="#cb3-1253" aria-hidden="true" tabindex="-1"></a>Putting too high weights around $\xs$ results in irrelevant cut-points, closer to $\xs$ </span>
+<span id="cb3-1254"><a href="#cb3-1254" aria-hidden="true" tabindex="-1"></a>compared to RF. It induces large correlations between the trees in the forest, and the </span>
+<span id="cb3-1255"><a href="#cb3-1255" aria-hidden="true" tabindex="-1"></a>quality of prediction is impacted negatively. This is why for the kernel approaches a bandwith of quantile $\alpha=1$ is preferred. With this choice, </span>
+<span id="cb3-1256"><a href="#cb3-1256" aria-hidden="true" tabindex="-1"></a>even if it localized the trees, we obtained results very similar if not worse than those of RF, at the cost of very high computational complexity. Less computationally intensive but as disappointing is the kernel voting RF strategy.</span>
+<span id="cb3-1257"><a href="#cb3-1257" aria-hidden="true" tabindex="-1"></a> </span>
+<span id="cb3-1258"><a href="#cb3-1258" aria-hidden="true" tabindex="-1"></a>The CSRF of @xu:etal:2016 (see @sec-weightingIndividuals), the nearest</span>
+<span id="cb3-1259"><a href="#cb3-1259" aria-hidden="true" tabindex="-1"></a>neighbor weights (@sec-nearest-neighbours) and the local weighting </span>
+<span id="cb3-1260"><a href="#cb3-1260" aria-hidden="true" tabindex="-1"></a>of covariates (@sec-weightingCovariates) strategies can give good performance but depend on tuning parameters.</span>
+<span id="cb3-1261"><a href="#cb3-1261" aria-hidden="true" tabindex="-1"></a>For instance, the CSRF brings better performance when the tree depth is low, i.e. high $\Nmin$.</span>
+<span id="cb3-1262"><a href="#cb3-1262" aria-hidden="true" tabindex="-1"></a>However, generally, results provided by these local methods are very similar to eager ones, and no great benefit is observed on our three examples.</span>
+<span id="cb3-1263"><a href="#cb3-1263" aria-hidden="true" tabindex="-1"></a>When looking at the very small benefits in terms of prediction error rate compared to the non-local approaches, we can say that local strategies are clearly not worth the additional computational cost. Especially since most of them require the choice </span>
+<span id="cb3-1264"><a href="#cb3-1264" aria-hidden="true" tabindex="-1"></a>of a tuning parameter, characterizing the weights given to instances surrounding $\xs$.</span>
+<span id="cb3-1265"><a href="#cb3-1265" aria-hidden="true" tabindex="-1"></a> </span>
+<span id="cb3-1266"><a href="#cb3-1266" aria-hidden="true" tabindex="-1"></a>We have not considered here the case of regression problems, for which local tree-based methods have also been proposed. For instance the CSRF, the nearest neighbor weights and the dynamic voting with selection random forests are directly applicable to regression forests, and in most cases already implemented. Similarly, our propositions regarding local weighting of covariates, and local splitting criterion using kernels would easily be extendable to regression problems. In a local regression framework, @friedberg2020local consider a two-step approach where the response $y^\star$ is predicted from a locally weighted ridge regression using weights from a modified random forest. This forest is built with a modified splitting criterion which minimizes the residuals in each leaf after fitting a ridge regression to predict $y_j$ from $x_j$.</span>
+<span id="cb3-1267"><a href="#cb3-1267" aria-hidden="true" tabindex="-1"></a>Whether these methods improve the original random forest in the case of regression is still an open question, but our results in the case of classification are not optimistic.</span>
 <span id="cb3-1268"><a href="#cb3-1268" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb3-1269"><a href="#cb3-1269" aria-hidden="true" tabindex="-1"></a>::: {#refs}</span>
-<span id="cb3-1270"><a href="#cb3-1270" aria-hidden="true" tabindex="-1"></a>:::</span>
+<span id="cb3-1269"><a href="#cb3-1269" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-1270"><a href="#cb3-1270" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb3-1271"><a href="#cb3-1271" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb3-1272"><a href="#cb3-1272" aria-hidden="true" tabindex="-1"></a><span class="fu"># Session information {.appendix .unnumbered}</span></span>
+<span id="cb3-1272"><a href="#cb3-1272" aria-hidden="true" tabindex="-1"></a>:::</span>
 <span id="cb3-1273"><a href="#cb3-1273" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb3-1274"><a href="#cb3-1274" aria-hidden="true" tabindex="-1"></a><span class="in">```{r session-info}</span></span>
-<span id="cb3-1275"><a href="#cb3-1275" aria-hidden="true" tabindex="-1"></a><span class="in">sessionInfo()</span></span>
-<span id="cb3-1276"><a href="#cb3-1276" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb3-1274"><a href="#cb3-1274" aria-hidden="true" tabindex="-1"></a><span class="fu"># References {.unnumbered}</span></span>
+<span id="cb3-1275"><a href="#cb3-1275" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-1276"><a href="#cb3-1276" aria-hidden="true" tabindex="-1"></a>::: {#refs}</span>
+<span id="cb3-1277"><a href="#cb3-1277" aria-hidden="true" tabindex="-1"></a>:::</span>
+<span id="cb3-1278"><a href="#cb3-1278" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-1279"><a href="#cb3-1279" aria-hidden="true" tabindex="-1"></a><span class="fu"># Session information {.appendix .unnumbered}</span></span>
+<span id="cb3-1280"><a href="#cb3-1280" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-1281"><a href="#cb3-1281" aria-hidden="true" tabindex="-1"></a><span class="in">```{r session-info}</span></span>
+<span id="cb3-1282"><a href="#cb3-1282" aria-hidden="true" tabindex="-1"></a><span class="in">sessionInfo()</span></span>
+<span id="cb3-1283"><a href="#cb3-1283" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
 </code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div></div></div></div></div>
 </div> <!-- /content -->

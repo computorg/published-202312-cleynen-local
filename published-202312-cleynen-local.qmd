@@ -1030,7 +1030,14 @@ kableExtra::kable(TableOrdered, booktabs=T, row.names=NA)
 # Data accessibility and reproducibility {#sec-reproducibility}
 
 
-The global computational time for the examples presented above represent several days of multiple cores usage and are therefore not directly proposed to the reader. All codes, data and session information are available at [github.com/jmm34/computo-local-tree-methods-for-classification](https://github.com/jmm34/computo-local-tree-methods-for-classification). Note that during the preparation of the manuscript we detect an [issue](https://github.com/imbs-hl/ranger/issues/615) in the implementation of the Case Specific Random Forests function (csrf) function of the R package ranger and have to redo quite a lot of calculation to ensure reproducibility. 
+The global computational time for the examples presented above represent
+several days of multiple cores usage and are therefore not directly proposed
+to the reader. All codes, data and session information are available at
+[github.com/computorg/published-202312-cleynen-local](https://github.com/computorg/published-202312-cleynen-local).
+Note that during the preparation of the manuscript we detect an
+[issue](https://github.com/imbs-hl/ranger/issues/615) in the implementation of
+the Case Specific Random Forests function (csrf) function of the R package
+ranger and have to redo quite a lot of calculation to ensure reproducibility. 
 
 In this section, we reproduce the first Gaussian example presented above
 (without additional noise) with only 500 training data, 100 test data and 5

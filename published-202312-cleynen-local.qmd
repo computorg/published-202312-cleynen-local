@@ -3,33 +3,26 @@ title: "Local tree methods for classification: a review and some dead ends"
 subtitle: "Example based on the quarto system"
 author:
   - name: Alice Cleynen
-    corresponding: true
     email: alice.cleynen@umontpellier.fr
     url: https://alice.cleynen.fr/
+    orcid: 0000-0001-8083-0204
     affiliations:
-      - name: Name of Affiliation one
-        department: Statistics
-        url: https://someplace.themoon.org
+      - name: IMAG, Univ Montpellier, CNRS, UMR 5149, Montpellier, France
+        url: https://imag.umontpellier.fr/
   - name: Louis Raynal
-    email: johndoe@nowhere.moon
-    url: https://johndoe.someplace.themoon.org
-    orcid: 0000-0000-0000-0000
-    acknowledgements: |
-      John Doe's acknowledgements
+    email: louis.raynal@chd-vendee.fr
+    orcid: 0000-0003-2805-3254
     affiliations:
-      - name: Name of Afficiliation two
-        department: Computer Science
-        url: https://someplace.themoon.org
+      - name: Centre Hospitalier Départemental Vendée, La Roche-sur-Yon, France
+      - url: https://www.chd-vendee.fr/
   - name: Jean-Michel Marin
-    email: johndoe@nowhere.moon
-    url: https://johndoe.someplace.themoon.org
-    orcid: 0000-0000-0000-0000
-    acknowledgements: |
-      John Doe's acknowledgements
+    corresponding: true
+    email: jean-michel.marin@umontpellier.fr
+    url: https://imag.umontpellier.fr/~marin/
+    orcid: 0000-0001-7451-9719
     affiliations:
-      - name: Name of Afficiliation two
-        department: Computer Science
-        url: https://someplace.themoon.org
+      - name: IMAG, Univ Montpellier, CNRS, UMR 5149, Montpellier, France
+        url: https://imag.umontpellier.fr/
 date: last-modified
 date-modified: last-modified
 description: |

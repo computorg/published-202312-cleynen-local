@@ -45,7 +45,6 @@ format:
 
 
 ::: {.content-hidden unless-format="html"}
-$\DeclareMathOperator*{\argmax}{argmax}$
 $\newcommand{\diag}{\operatorname{diag}}$
 $\newcommand{\var}{\mathrm{Var}}$
 $\newcommand{\xs}{x^*}$

@@ -2,14 +2,14 @@
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
 
 <meta charset="utf-8">
-<meta name="generator" content="quarto-1.4.513">
+<meta name="generator" content="quarto-1.4.515">
 
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
 <meta name="author" content="Alice Cleynen">
 <meta name="author" content="Louis Raynal">
 <meta name="author" content="Jean-Michel Marin">
-<meta name="dcterms.date" content="2023-11-28">
+<meta name="dcterms.date" content="2023-12-03">
 <meta name="keywords" content="key1, key2, key3">
 
 <title>Local tree methods for classification: a review and some dead ends</title>
@@ -190,14 +190,14 @@ ISSN 2824-7795</p>
       <div>
       <div class="quarto-title-meta-heading">Published</div>
       <div class="quarto-title-meta-contents">
-        <p class="date">November 28, 2023</p>
+        <p class="date">December 3, 2023</p>
       </div>
     </div>
                                     
       <div>
       <div class="quarto-title-meta-heading">Modified</div>
       <div class="quarto-title-meta-contents">
-        <p class="date-modified">November 28, 2023</p>
+        <p class="date-modified">December 3, 2023</p>
       </div>
     </div>
       
@@ -310,7 +310,7 @@ ISSN 2824-7795</p>
 <div aria-describedby="fig-4Unif-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
 <img src="published-202312-cleynen-local_files/figure-html/fig-4Unif-1.svg" class="img-fluid figure-img">
 </div>
-<figcaption class="figure quarto-float-caption quarto-float-fig" id="fig-4Unif-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-4Unif-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
 Figure&nbsp;1: An illustrative classification problem with 2 classes (purple and sky blye), containing two covariates describing four distinguishable regions (delimited by orange dashed lines) and an unlabeled data to classify (black star). This case will give rise to a fragmentation problem.
 </figcaption>
 </figure>
@@ -341,7 +341,7 @@ Figure&nbsp;1: An illustrative classification problem with 2 classes (purple and
 <div aria-describedby="fig-early-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
 <img src="published-202312-cleynen-local_files/figure-html/fig-early-1.svg" class="img-fluid figure-img">
 </div>
-<figcaption class="figure quarto-float-caption quarto-float-fig" id="fig-early-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-early-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
 Figure&nbsp;2: An illustrative classification problem with 2 classes (purple and sky blye), containing an informative covariate (x2) and a non-informative covariate (x1) and an unlabeled data to classify (black star). Splitting along x1 will result in a pure leaf with sky-blue label.
 </figcaption>
 </figure>
@@ -514,7 +514,7 @@ w_b(x^*) = \frac{ \sum_{i=1}^N \mathbf{1}\{x^{(i)}\in \text{OOB}_b\} \, K_V(x^{(
 <div aria-describedby="fig-gaussEq-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
 <img src="published-202312-cleynen-local_files/figure-html/fig-gaussEq-1.svg" class="img-fluid figure-img">
 </div>
-<figcaption class="figure quarto-float-caption quarto-float-fig" id="fig-gaussEq-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-gaussEq-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
 Figure&nbsp;3: First Gaussian example: two first explanatory variables <span class="math inline">X_1</span> and <span class="math inline">X_2</span> ; colors indicate the class labels (1-sky blue, 2-purple, 3-sand, 4-dark green).
 </figcaption>
 </figure>
@@ -524,7 +524,7 @@ Figure&nbsp;3: First Gaussian example: two first explanatory variables <span cla
 <div class="cell">
 <div id="tbl-gaussEqNoise10" class="cell anchored">
 <figure class="quarto-float quarto-float-tbl figure">
-<figcaption class="table quarto-float-caption quarto-float-tbl" id="tbl-gaussEqNoise10-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<figcaption class="quarto-float-caption-top quarto-float-caption quarto-float-tbl" id="tbl-gaussEqNoise10-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
 Table&nbsp;1: First Gaussian example: prediction error rate (percentage), with 10000 training data. With 20 variables (columns 3 and 4), and with 100 additional noise variables (columns 5 and 6)
 </figcaption>
 <div aria-describedby="tbl-gaussEqNoise10-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
@@ -715,7 +715,7 @@ Table&nbsp;1: First Gaussian example: prediction error rate (percentage), with 1
 <div aria-describedby="fig-gaussDisp-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
 <img src="published-202312-cleynen-local_files/figure-html/fig-gaussDisp-1.svg" class="img-fluid figure-img">
 </div>
-<figcaption class="figure quarto-float-caption quarto-float-fig" id="fig-gaussDisp-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-gaussDisp-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
 Figure&nbsp;4: Second Gaussian example: two first explanatory variables <span class="math inline">X_1</span> and <span class="math inline">X_2</span> ; colors indicate the classes (1-sky blue, 2-purple, 3-sand, 4-dark green).
 </figcaption>
 </figure>
@@ -725,7 +725,7 @@ Figure&nbsp;4: Second Gaussian example: two first explanatory variables <span cl
 <div class="cell">
 <div id="tbl-gaussUnbNoise10" class="cell anchored">
 <figure class="quarto-float quarto-float-tbl figure">
-<figcaption class="table quarto-float-caption quarto-float-tbl" id="tbl-gaussUnbNoise10-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<figcaption class="quarto-float-caption-top quarto-float-caption quarto-float-tbl" id="tbl-gaussUnbNoise10-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
 Table&nbsp;2: Second Gaussian example: prediction error rate (percentage), with 10000 training data. With 20 variables (columns 3 and 4), and with 100 additional noise variables (columns 5 and 6)
 </figcaption>
 <div aria-describedby="tbl-gaussUnbNoise10-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
@@ -908,7 +908,7 @@ Table&nbsp;2: Second Gaussian example: prediction error rate (percentage), with 
 <div class="cell">
 <div id="tbl-Small" class="cell anchored">
 <figure class="quarto-float quarto-float-tbl figure">
-<figcaption class="table quarto-float-caption quarto-float-tbl" id="tbl-Small-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<figcaption class="quarto-float-caption-top quarto-float-caption quarto-float-tbl" id="tbl-Small-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
 Table&nbsp;3: Smaller second Gaussian example: prediction error rate for only 500 test data, with runtime comparison
 </figcaption>
 <div aria-describedby="tbl-Small-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
@@ -1071,7 +1071,7 @@ Table&nbsp;3: Smaller second Gaussian example: prediction error rate for only 50
 <div aria-describedby="fig-SpherFrag-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
 <img src="published-202312-cleynen-local_files/figure-html/fig-SpherFrag-1.svg" class="img-fluid figure-img">
 </div>
-<figcaption class="figure quarto-float-caption quarto-float-fig" id="fig-SpherFrag-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-SpherFrag-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
 Figure&nbsp;5: Spherical fragmented example: two first explanatory variables <span class="math inline">X_1</span> and <span class="math inline">X_2</span> ; colors indicate the class labels (1-sky blue, 2-purple, 3-sand).
 </figcaption>
 </figure>
@@ -1082,7 +1082,7 @@ Figure&nbsp;5: Spherical fragmented example: two first explanatory variables <sp
 <div class="cell">
 <div id="tbl-Spherical" class="cell anchored">
 <figure class="quarto-float quarto-float-tbl figure">
-<figcaption class="table quarto-float-caption quarto-float-tbl" id="tbl-Spherical-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<figcaption class="quarto-float-caption-top quarto-float-caption quarto-float-tbl" id="tbl-Spherical-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
 Table&nbsp;4: Spherical fragmented example: prediction error rate (percentage), with 10000 training data, and runtime comparison
 </figcaption>
 <div aria-describedby="tbl-Spherical-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
@@ -1245,7 +1245,7 @@ Table&nbsp;4: Spherical fragmented example: prediction error rate (percentage), 
 <div aria-describedby="fig-popGen-LDA-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
 <img src="Fig4.png" class="img-fluid figure-img">
 </div>
-<figcaption class="figure quarto-float-caption quarto-float-fig" id="fig-popGen-LDA-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-popGen-LDA-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
 Figure&nbsp;6: Population genetics example: projections on the LDA axes of the <span class="math inline">10,000</span> training instances ; colors represent scenario indices: sky-blue for model 1, sand for model 2 and purple for model 3 ; the hard to discriminate <span class="math inline">[-1;1]^2</span> region is represented by black dashed lines.
 </figcaption>
 </figure>
@@ -1257,7 +1257,7 @@ Figure&nbsp;6: Population genetics example: projections on the LDA axes of the <
 <div class="cell">
 <div id="tbl-GenPopResults" class="cell anchored">
 <figure class="quarto-float quarto-float-tbl figure">
-<figcaption class="table quarto-float-caption quarto-float-tbl" id="tbl-GenPopResults-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<figcaption class="quarto-float-caption-top quarto-float-caption quarto-float-tbl" id="tbl-GenPopResults-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
 Table&nbsp;5: Population Genetics example: prediction error rate (percentage), with 10000 training data and 1000 test data
 </figcaption>
 <div aria-describedby="tbl-GenPopResults-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
@@ -1374,7 +1374,7 @@ Table&nbsp;5: Population Genetics example: prediction error rate (percentage), w
 <div class="cell">
 <div id="tbl-ToyEx" class="cell anchored">
 <figure class="quarto-float quarto-float-tbl figure">
-<figcaption class="table quarto-float-caption quarto-float-tbl" id="tbl-ToyEx-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<figcaption class="quarto-float-caption-top quarto-float-caption quarto-float-tbl" id="tbl-ToyEx-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
 Table&nbsp;6: Toy example: prediction error rate (percentage)
 </figcaption>
 <div aria-describedby="tbl-ToyEx-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
@@ -1580,7 +1580,7 @@ Zhang, L., Y. Ren, and P. N. Suganthan. 2013. <span>“Instance Based Random For
 
 <div class="cell">
 <details class="code-fold">
-<summary>Code</summary>
+<summary>Hide/Show the code</summary>
 <div class="sourceCode cell-code" id="cb1"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="fu">sessionInfo</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </details>
 <div class="cell-output cell-output-stdout">
@@ -1628,7 +1628,7 @@ loaded via a namespace (and not attached):
   title = {Local Tree Methods for Classification: A Review and Some Dead
     Ends},
   journal = {Computo},
-  date = {2023-11-28},
+  date = {2023-12-03},
   doi = {10.57750/3j8m-8d57},
   issn = {2824-7795},
   langid = {en},
@@ -1659,7 +1659,7 @@ loaded via a namespace (and not attached):
 </code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre><div class="quarto-appendix-secondary-label">For attribution, please cite this work as:</div><div id="ref-cleynen2023" class="csl-entry quarto-appendix-citeas" role="listitem">
 Cleynen, Alice, Louis Raynal, and Jean-Michel Marin. 2023. <span>“Local
 Tree Methods for Classification: A Review and Some Dead Ends.”</span>
-<em>Computo</em>, November. <a href="https://doi.org/10.57750/3j8m-8d57">https://doi.org/10.57750/3j8m-8d57</a>.
+<em>Computo</em>, December. <a href="https://doi.org/10.57750/3j8m-8d57">https://doi.org/10.57750/3j8m-8d57</a>.
 </div></div></section></div></main>
 <!-- /main column -->
 <script id="quarto-html-after-body" type="application/javascript">

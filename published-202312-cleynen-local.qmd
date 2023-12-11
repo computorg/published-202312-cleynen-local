@@ -26,7 +26,7 @@ date: last-modified
 date-modified: last-modified
 abstract: >+
     Random Forests (RF) [@breiman:2001] are very popular machine learning methods. They perform well even with little or no tuning, and have some theoretical guarantees, especially for sparse problems [@biau:2012;@scornet:etal:2015]. These learning strategies have been used in several contexts, also outside the field of classification and regression. To perform Bayesian model selection in the case of intractable likelihoods, the ABC Random Forests (ABC-RF) strategy of @pudlo:etal:2016 consists in applying Random Forests on training sets composed of simulations coming from the Bayesian generative models. The ABC-RF technique is based on an underlying RF for which the training and prediction phases are separated. The training phase does not take into account the data to be predicted. This seems to be suboptimal as in the ABC framework only one observation is of interest for the prediction. In this paper, we study tree-based methods that are built to predict a specific instance in a classification setting. This type of methods falls within the scope of local (lazy/instance-based/case specific) classification learning. We review some existing strategies and propose two new ones. The first consists in modifying the tree splitting rule by using kernels, the second in using a first RF to compute some local variable importance that is used to train a second, more local, RF. Unfortunately, these approaches, although interesting, do not provide conclusive results.
-keywords: [key1, key2, key3]
+keywords: [classification, Random Forests, local methods]
 citation:
   type: article-journal
   container-title: "Computo"
@@ -157,6 +157,8 @@ the unlabeled instance (represented by a black star) is in a region where a lot 
 It is thus interesting to consider a local approach taking $\xs$ into account.
 
 ```{r}
+#| fig.height: 4
+#| fig.width: 4
 #| label: fig-4Unif
 #| echo: false
 #| eval: true
@@ -295,6 +297,8 @@ LazyDT provides three other major features: the use of discretised explanatory v
 
 
 ```{r}
+#| fig.height: 4
+#| fig.width: 4
 #| label: fig-early
 #| echo: false
 #| eval: true
@@ -341,11 +345,11 @@ In this section, we examine the possibility of using weights during tree constru
 In the wake of locally weighted regression, we set a weight to each training individual and per covariate $j$ depending on its proximity to $\xsj$ in the covariate $j$ space. We consider a Gaussian kernel centered in $\xsj$, 
 providing weights 
 $$
-K_{h_j}(x_j^{(i)} - x_j^*, \;\; \text{for} \;\; i\in\{1,\ldots,N\}.
+K_{h_j}(x_j^{(i)} - x_j^*), \;\; \text{for} \;\; i\in\{1,\ldots,N\}.
 $$
 
 We focus on a Gaussian kernel due to its smoothness and to avoid giving
-exactly zero weights to some individuals, so that $K_{h_j}(x_j^{(i)} - x_j^*=1/\sqrt{2\pi} h_j \exp\left(-\frac{(x_j^{(i)} - \xsj)^2}{2h_j^2}\right)$.
+exactly zero weights to some individuals, so that $K_{h_j}(x_j^{(i)} - x_j^*)=1/(\sqrt{2\pi} h_j) \exp\left(-\frac{(x_j^{(i)} - \xsj)^2}{2h_j^2}\right)$.
 
 The choice of the bandwidth $h_j$ is tricky. We consider as bandwidth value $h_j$ the quantile of 
 order $\alpha$ of the distribution of distances to $\xs$: $\mathbb{Q}_\alpha \left\{ \mid x_j^{(i)} - \xsj \mid_{i=1, \ldots, N} \right\}$ (ie $h_j=d^j_{(\alpha N)}$ where $d^j_{(1)},\dots ,d^j_{(N)}$ are the ordered distances $\mid x_j^{(i)} - \xsj \mid$ of the training data points to $\xs$ in the covariate $j$ space).
@@ -359,7 +363,7 @@ For a given class label $k$, at the mother node $t$, this approach transforms th
 (giving uniform weights among data) into some weighted class frequencies in the following way:
 
 $$
-    p_k  = \frac{\sum_{i:x^{(i)}\in t} \mathbf{1}\{ y^{(i)}=k \}}{\#t} \quad \Rightarrow \quad  \;\;\; \widetilde{p}_{k,j} = \frac{\sum_{i:x\idxi\in t} \mathbf{1}\{ y\idxi=k \}  K_{h_j}(x_j^{(i)} - x_j^*}{\sum_{\ell:x^{(\ell)}\in t} K_{h_j}(x_j^{(\ell)} - x_j^*)},
+    p_k  = \frac{\sum_{i:x^{(i)}\in t} \mathbf{1}\{ y^{(i)}=k \}}{\#t} \quad \Rightarrow \quad  \;\;\; \widetilde{p}_{k,j} = \frac{\sum_{i:x\idxi\in t} \mathbf{1}\{ y\idxi=k \}  K_{h_j}(x_j^{(i)} - x_j^*)}{\sum_{\ell:x^{(\ell)}\in t} K_{h_j}(x_j^{(\ell)} - x_j^*)},
 $$
 
 where $\mathbf{1}\{\cdot\}$ is the indicator function.
@@ -422,7 +426,7 @@ In the spirit of @armano:tamponi:2018, it is natural to extend the approach intr
 in @sec-localKernel with a multidimensional kernel centered in $\xs$.
 We assign to each data $(y\idxi,x\idxi)$ a weight
 $$
-K_V(x^{(i)}-x^*) = \exp{ \left( -\frac{1}{2}(x\idxi - \xs)^\top V^{-2} (x\idxi - \xs) \right)},
+K_V(x^{(i)}-x^*) = 1/(2\pi)^{d/2}\exp{ \left( -\frac{1}{2}(x\idxi - \xs)^\top V^{-2} (x\idxi - \xs) \right)},
 $$
 where $V$ is a scaling matrix of the Gaussian kernel.
 Similarly to @sec-localKernel we consider for $V$ the diagonal matrix made of the $\alpha$ quantiles, i.e.
@@ -436,7 +440,7 @@ The weighted frequency for a given class label $k$ becomes
 
 $$
     \widetilde{p}_k = \frac{\sum_{i=1}^N  \mathbf{1}\{ y\idxi=k \} 
-K_V(x^{(i)}-x^*}{\sum_{\ell=1}^N K_V(x^{(\ell)}-x^*)}.
+K_V(x^{(i)}-x^*)}{\sum_{\ell=1}^N K_V(x^{(\ell)}-x^*)}.
 $$
 
 The weighted proportions of individual at the daughter nodes are transformed
@@ -588,13 +592,11 @@ In the following this proposal is denoted as KV-RF (for kernel voting - random f
 
 In this section, we compare the previously presented methods -- summarized below -- on two (simulated) Gaussian mixtures examples and a population genetics example.
 
-  - CSRF        -  Case-specific RF              -      @sec-weightingIndividuals   
-  - NN-RF       -  Nearest-neighbors RF         -     @sec-nearest-neighbours
-  - LVI-RF      -  Local variable importance RF  -    @sec-weightingCovariates
-  - DVSRF       -  Dynamic voting with selection RF - @sec-dynamicVoting 
-  - KV-RF       -  Kernel voting RF              -    @sec-kernelVoting
-
-
+- CSRF -  Case-specific RF - @sec-weightingIndividuals
+- NN-RF -  Nearest-neighbors RF - @sec-nearest-neighbours
+- LVI-RF -  Local variable importance RF - @sec-weightingCovariates
+- DVSRF -  Dynamic voting with selection RF - @sec-dynamicVoting 
+- KV-RF -  Kernel voting RF - @sec-kernelVoting
 
 Methods are run ten times on the same test data set. The average and standard deviation of the ten resulting misclassification error rates, per method, are reported as a measure of performance. Note that in order to recover the predictions for the whole test table, each local algorithm is reapplied to each test data.
 The  first two Gaussian examples have the advantage of being simple enough to compute the Bayes classifier which gives the optimal error rate.
@@ -636,6 +638,8 @@ same training / test combinations. The results are presented in @tbl-gaussEqNois
 In both scenarios, using only $3,000$ training data increased the error rates of about $2$\% for each method, but did not change the comparison.
 
 ```{r}
+#| fig.height: 4
+#| fig.width: 4
 #| label: fig-gaussEq
 #| eval: true
 #| echo: false
@@ -722,7 +726,7 @@ rownames(TableOrdered2)=NULL
 
 Table2=cbind(TableOrdered,TableOrdered2[,3:4])
 
-kableExtra::kable(Table2, booktabs=T, row.names=NA)
+kableExtra::kable(Table2, format="latex", row.names=NA)
 
 ```
 
@@ -749,6 +753,8 @@ variables drawn from uniform distributions on $[0,1]$. The results are
 presented in @tbl-gaussUnbNoise10. Once again, only the results for $10,000$ training data are shown as the methods comparison is similar for $3,000$ data, at the price of a higher error rate (about 2\%).
 
 ```{r}
+#| fig.height: 4
+#| fig.width: 4
 #| label: fig-gaussDisp
 #| echo: false
 #| eval: true
@@ -829,7 +835,7 @@ rownames(TableOrdered4)=NULL
 
 Table4=cbind(TableOrdered3,TableOrdered4[,3:4])
 
-kableExtra::kable(Table4, booktabs=T, row.names=NA)
+kableExtra::kable(Table4, format="latex", row.names=NA)
 
 ```
 
@@ -861,7 +867,7 @@ colnames(TableOrderedS)=c("Method","Parameters","Error rate","(sd)","RunTime (se
 rownames(TableOrderedS)=NULL
 
 
-kableExtra::kable(TableOrderedS, booktabs=T, row.names=NA)
+kableExtra::kable(TableOrderedS, format="latex", row.names=NA)
 
 ```
 
@@ -891,6 +897,8 @@ as fold-time the runtime of the classic RF, in @tbl-Spherical.
 
 
 ```{r}
+#| fig.height: 4
+#| fig.width: 4
 #| label: fig-SpherFrag
 #| fig-cap: "Spherical fragmented example: two first explanatory variables $X_1$ and $X_2$ ;    colors indicate the class labels (1-sky blue, 2-purple, 3-sand)."
 #| eval: true
@@ -969,7 +977,7 @@ rownames(TableOrdered5)=NULL
 
 Table5=cbind(TableOrdered5)
 
-kableExtra::kable(Table5, booktabs=T, row.names=NA)
+kableExtra::kable(Table5, format="latex", row.names=NA)
 
 ```
 
@@ -994,7 +1002,7 @@ where scenarios are hard to discriminate, see @fig-popGen-LDA.
 #| fig-cap: "Population genetics example: projections on the LDA axes of the $10,000$ training instances ;     colors represent scenario indices: sky-blue for model 1, sand for model 2 and purple for model 3 ;    the hard to discriminate $[-1;1]^2$ region is represented by black dashed lines."
 #| echo: false
 
-knitr::include_graphics("Fig4.png")
+knitr::include_graphics("Fig4.png",dpi=NA)
 ```
 
 
@@ -1022,7 +1030,7 @@ TableOrdered=Table[c(1:2,5:7,13:15,3,8:12),]
 colnames(TableOrdered)=c("Method","Parameters","Error rate","(sd)")
 rownames(TableOrdered)=NULL
 
-kableExtra::kable(TableOrdered, booktabs=T, row.names=NA)
+kableExtra::kable(TableOrdered, format="latex", row.names=NA)
 
 ```
 
@@ -1244,8 +1252,13 @@ of a tuning parameter, characterizing the weights given to instances surrounding
 We have not considered here the case of regression problems, for which local tree-based methods have also been proposed. For instance the CSRF, the nearest neighbor weights and the dynamic voting with selection random forests are directly applicable to regression forests, and in most cases already implemented. Similarly, our propositions regarding local weighting of covariates, and local splitting criterion using kernels would easily be extendable to regression problems. In a local regression framework, @friedberg2020local consider a two-step approach where the response $y^\star$ is predicted from a locally weighted ridge regression using weights from a modified random forest. This forest is built with a modified splitting criterion which minimizes the residuals in each leaf after fitting a ridge regression to predict $y_j$ from $x_j$.
 Whether these methods improve the original random forest in the case of regression is still an open question, but our results in the case of classification are not optimistic.
 
+# Acknowledgements
 
+We thank the referees for their very helpful suggestions, helping us to improve the quality of that paper. We also express gratitude to the Associate Editor Nelle Varoquaux and the Editor Julien Chiquet for dedicating their time to this paper and for their responses to our numerous inquiries about the tools.
 
+# Funding 
+
+This work was supported by the French National Research Agency (ANR) through the project ANR-18-CE40-0034 (ABSint).
 
 :::
 

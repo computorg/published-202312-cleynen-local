@@ -2,14 +2,14 @@
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
 
 <meta charset="utf-8">
-<meta name="generator" content="quarto-1.4.528">
+<meta name="generator" content="quarto-1.4.533">
 
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
 <meta name="author" content="Alice Cleynen">
 <meta name="author" content="Louis Raynal">
 <meta name="author" content="Jean-Michel Marin">
-<meta name="dcterms.date" content="2023-12-17">
+<meta name="dcterms.date" content="2023-12-24">
 <meta name="keywords" content="classification, Random Forests, local methods">
 
 <title>Local tree methods for classification: a review and some dead ends</title>
@@ -217,14 +217,14 @@ ISSN 2824-7795</p>
       <div>
       <div class="quarto-title-meta-heading">Published</div>
       <div class="quarto-title-meta-contents">
-        <p class="date">December 17, 2023</p>
+        <p class="date">December 24, 2023</p>
       </div>
     </div>
                                     
       <div>
       <div class="quarto-title-meta-heading">Modified</div>
       <div class="quarto-title-meta-contents">
-        <p class="date-modified">December 17, 2023</p>
+        <p class="date-modified">December 24, 2023</p>
       </div>
     </div>
       
@@ -334,7 +334,7 @@ ISSN 2824-7795</p>
 <p>Indeed, because the best split is selected on average, an eager tree may lead to many irrelevant splits to predict <span class="math inline">x^*</span>, potentially discarding data relevant for the considered example at early stages of the tree. This behavior results from data fragmentation <span class="citation" data-cites="fulton:etal:1996">(<a href="#ref-fulton:etal:1996" role="doc-biblioref">Fulton et al. 1996</a>)</span>, i.e.&nbsp;from the recursive partitioning of the explanatory variables space to achieve good global performances. In the following we mention this phenomenon as the fragmentation problem. A very simple 2-class classification problem presented in <a href="#fig-4Unif" class="quarto-xref">Figure&nbsp;1</a> illustrates this issue. The distribution of the training data set will induce, when possible, an initial cut for the tree construction in <span class="math inline">X_1\approx0.5</span>, however, the unlabeled instance (represented by a black star) is in a region where a lot of relevant instances will be discarded after this first data split. A more pertinent first cut should occur in <span class="math inline">X_2\approx0.25</span>. This problem, called fragmentation problem, also leads to less significant splitting rules at deeper levels of the tree construction since based on fewer instances. It is thus interesting to consider a local approach taking <span class="math inline">x^*</span> into account.</p>
 <div class="cell">
 <div class="cell-output-display">
-<div id="fig-4Unif" class="quarto-figure quarto-figure-center anchored">
+<div id="fig-4Unif" class="quarto-figure quarto-figure-center quarto-float anchored">
 <figure class="quarto-float quarto-float-fig figure">
 <div aria-describedby="fig-4Unif-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
 <img src="published-202312-cleynen-local_files/figure-html/fig-4Unif-1.svg" class="img-fluid figure-img">
@@ -365,7 +365,7 @@ Figure&nbsp;1: An illustrative classification problem with 2 classes (purple and
 </ul>
 <div class="cell">
 <div class="cell-output-display">
-<div id="fig-early" class="quarto-figure quarto-figure-center anchored">
+<div id="fig-early" class="quarto-figure quarto-figure-center quarto-float anchored">
 <figure class="quarto-float quarto-float-fig figure">
 <div aria-describedby="fig-early-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
 <img src="published-202312-cleynen-local_files/figure-html/fig-early-1.svg" class="img-fluid figure-img">
@@ -537,7 +537,7 @@ w_b(x^*) = \frac{ \sum_{i=1}^N \mathbf{1}\{x^{(i)}\in \text{OOB}_b\} \, K_V(x^{(
 \end{align*}</span> The first two dimensions are the most relevant for discriminating between the four classes. They are represented in <a href="#fig-gaussEq" class="quarto-xref">Figure&nbsp;3</a>. Indeed, although the remaining ones can provide information to identify the class labels, they are more overlapping with each others and hence less informative. We also consider a higher dimensional setting in which we add <span class="math inline">100</span> additional noise variables (sampled as uniforms on <span class="math inline">[0,1]</span>) for which we reproduce the same training / test combinations. The results are presented in <a href="#tbl-gaussEqNoise10" class="quarto-xref">Table&nbsp;1</a> for <span class="math inline">10,000</span> training data. In both scenarios, using only <span class="math inline">3,000</span> training data increased the error rates of about <span class="math inline">2</span>% for each method, but did not change the comparison.</p>
 <div class="cell">
 <div class="cell-output-display">
-<div id="fig-gaussEq" class="quarto-figure quarto-figure-center anchored">
+<div id="fig-gaussEq" class="quarto-figure quarto-figure-center quarto-float anchored">
 <figure class="quarto-float quarto-float-fig figure">
 <div aria-describedby="fig-gaussEq-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
 <img src="published-202312-cleynen-local_files/figure-html/fig-gaussEq-1.svg" class="img-fluid figure-img">
@@ -550,14 +550,14 @@ Figure&nbsp;3: First Gaussian example: two first explanatory variables <span cla
 </div>
 </div>
 <div class="cell">
-<div id="tbl-gaussEqNoise10" class="cell anchored">
+<div id="tbl-gaussEqNoise10" class="cell quarto-float anchored">
 <figure class="quarto-float quarto-float-tbl figure">
 <figcaption class="quarto-float-caption-top quarto-float-caption quarto-float-tbl" id="tbl-gaussEqNoise10-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
 Table&nbsp;1: First Gaussian example: prediction error rate (percentage), with 10000 training data. With 20 variables (columns 3 and 4), and with 100 additional noise variables (columns 5 and 6)
 </figcaption>
 <div aria-describedby="tbl-gaussEqNoise10-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
 <div class="cell-output-display">
-<table class="cell table table-sm table-striped small" data-quarto-postprocess="true">
+<table class="do-not-create-environment cell table table-sm table-striped small" data-quarto-postprocess="true">
 <thead>
 <tr class="header">
 <th style="text-align: left;" data-quarto-table-cell-role="th">Method</th>
@@ -738,7 +738,7 @@ Table&nbsp;1: First Gaussian example: prediction error rate (percentage), with 1
 <p>The first two covariates are still the most important ones, however we slightly modified the Gaussian parameters (the first two diagonal terms for <span class="math inline">\Sigma_1</span> and <span class="math inline">\Sigma_2</span> are now 2 and 1) to induce as best split rule for a CART: <span class="math inline">X_1\approx2</span>. This example hence becomes an illustration of the fragmentation problem we mentioned earlier (<a href="#fig-4Unif" class="quarto-xref">Figure&nbsp;1</a>). Indeed, the first cut produced by the eager RF algorithm – if this covariate is sampled – will split the elements labeled 3 and 4 in half (at <span class="math inline">X_1\approx2</span>). It implies the loss of some potentially relevant training data to predict those two classes. We hope local approaches can handle such an example which also contains very unbalanced classes proportions, see <a href="#fig-gaussDisp" class="quarto-xref">Figure&nbsp;4</a>. Once again we also consider the same scenario where we add <span class="math inline">100</span> additional noise variables drawn from uniform distributions on <span class="math inline">[0,1]</span>. The results are presented in <a href="#tbl-gaussUnbNoise10" class="quarto-xref">Table&nbsp;2</a>. Once again, only the results for <span class="math inline">10,000</span> training data are shown as the methods comparison is similar for <span class="math inline">3,000</span> data, at the price of a higher error rate (about 2%).</p>
 <div class="cell">
 <div class="cell-output-display">
-<div id="fig-gaussDisp" class="quarto-figure quarto-figure-center anchored">
+<div id="fig-gaussDisp" class="quarto-figure quarto-figure-center quarto-float anchored">
 <figure class="quarto-float quarto-float-fig figure">
 <div aria-describedby="fig-gaussDisp-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
 <img src="published-202312-cleynen-local_files/figure-html/fig-gaussDisp-1.svg" class="img-fluid figure-img">
@@ -751,14 +751,14 @@ Figure&nbsp;4: Second Gaussian example: two first explanatory variables <span cl
 </div>
 </div>
 <div class="cell">
-<div id="tbl-gaussUnbNoise10" class="cell anchored">
+<div id="tbl-gaussUnbNoise10" class="cell quarto-float anchored">
 <figure class="quarto-float quarto-float-tbl figure">
 <figcaption class="quarto-float-caption-top quarto-float-caption quarto-float-tbl" id="tbl-gaussUnbNoise10-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
 Table&nbsp;2: Second Gaussian example: prediction error rate (percentage), with 10000 training data. With 20 variables (columns 3 and 4), and with 100 additional noise variables (columns 5 and 6)
 </figcaption>
 <div aria-describedby="tbl-gaussUnbNoise10-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
 <div class="cell-output-display">
-<table class="cell table table-sm table-striped small" data-quarto-postprocess="true">
+<table class="do-not-create-environment cell table table-sm table-striped small" data-quarto-postprocess="true">
 <thead>
 <tr class="header">
 <th style="text-align: left;" data-quarto-table-cell-role="th">Method</th>
@@ -934,14 +934,14 @@ Table&nbsp;2: Second Gaussian example: prediction error rate (percentage), with 
 <p>In this example, when no additional noise is considered, bagging CARTs and Random forest have similar performance, which is once again slightly beaten by a Nearest-neighbors random forest with moderate number of neighbors. When the number of noise variable increases, surprisingly bagging Carts outperforms classic random forest, and is slightly beaten by the Local variable importance RF which manages to select important variables to build trees.</p>
 <p>Finally, we performed an independent experiment using the same unbalanced design with noise where we also included a comparison with LazyRF and the univariate and multivariate kernel approach on only 500 test data and 4 replicates. The total experiment took 41 days to run using 10 cores of a standard high performance computing cluster. The results are displayed in <a href="#tbl-Small" class="quarto-xref">Table&nbsp;3</a>. Even though it is hard to compare the results on such small experiments (500 tests hardly cover a 23-dimensional space), there is no clear performance gain for methods LazyRF, Multi-K and Uni-K, who run up to 750 thousand times slower than a classic RF.</p>
 <div class="cell">
-<div id="tbl-Small" class="cell anchored">
+<div id="tbl-Small" class="cell quarto-float anchored">
 <figure class="quarto-float quarto-float-tbl figure">
 <figcaption class="quarto-float-caption-top quarto-float-caption quarto-float-tbl" id="tbl-Small-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
 Table&nbsp;3: Smaller second Gaussian example: prediction error rate for only 500 test data, with runtime comparison
 </figcaption>
 <div aria-describedby="tbl-Small-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
 <div class="cell-output-display">
-<table class="cell table table-sm table-striped small" data-quarto-postprocess="true">
+<table class="do-not-create-environment cell table table-sm table-striped small" data-quarto-postprocess="true">
 <thead>
 <tr class="header">
 <th style="text-align: left;" data-quarto-table-cell-role="th">Method</th>
@@ -1094,7 +1094,7 @@ Table&nbsp;3: Smaller second Gaussian example: prediction error rate for only 50
 <p>In this example we performed a slightly different runtime comparison of all methods, conducting the experiment for only one test datapoint and using only one computing node. This allows a fairer comparison between methods which make use of global approaches and those that are entirely local. Results are given as fold-time the runtime of the classic RF, in <a href="#tbl-Spherical" class="quarto-xref">Table&nbsp;4</a>.</p>
 <div class="cell">
 <div class="cell-output-display">
-<div id="fig-SpherFrag" class="quarto-figure quarto-figure-center anchored">
+<div id="fig-SpherFrag" class="quarto-figure quarto-figure-center quarto-float anchored">
 <figure class="quarto-float quarto-float-fig figure">
 <div aria-describedby="fig-SpherFrag-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
 <img src="published-202312-cleynen-local_files/figure-html/fig-SpherFrag-1.svg" class="img-fluid figure-img">
@@ -1108,14 +1108,14 @@ Figure&nbsp;5: Spherical fragmented example: two first explanatory variables <sp
 </div>
 <p>In this example, once again bagging CARTs outperforms all other methods, while classic random forests are beaten by almost all other methods except nearest-neighbour Random Forests, who suffer most from the fragmentation issue. Local variable importance RF and Case-specific Random forests perform quite well.</p>
 <div class="cell">
-<div id="tbl-Spherical" class="cell anchored">
+<div id="tbl-Spherical" class="cell quarto-float anchored">
 <figure class="quarto-float quarto-float-tbl figure">
 <figcaption class="quarto-float-caption-top quarto-float-caption quarto-float-tbl" id="tbl-Spherical-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
 Table&nbsp;4: Spherical fragmented example: prediction error rate (percentage), with 10000 training data, and runtime comparison
 </figcaption>
 <div aria-describedby="tbl-Spherical-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
 <div class="cell-output-display">
-<table class="cell table table-sm table-striped small" data-quarto-postprocess="true">
+<table class="do-not-create-environment cell table table-sm table-striped small" data-quarto-postprocess="true">
 <thead>
 <tr class="header">
 <th style="text-align: left;" data-quarto-table-cell-role="th">Method</th>
@@ -1268,7 +1268,7 @@ Table&nbsp;4: Spherical fragmented example: prediction error rate (percentage), 
 <p>The data is summarized thanks to <span class="math inline">d=48</span> summary statistics available within the DIY-ABC software for SNP markers <span class="citation" data-cites="cornuet:etal:2014">(<a href="#ref-cornuet:etal:2014" role="doc-biblioref">Cornuet et al. 2014</a>)</span>, which is also used to simulate training and test sets respectively of size <span class="math inline">10,000</span> and <span class="math inline">1,000</span>, equally distributed among the three scenarios. Moreover, the data are constrained to be drawn in the <span class="math inline">[-1;1]^2</span> square on the linear discriminant analysis (LDA) axes projections graph, which is a region where scenarios are hard to discriminate, see <a href="#fig-popGen-LDA" class="quarto-xref">Figure&nbsp;6</a>.</p>
 <div class="cell">
 <div class="cell-output-display">
-<div id="fig-popGen-LDA" class="quarto-figure quarto-figure-center anchored">
+<div id="fig-popGen-LDA" class="quarto-figure quarto-figure-center quarto-float anchored">
 <figure class="quarto-float quarto-float-fig figure">
 <div aria-describedby="fig-popGen-LDA-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
 <img src="Fig4.png" class="img-fluid figure-img">
@@ -1283,14 +1283,14 @@ Figure&nbsp;6: Population genetics example: projections on the LDA axes of the <
 <p>Similarly to the Gaussian mixture examples, the methods are run ten times on the same data. The averaged misclassification error rates and the associated standard deviation are displayed in <a href="#tbl-GenPopResults" class="quarto-xref">Table&nbsp;5</a>.</p>
 <p>In this example again, bagging CARTs outperforms a classic random forest. Most local approaches can be tuned to reach a classic RF performance, but none manage to significantly outperform it, let alone reach bagging CARTs results.</p>
 <div class="cell">
-<div id="tbl-GenPopResults" class="cell anchored">
+<div id="tbl-GenPopResults" class="cell quarto-float anchored">
 <figure class="quarto-float quarto-float-tbl figure">
 <figcaption class="quarto-float-caption-top quarto-float-caption quarto-float-tbl" id="tbl-GenPopResults-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
 Table&nbsp;5: Population Genetics example: prediction error rate (percentage), with 10000 training data and 1000 test data
 </figcaption>
 <div aria-describedby="tbl-GenPopResults-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
 <div class="cell-output-display">
-<table class="cell table table-sm table-striped small" data-quarto-postprocess="true">
+<table class="do-not-create-environment cell table table-sm table-striped small" data-quarto-postprocess="true">
 <thead>
 <tr class="header">
 <th style="text-align: left;" data-quarto-table-cell-role="th">Method</th>
@@ -1400,14 +1400,14 @@ Table&nbsp;5: Population Genetics example: prediction error rate (percentage), w
 <p>The global computational time for the examples presented above represent several days of multiple cores usage and are therefore not directly proposed to the reader. All codes, data and session information are available at <a href="https://github.com/computorg/published-202312-cleynen-local">github.com/computorg/published-202312-cleynen-local</a>. Note that during the preparation of the manuscript we detect an <a href="https://github.com/imbs-hl/ranger/issues/615">issue</a> in the implementation of the Case Specific Random Forests function (csrf) function of the R package ranger and have to redo quite a lot of calculation to ensure reproducibility.</p>
 <p>In this section, we reproduce the first Gaussian example presented above (without additional noise) with only 500 training data, 100 test data and 5 replicates, to illustrate the methods and produce similar tables to <a href="#tbl-gaussEqNoise10" class="quarto-xref">Table&nbsp;1</a> to <a href="#tbl-GenPopResults" class="quarto-xref">Table&nbsp;5</a>. The results in themselves are not interpretable due to the low dimensionality of the test and training data, so most methods were only illustrated with one set of parameters. However, changing parameters value in the code is straightforward.</p>
 <div class="cell">
-<div id="tbl-ToyEx" class="cell anchored">
+<div id="tbl-ToyEx" class="cell quarto-float anchored">
 <figure class="quarto-float quarto-float-tbl figure">
 <figcaption class="quarto-float-caption-top quarto-float-caption quarto-float-tbl" id="tbl-ToyEx-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
 Table&nbsp;6: Toy example: prediction error rate (percentage)
 </figcaption>
 <div aria-describedby="tbl-ToyEx-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
 <div class="cell-output-display">
-<table class="cell table table-sm table-striped small" data-quarto-postprocess="true">
+<table class="do-not-create-environment cell table table-sm table-striped small" data-quarto-postprocess="true">
 <thead>
 <tr class="header">
 <th style="text-align: left;" data-quarto-table-cell-role="th">Method</th>
@@ -1663,7 +1663,7 @@ loaded via a namespace (and not attached):
   title = {Local Tree Methods for Classification: A Review and Some Dead
     Ends},
   journal = {Computo},
-  date = {2023-12-17},
+  date = {2023-12-24},
   doi = {10.57750/3j8m-8d57},
   issn = {2824-7795},
   langid = {en},
@@ -2703,7 +2703,7 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
 <span id="cb3-557"><a href="#cb3-557" aria-hidden="true" tabindex="-1"></a>The quality of the $b$-th tree toward $\xs$ is then evaluated as the average margins of the out-of-bag $\kappa$ instances, weighted by proximities, i.e.   </span>
 <span id="cb3-558"><a href="#cb3-558" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb3-559"><a href="#cb3-559" aria-hidden="true" tabindex="-1"></a>$$</span>
-<span id="cb3-560"><a href="#cb3-560" aria-hidden="true" tabindex="-1"></a>    w_b(\xs) = \frac{ \sum_{i=1}^\kappa \mathbf{1}<span class="sc">\{</span>x\idxi \in \text{OOB}_b\} \, \sigma(\xs, x\idxi) \, \text{mr}_b(x\idxi) }{\sum_{\ell=1}^\kappa \mathbf{1}\{x^{(\ell)} \in \text{OOB}_b<span class="sc">\}</span> \, \sigma(\xs, x^{(\ell)}) } \, ,</span>
+<span id="cb3-560"><a href="#cb3-560" aria-hidden="true" tabindex="-1"></a>    w_b(\xs) = \frac{ \sum_{i=1}^\kappa \mathbf{1}<span class="sc">\{</span>x\idxi \in \text{OOB}_b\} \, \sigma(\xs, x\idxi) \, \text{mr}_b(x\idxi) }{\sum_{\ell=1}^\kappa \mathbf{1}<span class="sc">\{</span>x^{(\ell)} \in \text{OOB}_b<span class="sc">\}</span> \, \sigma(\xs, x^{(\ell)}) } \, ,</span>
 <span id="cb3-561"><a href="#cb3-561" aria-hidden="true" tabindex="-1"></a>$${#eq-weightsTree}</span>
 <span id="cb3-562"><a href="#cb3-562" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb3-563"><a href="#cb3-563" aria-hidden="true" tabindex="-1"></a>where $\text{OOB}_b$ is the set of out-of-bag data for the $b$-th tree, $\sigma(\xs, x\idxi)$ is the proximity measure provided by the RF, to the power of $3$, and the margin function $\text{mr}_b(x\idxi)$ is equal to $1$ if the $b$-th tree predicts $y\idxi$ correctly, $-1$ otherwise.</span>
@@ -2731,7 +2731,7 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
 <span id="cb3-585"><a href="#cb3-585" aria-hidden="true" tabindex="-1"></a>Using the same notations as above, the $b$-th tree weight is hence computed in the following way:</span>
 <span id="cb3-586"><a href="#cb3-586" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb3-587"><a href="#cb3-587" aria-hidden="true" tabindex="-1"></a>$$</span>
-<span id="cb3-588"><a href="#cb3-588" aria-hidden="true" tabindex="-1"></a>w_b(\xs) = \frac{ \sum_{i=1}^N \mathbf{1}<span class="sc">\{</span>x\idxi \in \text{OOB}_b\} \, K_V(x^{(i)}-x^*) \, \mathbf{1} \{\hat{y}\idxi_b=y\idxi\} }{\sum_{\ell=1}^N \mathbf{1}\{x^{(\ell)} \in \text{OOB}_b<span class="sc">\}</span> \, K_V(x^{(\ell)}-x^*)}.</span>
+<span id="cb3-588"><a href="#cb3-588" aria-hidden="true" tabindex="-1"></a>w_b(\xs) = \frac{ \sum_{i=1}^N \mathbf{1}<span class="sc">\{</span>x\idxi \in \text{OOB}_b\} \, K_V(x^{(i)}-x^*) \, \mathbf{1} \{\hat{y}\idxi_b=y\idxi\} }{\sum_{\ell=1}^N \mathbf{1}<span class="sc">\{</span>x^{(\ell)} \in \text{OOB}_b<span class="sc">\}</span> \, K_V(x^{(\ell)}-x^*)}.</span>
 <span id="cb3-589"><a href="#cb3-589" aria-hidden="true" tabindex="-1"></a>$${#eq-weightsKernelTree}</span>
 <span id="cb3-590"><a href="#cb3-590" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb3-591"><a href="#cb3-591" aria-hidden="true" tabindex="-1"></a>All $N$ labeled data are used for the weight computation, their importance being measured by the kernel. $\alpha$ is again set to $1$ and tree selection is not performed.</span>

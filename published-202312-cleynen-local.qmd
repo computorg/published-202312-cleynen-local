@@ -34,6 +34,8 @@ citation:
   url: "https://computo.sfds.asso.fr/published-202312-cleynen-local/"
   publisher: "French Statistical Society"
   issn: "2824-7795"
+  pdf-url: "https://computo.sfds.asso.fr/published-202312-cleynen-local/published-202312-cleynen-local.pdf"
+  url:  "https://computo.sfds.asso.fr/published-202312-cleynen-local/"
 google-scholar: true  
 bibliography: references.bib
 github-user: computorg

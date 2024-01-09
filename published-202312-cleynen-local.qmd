@@ -31,7 +31,8 @@ citation:
   type: article-journal
   container-title: "Computo"
   doi: "10.57750/3j8m-8d57"
-  publisher: "Société Française de Statistique"
+  url: "https://computo.sfds.asso.fr/published-202312-cleynen-local/"
+  publisher: "French Statistical Society"
   issn: "2824-7795"
 google-scholar: true  
 bibliography: references.bib

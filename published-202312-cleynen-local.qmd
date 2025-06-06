@@ -33,8 +33,6 @@ citation:
   doi: "10.57750/3j8m-8d57"
   publisher: "French Statistical Society"
   issn: "2824-7795"
-  pdf-url: "https://computo.sfds.asso.fr/published-202312-cleynen-local/published-202312-cleynen-local.pdf"
-  url:  "https://computo.sfds.asso.fr/published-202312-cleynen-local/"
 google-scholar: true  
 bibliography: references.bib
 github-user: computorg
@@ -694,7 +692,7 @@ plot(x.train[,1], x.train[,2], col=couleur,xlab="X1",ylab="X2",pch=8,cex=0.8)
 
 
 
-```{r gaussEq10} 
+```{r} 
 #| label: tbl-gaussEqNoise10
 #| eval: true
 #| echo: false

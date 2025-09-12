@@ -1,5 +1,50 @@
 project:
-  title: "published-202312-cleynen-local"
+  render:
+    - published-202312-cleynen-local.qmd
+
+title: "Local tree methods for classification: a review and some dead ends"
+author:
+  - name: Alice Cleynen
+    email: alice.cleynen@umontpellier.fr
+    url: https://alice.cleynen.fr/
+    orcid: 0000-0001-8083-0204
+    affiliations:
+      - name: IMAG, Univ Montpellier, CNRS, UMR 5149, Montpellier, France
+        url: https://imag.umontpellier.fr/
+  - name: Louis Raynal
+    email: louis.raynal@chd-vendee.fr
+    orcid: 0000-0003-2805-3254
+    affiliations:
+      - name: Centre Hospitalier Départemental Vendée, La Roche-sur-Yon, France
+      - url: https://www.chd-vendee.fr/
+  - name: Jean-Michel Marin
+    corresponding: true
+    email: jean-michel.marin@umontpellier.fr
+    url: https://imag.umontpellier.fr/~marin/
+    orcid: 0000-0001-7451-9719
+    affiliations:
+      - name: IMAG, Univ Montpellier, CNRS, UMR 5149, Montpellier, France
+        url: https://imag.umontpellier.fr/
+date: 12/14/2023
+date-modified: last-modified
+abstract: >+
+    Random Forests (RF) [@breiman:2001] are very popular machine learning methods. They perform well even with little or no tuning, and have some theoretical guarantees, especially for sparse problems [@biau:2012;@scornet:etal:2015]. These learning strategies have been used in several contexts, also outside the field of classification and regression. To perform Bayesian model selection in the case of intractable likelihoods, the ABC Random Forests (ABC-RF) strategy of @pudlo:etal:2016 consists in applying Random Forests on training sets composed of simulations coming from the Bayesian generative models. The ABC-RF technique is based on an underlying RF for which the training and prediction phases are separated. The training phase does not take into account the data to be predicted. This seems to be suboptimal as in the ABC framework only one observation is of interest for the prediction. In this paper, we study tree-based methods that are built to predict a specific instance in a classification setting. This type of methods falls within the scope of local (lazy/instance-based/case specific) classification learning. We review some existing strategies and propose two new ones. The first consists in modifying the tree splitting rule by using kernels, the second in using a first RF to compute some local variable importance that is used to train a second, more local, RF. Unfortunately, these approaches, although interesting, do not provide conclusive results.
+keywords: [classification, Random Forests, local methods]
+citation:
+  type: article-journal
+  container-title: "Computo"
+  doi: "10.57750/3j8m-8d57"
+  publisher: "French Statistical Society"
+  issn: "2824-7795"
+google-scholar: true  
+bibliography: references.bib
+github-user: computorg
+repo: "published-202312-cleynen-local"
+draft: false # set to false once the build is running
+published: true # will be set to true once accepted
+format:
+  computo-html: default
+  computo-pdf: default
 
 
 

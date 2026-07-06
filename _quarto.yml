@@ -1,6 +1,7 @@
 project:
   render:
-    - published-202312-cleynen-local.qmd
+    - main.qmd
+    - README.qmd
 
 title: "Local tree methods for classification: a review and some dead ends"
 author:
@@ -40,8 +41,7 @@ google-scholar: true
 bibliography: references.bib
 github-user: computorg
 repo: "published-202312-cleynen-local"
-draft: false # set to false once the build is running
-published: true # will be set to true once accepted
+status: published
 format:
   computo-html: default
   computo-pdf: default
